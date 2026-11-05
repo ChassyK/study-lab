@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fare domande ai dati e trovare gruppi: alberi decisionali e k-means — Big Data &amp; AI</title>
+<meta name="description" content="Prima lezione di machine learning applicato. Primo blocco: l&#x27;albero decisionale, un modello che prevede rispondendo a una serie di domande sui dati, utile sia p">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",themeVariables:{fontFamily:"Schibsted Grotesk, sans-serif",primaryColor:"#ffffff",primaryBorderColor:"#9aa6b2",lineColor:"#5a6675",fontSize:"17px"},flowchart:{useMaxWidth:true,htmlLabels:true}});</script></head>
+<body class="p-lesson" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5l8 6 8-6v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>Study Lab</a>
+<nav class="topnav" aria-label="Corsi"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></nav></header>
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
+<main id="main" class="lesson">
+<header class="lesson-head">
+  <p class="crumbs"><a href="/study-lab/">Corsi</a> / <a href="/study-lab/big-data-ai/">Big Data &amp; AI</a></p>
+  <div class="date-mark"><span class="day">20</span><span class="month">ottobre<br>2026</span></div>
+  <h1>Fare domande ai dati e trovare gruppi: alberi decisionali e k-means</h1>
+  <p class="title-en" lang="en">Fundamentals of (Applied) Machine Learning — Decision Trees and Clustering (K-Means)</p>
+  <p class="meta">Martedì · Rizzi, Campana · <span class="chip s-parziale">Parziale</span></p>
+  <p class="coverage">Nessuna registrazione PLAUD per questa giornata (slot Rizzi 10:00–11:30 e Campana 12:00–13:30). Testo ricostruito solo dalle slide Canvas 133958 &#x27;BigDataBsnsRizzi2026Lesson5&#x27; (53 pagine): alberi decisionali (pp. 3–18), due esercitazioni (pp. 19–22), clustering e k-means (pp. 23–51). Le slide 4–6, 18, 24–25, 29–30, 43 e 52–53 sono solo immagini e sono state interpretate dal contesto. Il collegamento delle slide al 20 ottobre è dedotto: il file è stato caricato su Canvas il 19 ottobre, come le altre &#x27;Lesson&#x27; caricate il giorno prima della lezione. Non sappiamo che cosa abbiano detto in aula Rizzi e Campana né il contenuto della parte di Campana.</p>
+</header>
+<section class="brief" aria-labelledby="inbreve"><h2 id="inbreve">In breve</h2>
+<p class="lede">Prima lezione di machine learning applicato. Primo blocco: l&#x27;albero decisionale, un modello che prevede rispondendo a una serie di domande sui dati, utile sia per classificare (resta o se ne va?) sia per stimare un numero (quanto vale questo appartamento?). Secondo blocco: il clustering, cioè trovare gruppi simili in dati senza etichette, con l&#x27;algoritmo k-means. Conta perché sono i due strumenti più usati per segmentare clienti e prendere decisioni spiegabili.</p><ul class="keys"><li>Un albero decisionale fa una domanda per nodo, segue un ramo per risposta e dà la previsione nella foglia.</li><li>Classificazione se la foglia è una categoria (churn sì/no), regressione se la foglia è un numero (prezzo medio): decide il target, non il tipo di domanda.</li><li>Imparare significa scegliere, tra tante regole possibili (H), quella che approssima meglio la funzione vera e sconosciuta f.</li><li>Un albero abbastanza profondo può rappresentare qualsiasi regola, ma più è profondo più rischia di imparare a memoria (overfitting).</li><li>Pregi: leggibile, nessuna normalizzazione, relazioni non lineari. Difetti: overfitting, instabilità, preferenza per le variabili con molte categorie.</li><li>Il clustering è apprendimento non supervisionato: niente etichette, cerca gruppi di casi simili. Può però produrre gruppi senza senso.</li><li>K-means alterna due passi: assegna ogni punto al centro più vicino, sposta ogni centro nella media dei suoi punti, finché nulla cambia.</li><li>K-means converge sempre, ma può fermarsi in una soluzione sbagliata: dipende dai centri iniziali, da K e dalla misura di distanza.</li></ul></section>
+<div class="lesson-grid">
+<nav class="toc" aria-label="In questa lezione"><p class="toc-h">Spiegazione</p><ol><li><a href="#un-albero-decisionale-e-una-serie-di-domande-ben-scelte">Un albero decisionale è una serie di domande ben scelte</a></li><li><a href="#classificare-o-stimare-un-numero-lo-decide-la-foglia-non-la-">Classificare o stimare un numero: lo decide la foglia, non la domanda</a></li><li><a href="#imparare-vuol-dire-scegliere-una-regola-che-funzioni-anche-d">Imparare vuol dire scegliere una regola che funzioni anche domani</a></li><li><a href="#esercizio-1-costruire-un-albero-per-prevedere-chi-abbandona">Esercizio 1: costruire un albero per prevedere chi abbandona</a></li><li><a href="#esercizio-2-un-albero-che-stima-il-prezzo-di-una-casa">Esercizio 2: un albero che stima il prezzo di una casa</a></li><li><a href="#pregi-e-difetti-leggibile-ma-nervoso">Pregi e difetti: leggibile, ma nervoso</a></li><li><a href="#il-clustering-trova-gruppi-quando-nessuno-ti-da-la-risposta">Il clustering trova gruppi quando nessuno ti dà la risposta</a></li><li><a href="#k-means-sposta-i-centri-finche-nessuno-cambia-gruppo">K-means: sposta i centri finché nessuno cambia gruppo</a></li><li><a href="#quando-k-means-sbaglia-e-come-accorgersene">Quando k-means sbaglia, e come accorgersene</a></li></ol>
+<p class="toc-h">Mettiti alla prova</p><ul><li><a href="#richiamo">Richiamo</a></li><li><a href="#quiz">Quiz</a></li><li><a href="#trasferimento">Applica</a></li><li><a href="#decidi">Decidi tu</a></li><li><a href="#davedere">Da vedere</a></li><li><a href="#flashcard">Flashcard</a></li><li><a href="#glossario">Glossario</a></li><li><a href="#video">Video</a></li></ul>
+<div class="toc-actions"><a class="btn" href="2026-10-20__lezione.pdf" download>Scarica PDF</a><a class="btn ghost" href="https://notebook.google.com/notebook/075a6b17-6b0d-4565-a05f-d532d2bfa1b0">Apri NotebookLM</a></div></nav>
+<article class="prose"><h2 id="un-albero-decisionale-e-una-serie-di-domande-ben-scelte">Un albero decisionale è una serie di domande ben scelte</h2>
+<p>Fino a qui il corso ha parlato di dati: dove nascono, come si conservano, come si puliscono. Oggi si passa ai <em>modelli</em>, cioè alle regole che trasformano i dati in una previsione. Il primo modello è il più intuitivo di tutti: il <em>decision tree</em> (albero decisionale).</p>
+<p>Un albero decisionale funziona come il gioco "indovina chi". Fa una domanda sul caso che ha davanti, guarda la risposta e, in base a quella, fa la domanda successiva. Alla fine arriva a una risposta. Le slide aprono con un esempio medico: un paziente con dolore al petto. Prima domanda: l'elettrocardiogramma (<em>ECG</em>) è normale? Poi: ci sono altri sintomi? A seconda delle risposte, il paziente finisce in una categoria di rischio diversa. La slide 5 chiede proprio questo: che rischio ha un paziente con dolore al petto, nessun altro sintomo ed ECG normale? Basta seguire il percorso.</p>
+<p>Le parti dell'albero hanno un nome preciso:</p>
+<ol>
+<li>il <strong>nodo interno</strong> (<em>internal node</em>) fa un test su una sola variabile, per esempio "febbre da almeno 2 giorni?";</li>
+<li>il <strong>ramo</strong> (<em>branch</em>) è la risposta che scegli, e ti porta al nodo successivo;</li>
+<li>la <strong>foglia</strong> (<em>leaf</em>) è il punto di arrivo e contiene la previsione: una risposta (Y) oppure una probabilità per ogni risposta possibile.</li>
+</ol>
+<p>Le variabili che l'albero interroga si chiamano <em>feature</em> (caratteristiche del caso). Quello che vuoi prevedere si chiama <em>target</em>. Tenere separate le due cose è il primo passo per non confondersi.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Un albero decisionale è una sequenza di domande sulle caratteristiche di un caso: ogni percorso dalla radice a una foglia è una regola del tipo "se… e se… allora…".</p>
+</aside>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Una regola ad albero nel pronto soccorso di Chicago</p>
+<p>Il Cook County Hospital di Chicago, grande ospedale pubblico, aveva un problema: troppi pazienti con dolore al petto venivano ricoverati nei reparti monitorati "per sicurezza", con letti sempre pieni. A fine anni Novanta l'ospedale ha adottato una regola decisionale (derivata dal lavoro del cardiologo Lee Goldman, pubblicato nel 1988 sul New England Journal of Medicine) che, partendo dall'ECG e da pochi segni clinici, divide i pazienti in rischio alto, moderato, basso e molto basso. Uno studio pubblicato su JAMA nel 2002 ha confrontato 207 pazienti prima della regola (marzo 1997) con 1.008 pazienti dopo (agosto–novembre 1999). La quota di pazienti senza complicazioni mandati correttamente in reparti meno intensivi è salita dal 21% al 36%, senza differenze significative sulla sicurezza (94% contro 89%). I medici hanno usato la regola nell'83% dei casi. Lezione per il business: una regola semplice e leggibile, fatta di poche domande, può migliorare le decisioni di professionisti esperti, perché è coerente e non si fa prendere dalla paura.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Nell&#x27;albero medico, che cosa sono &quot;ECG normale?&quot; e &quot;rischio basso&quot;?</summary>
+<div class="answer">
+<p>"ECG normale?" è un test su una feature, quindi sta in un nodo interno. "Rischio basso" è la previsione, quindi sta in una foglia. Le domande stanno nei nodi, le risposte del modello nelle foglie.</p>
+</div>
+</details>
+<h2 id="classificare-o-stimare-un-numero-lo-decide-la-foglia-non-la-">Classificare o stimare un numero: lo decide la foglia, non la domanda</h2>
+<p>Gli alberi sanno fare due lavori diversi.</p>
+<ul>
+<li><strong>Classificazione</strong> (<em>classification</em>): la foglia contiene una categoria. Il cliente resta o se ne va? Il tumore è benigno o maligno?</li>
+<li><strong>Regressione</strong> (<em>regression</em>): la foglia contiene un numero. Quanto vale questo appartamento? Di solito è la media dei casi che cadono in quella foglia.</li>
+</ul>
+<p>Le domande possono usare variabili di ogni tipo. Se la variabile è continua (giorni di febbre, età, metri quadri), il nodo usa una <strong>soglia</strong> (<em>threshold</em>): "giorni di febbre ≥ 2?" divide i casi in due rami. Le slide 8 e 9 lo mostrano con un esempio sugli antibiotici: se la febbre dura da almeno 2 giorni e il bambino ha più di 3 anni, si prescrivono macrolidi; altrimenti no.</p>
+<p>Attenzione a una trappola, presente proprio nelle slide. La slide 8 si intitola <em>Regression Decision Tree</em>, ma le sue foglie dicono "prescrivere" o "non prescrivere": sono categorie. Quindi è un albero di <strong>classificazione</strong> che usa soglie numeriche. Una domanda con un numero non rende l'albero "di regressione". Conta solo che cosa c'è nella foglia.</p>
+<p>Le slide 12–14 mostrano un albero costruito con la libreria Python <em>scikit-learn</em> sul <em>Wisconsin Breast Cancer dataset</em>: 569 casi, 30 misure delle cellule ricavate da immagini al microscopio, ognuno etichettato come benigno o maligno (dati pubblicati dall'Università del Wisconsin, 1995). L'albero chiede per esempio "worst perimeter ≤ 105,95?" e poi "worst concave points ≤ 0,135?". Sono soglie imparate da quei dati, non regole mediche da usare a casa.</p>
+<p>Le stesse slide fanno vedere un'idea geometrica importante. Se metti i casi su un grafico con due variabili, ogni soglia è una linea dritta parallela a un asse. Due soglie ritagliano un rettangolo. Alla fine l'albero divide lo spazio in tanti rettangoli (in più dimensioni si chiamano iper-rettangoli), e ognuno ha la sua previsione. La linea che separa zone con previsioni diverse è il <em>decision boundary</em> (confine di decisione). Per questo i confini di un albero hanno una tipica forma "a scalini".</p>
+<figure class="yt" data-id="_L39rN6gz7Y" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Alberi di classificazione spiegati passo per passo (StatQuest)"><img loading="lazy" src="https://i.ytimg.com/vi/_L39rN6gz7Y/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Alberi di classificazione spiegati passo per passo (StatQuest) · <a href="https://www.youtube.com/watch?v=_L39rN6gz7Y">apri su YouTube</a></figcaption></figure>
+
+<p>:::</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un albero prevede il prezzo di un&#x27;auto usata in euro e usa come domanda &quot;è diesel?&quot;. È classificazione o regressione?</summary>
+<div class="answer">
+<p>Regressione. La domanda è una categoria (diesel sì/no), ma la foglia dà un numero, il prezzo. Il tipo di problema lo decide il target.</p>
+</div>
+</details>
+<h2 id="imparare-vuol-dire-scegliere-una-regola-che-funzioni-anche-d">Imparare vuol dire scegliere una regola che funzioni anche domani</h2>
+<p>La slide 11 mette tutto in linguaggio formale. Vale la pena capirlo, perché ritorna in ogni modello che vedrai.</p>
+<ul>
+<li><strong>X</strong> è l'insieme di tutti i casi possibili. Ogni caso <strong>x</strong> è un elenco di caratteristiche (<em>feature vector</em>), per esempio ⟨umidità = bassa, vento = debole, cielo = pioggia, temperatura = alta⟩.</li>
+<li><strong>Y</strong> è l'insieme delle risposte possibili (qui discrete, cioè categorie).</li>
+<li><strong>f: X → Y</strong> è la regola vera che lega ogni caso alla sua risposta. Non la conosciamo: se la conoscessimo, non servirebbe il modello.</li>
+<li><strong>H</strong> è l'insieme delle regole candidate (<em>hypotheses</em>). Nel nostro caso ogni candidata <strong>h</strong> è un albero, che porta x a una foglia e gli assegna una y.</li>
+</ul>
+<p>Imparare significa scegliere, dentro H, l'albero h che si avvicina di più a f, usando gli esempi che abbiamo.</p>
+<p>Qui entrano due concetti che non vanno confusi. L'<em>expressivity</em> (espressività) dice che cosa un modello <strong>può</strong> rappresentare. La <em>generalizzazione</em> dice quanto bene funziona su casi <strong>nuovi</strong>. Le slide 15–17 mostrano che gli alberi sono molto espressivi: possono rappresentare qualsiasi funzione logica delle feature. L'esempio è lo <em>XOR</em> ("o esclusivo"): la risposta è vera quando A e B sono diversi. Una sola domanda non basta, perché sapere A non dice ancora la risposta. Con due livelli sì: prima chiedi A, poi in ogni ramo chiedi B.</p>
+<p>La profondità regola quanto è espressivo l'albero. Profondità 1 significa una sola domanda: si chiama <em>decision stump</em> (ceppo). Profondità 2 permette due domande lungo ogni percorso (rami diversi possono anche usare variabili diverse). Un albero binario pieno di profondità d ha fino a 2^d foglie: con d = 3 sono 8 foglie.</p>
+<p>Il rovescio della medaglia è nella nota della slide 16: se la regola vera è deterministica, ogni caso può avere il suo percorso personale fino a una foglia. Ma un albero così ha imparato a memoria e "probabilmente non generalizzerà". Nel caso peggiore servono anche moltissimi nodi, in numero che cresce in modo esponenziale.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Poter rappresentare tutto non vuol dire saper prevedere: un modello si giudica sui casi che non ha mai visto.</p>
+</aside>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span> · Lezione del 3 novembre</p>
+<p>La valutazione onesta dei modelli (dati di training, validazione e test, overfitting e underfitting, accuracy, precision e recall) è il tema della lezione del 3/11. Qui nasce il problema; lì trovi gli strumenti per misurarlo.</p>
+</aside>
+<h2 id="esercizio-1-costruire-un-albero-per-prevedere-chi-abbandona">Esercizio 1: costruire un albero per prevedere chi abbandona</h2>
+<p>La slide 20 propone una sfida di cinque minuti su dieci clienti. Le colonne sono: anzianità del rapporto (<em>tenure</em>), giorni di inattività, reclami, spesa mensile in euro, e il target <em>churn</em> (abbandono: sì/no). Il compito: scegliere la prima domanda, aggiungere almeno un secondo livello, trovare le foglie miste, dire quale errore costa di più e indicare un rischio di overfitting. Il suggerimento della slide è prezioso: non cercare l'albero perfetto, cerca un primo taglio difendibile.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Cliente</th>
+<th style="text-align: right;">Tenure</th>
+<th style="text-align: right;">Giorni inattivi</th>
+<th style="text-align: right;">Reclami</th>
+<th style="text-align: right;">€ al mese</th>
+<th>Churn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">95</td>
+<td>No</td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">35</td>
+<td>Sì</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">115</td>
+<td>No</td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">25</td>
+<td>Sì</td>
+</tr>
+<tr>
+<td>E</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">140</td>
+<td>No</td>
+</tr>
+<tr>
+<td>F</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">55</td>
+<td>Sì</td>
+</tr>
+<tr>
+<td>G</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">90</td>
+<td>Sì</td>
+</tr>
+<tr>
+<td>H</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">160</td>
+<td>No</td>
+</tr>
+<tr>
+<td>I</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">70</td>
+<td>Sì</td>
+</tr>
+<tr>
+<td>J</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">80</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Una soluzione ragionata (non è la soluzione del docente)</p>
+<ol>
+<li><strong>Prima domanda: giorni inattivi &gt; 20?</strong> È una regola che un commerciale capisce. Ramo sì: B, D, E, F, G, J. Ramo no: A, C, H, I.</li>
+<li><strong>Secondo livello, nel ramo sì: reclami ≥ 2?</strong> Sì: B, F, G, tutti "churn sì", foglia pura. No: D, E, J, cioè 1 sì e 2 no, foglia mista che a maggioranza prevede "no".</li>
+<li><strong>Ramo "inattivi ≤ 20"</strong>: A, C, H, I, cioè 1 sì e 3 no: foglia mista, prevede "no".</li>
+<li><strong>Errori</strong>: D (35 giorni inattivo, 0 reclami) e I (10 giorni, 5 reclami) se ne vanno, ma l'albero dice "resta". Sono due <strong>falsi negativi</strong>. Nessun falso positivo. Risposte esatte: 8 su 10, ma <strong>sui dati di addestramento</strong>.</li>
+<li><strong>Quale errore costa di più?</strong> Dipende dall'azione. Un falso negativo fa perdere un cliente e i suoi ricavi futuri. Un falso positivo fa spendere uno sconto inutile. Se un cliente vale molto più dello sconto, pesa di più il falso negativo.</li>
+<li><strong>Rischio di overfitting</strong>: la domanda "tenure ≤ 14?" separa perfettamente i dieci clienti (i cinque "sì" sono B, D, F, G, I). Sembra magica, ma con dieci righe può essere un caso. Va provata su clienti nuovi.</li>
+</ol>
+</aside>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  A[&quot;Giorni inattivi &gt; 20?&quot;] --&gt;|sì| B[&quot;Reclami ≥ 2?&quot;]
+  A --&gt;|no| C[&quot;Prevede: resta (3 no, 1 sì)&quot;]
+  B --&gt;|sì| D[&quot;Prevede: abbandona (3 sì)&quot;]
+  B --&gt;|no| E[&quot;Prevede: resta (2 no, 1 sì)&quot;]
+</pre></figure>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Una foglia con 2 &quot;no&quot; e 1 &quot;sì&quot; prevede &quot;no&quot;. Vuol dire che quei clienti non abbandoneranno mai?</summary>
+<div class="answer">
+<p>No. La foglia dà la risposta più probabile, non una certezza: qui la stima è circa 1 su 3 di abbandono. Un buon albero comunica anche questa probabilità, così chi decide sa quanto fidarsi.</p>
+</div>
+</details>
+<h2 id="esercizio-2-un-albero-che-stima-il-prezzo-di-una-casa">Esercizio 2: un albero che stima il prezzo di una casa</h2>
+<p>La slide 22 cambia target: non più sì/no, ma il prezzo di dieci appartamenti in migliaia di euro (€k: 175 significa 175.000 €). Le feature sono area in m², distanza dal centro in km, piano e ristrutturazione. Qui la foglia prevede la <strong>media</strong> dei prezzi dei casi che contiene, e la soglia migliore è quella che riduce di più l'errore dentro le foglie (la somma dei quadrati delle differenze dalla media, detta anche varianza interna).</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Primo e secondo taglio, con i conti</p>
+<ol>
+<li><strong>Area ≤ 80 m²?</strong> Ramo sì: A, B, C, D, J. Prezzi 175 + 225 + 250 + 335 + 220 = 1.205, media <strong>241 €k</strong>. Ramo no: E, F, G, H, I, media (300 + 390 + 525 + 410 + 610) / 5 = <strong>447 €k</strong>.</li>
+<li><strong>Secondo taglio solo per le case grandi: distanza dal centro ≤ 3 km?</strong> Vicine: F, G, I, media 1.525 / 3 ≈ <strong>508 €k</strong>. Lontane: E, H, media <strong>355 €k</strong>.</li>
+<li><strong>Residuo</strong> (<em>residual</em>) = prezzo vero − previsione. F vale 390 ma l'albero dice 508: residuo <strong>−118 €k</strong>, l'albero sovrastima. È il residuo più grande in valore assoluto. Forse perché F è al secondo piano e non ristrutturata: variabili che l'albero non ha ancora usato.</li>
+<li><strong>Controllo</strong>: la soglia 80 è comoda ma non la migliore. Con le stesse dieci case la soglia che riduce di più l'errore è tra 91 e 103 m². Provalo con il laboratorio qui sotto.</li>
+</ol>
+</aside>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Trova la soglia migliore sull&#x27;area</p><div class="lab-body"><div class="row"><label for="thr">Soglia area (m²): <output id="thrv">80</output></label>
+<input type="range" id="thr" min="50" max="120" step="1" value="80"></div>
+<p>Case piccole: <output id="nl"></output> · media <output id="ml"></output> €k</p>
+<p>Case grandi: <output id="nr"></output> · media <output id="mr"></output> €k</p>
+<p class="out" id="res"></p>
+<p class="note">Dati: le dieci case della slide 22. Errore = somma dei quadrati delle differenze tra prezzo e media della propria foglia. Senza alcun taglio l'errore è 178.940.</p>
+<script>
+(function(){
+var A=[48,55,68,74,82,91,103,110,125,64], P=[175,225,250,335,300,390,525,410,610,220];
+var s=document.getElementById('thr');
+function sse(X){if(!X.length)return 0;var m=X.reduce(function(a,b){return a+b},0)/X.length;return X.reduce(function(a,b){return a+(b-m)*(b-m)},0);}
+function mean(X){return X.length?Math.round(X.reduce(function(a,b){return a+b},0)/X.length):0;}
+function up(){var t=+s.value,L=[],R=[];for(var i=0;i<A.length;i++){(A[i]<=t?L:R).push(P[i]);}
+document.getElementById('thrv').value=t;document.getElementById('nl').value=L.length+' case';document.getElementById('nr').value=R.length+' case';
+document.getElementById('ml').value=mean(L);document.getElementById('mr').value=mean(R);
+var e=Math.round(sse(L)+sse(R));
+document.getElementById('res').textContent=(L.length&&R.length)?('Errore totale: '+e.toLocaleString('it-IT')+' (riduzione del '+Math.round(100*(1-e/178940))+'% rispetto a nessun taglio).'):'Con questa soglia tutte le case stanno da una parte: nessun taglio.';}
+s.addEventListener('input',up);up();})();
+</script></div></figure>
+
+<figure class="yt" data-id="g9c66TUylZ4" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Come si sceglie la soglia in un albero di regressione (StatQuest)"><img loading="lazy" src="https://i.ytimg.com/vi/g9c66TUylZ4/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Come si sceglie la soglia in un albero di regressione (StatQuest) · <a href="https://www.youtube.com/watch?v=g9c66TUylZ4">apri su YouTube</a></figcaption></figure>
+
+<p>:::</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Perché un albero di regressione non può prevedere un prezzo di 700 €k con questi dati?</summary>
+<div class="answer">
+<p>Perché ogni foglia restituisce una media dei prezzi che contiene, e nessuna media può superare il prezzo più alto osservato (610). Gli alberi non estrapolano oltre i dati visti: è un limite da ricordare quando il mercato sale.</p>
+</div>
+</details>
+<h2 id="pregi-e-difetti-leggibile-ma-nervoso">Pregi e difetti: leggibile, ma nervoso</h2>
+<p>La slide 10 fa il bilancio.</p>
+<p><strong>Pregi</strong>
+- <em>Facili da capire</em>: sono visivi, e il percorso è la spiegazione della decisione.
+- <em>Versatili</em>: servono sia per classificare sia per stimare numeri.
+- <em>Nessuna normalizzazione</em>: non serve mettere le variabili sulla stessa scala, perché ogni domanda guarda una variabile alla volta.
+- <em>Relazioni non lineari</em>: colgono effetti a soglia ("sopra i 30 giorni di inattività il rischio esplode") che una retta non vede.
+- <em>Interpretabili</em>: utile quando devi motivare una decisione a un cliente o a un'autorità.
+- <em>Dati mancanti</em>: possono gestirli con strategie come usare il valore più comune o ignorare il dato durante il taglio. Attenzione: dipende dal software usato.</p>
+<p><strong>Difetti</strong>
+- <em>Overfitting</em>: se troppo profondi imparano a memoria e vanno male sui casi nuovi.
+- <em>Instabilità</em>: piccoli cambi nei dati possono cambiare tutta la struttura. Togli due clienti dalla tabella churn e la prima domanda potrebbe diventare un'altra.
+- <em>Preferenza per variabili con molte categorie</em>: una variabile con tantissimi valori (per esempio il codice postale) offre più modi per dividere i dati e può sembrare utile per caso.
+- <em>Interazioni complesse</em>: relazioni che coinvolgono molte variabili insieme sono difficili da catturare con tagli uno alla volta.
+- <em>Costo di calcolo</em> su dataset molto grandi, soprattutto se l'albero è profondo e va potato (<em>pruning</em>, cioè tagliare i rami inutili).</p>
+<p>La slide 18 ricorda dove si usano: banche (decisioni sul credito), mobilità, social media. Nella pratica, per ridurre instabilità e overfitting si combinano molti alberi (<em>random forest</em>, <em>gradient boosting</em>): si perde un po' di leggibilità e si guadagna precisione.</p>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span> · Corso di International Business</p>
+<p>Quando un'impresa decide se entrare in un mercato estero, spesso usa proprio una logica ad albero: "il mercato è grande? il rischio politico è basso? esiste un partner locale?". Saper leggere un albero aiuta anche a scrivere un business case chiaro.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;azienda vuole un modello che il servizio clienti possa seguire a mano al telefono. Albero poco profondo o random forest di 500 alberi?</summary>
+<div class="answer">
+<p>Un albero poco profondo: tre o quattro domande si seguono a voce. La random forest può essere più precisa ma nessuno riesce a "leggerla" durante una telefonata. La scelta dipende da chi usa il modello e come.</p>
+</div>
+</details>
+<h2 id="il-clustering-trova-gruppi-quando-nessuno-ti-da-la-risposta">Il clustering trova gruppi quando nessuno ti dà la risposta</h2>
+<p>Seconda parte della lezione. Negli alberi avevamo la risposta giusta per ogni caso di addestramento (churn sì/no, prezzo vero): è <em>apprendimento supervisionato</em>. Il <em>clustering</em> (raggruppamento) è diverso: è <em>unsupervised learning</em>, apprendimento <strong>non supervisionato</strong>. Ci sono i dati ma nessuna etichetta. L'obiettivo è mettere insieme i casi simili.</p>
+<p>Le slide 26–32 danno esempi concreti: raggruppare email o risultati di ricerca, trovare abitudini di acquisto dei clienti, dividere un'immagine in zone omogenee (<em>image segmentation</em>), raggruppare geni con un'espressione simile. Il clustering è utile proprio quando <strong>non sai cosa cercare</strong>. Ma la slide 26 avverte con onestà: può produrre <em>gibberish</em>, cioè gruppi senza senso. Un algoritmo trova sempre dei gruppi, anche dove non c'è nessuna struttura vera.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Il clustering non trova "la verità": propone gruppi. Sta a te verificare che abbiano senso e servano a una decisione.</p>
+</aside>
+<figure class="yt" data-id="d2FpK1qiDgs" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Clustering e k-means spiegati facile, in italiano (BRAINLINK)"><img loading="lazy" src="https://i.ytimg.com/vi/d2FpK1qiDgs/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Clustering e k-means spiegati facile, in italiano (BRAINLINK) · <a href="https://www.youtube.com/watch?v=d2FpK1qiDgs">apri su YouTube</a></figcaption></figure>
+
+<p>:::</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Perché per segmentare i clienti non si può usare direttamente un albero di classificazione?</summary>
+<div class="answer">
+<p>Perché l'albero ha bisogno della risposta giusta per ogni cliente di addestramento ("segmento A", "segmento B"). Se i segmenti non esistono ancora, non c'è nulla da imparare: prima li crei con il clustering, poi semmai usi un albero per spiegare o assegnare i nuovi clienti.</p>
+</div>
+</details>
+<h2 id="k-means-sposta-i-centri-finche-nessuno-cambia-gruppo">K-means: sposta i centri finché nessuno cambia gruppo</h2>
+<p>L'algoritmo di clustering più famoso è <em>k-means</em> (k-medie). Decidi tu quanti gruppi vuoi, K. Poi l'algoritmo ripete due passi:</p>
+<ol>
+<li><strong>Inizio</strong>: sceglie K punti a caso come centri dei gruppi (<em>centroids</em>, centroidi).</li>
+<li><strong>Passo 1 – assegnazione</strong>: ogni punto va al centro più vicino.</li>
+<li><strong>Passo 2 – aggiornamento</strong>: ogni centro si sposta nella media dei punti che gli sono stati assegnati.</li>
+<li><strong>Stop</strong>: quando nessun punto cambia gruppo.</li>
+</ol>
+<p>Le slide 35–41 lo mostrano con K = 2: i due centri partono in posizioni casuali, si spostano a ogni giro e dopo poche iterazioni si fermano al centro delle due nuvole di punti.</p>
+<p>Perché funziona? La slide 44 spiega l'obiettivo: i punti devono stare il più vicino possibile al loro centro, cioè i gruppi devono essere compatti. Ognuno dei due passi può solo migliorare (o lasciare uguale) questa misura: con i centri fermi, scegliere il centro più vicino riduce la distanza; con i gruppi fermi, il punto che minimizza la distanza media è proprio la media. Per questo k-means <strong>converge sempre</strong> in un numero finito di passi (slide 42). Ogni giro costa poco: l'assegnazione richiede O(K·n) operazioni (ogni punto confrontato con ogni centro), l'aggiornamento O(n).</p>
+<p>C'è però una domanda aperta nella slide 43: che proprietà deve avere una misura di distanza? Deve essere zero solo tra un punto e se stesso, uguale in entrambe le direzioni e rispettare la disuguaglianza triangolare. E deve avere senso per il problema: se una variabile è in euro (migliaia) e l'altra in visite al mese (unità), l'euro domina la distanza. Per questo, al contrario degli alberi, con k-means conviene mettere le variabili sulla stessa scala.</p>
+<figure class="yt" data-id="4b5d3muPQmA" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: K-means e la scelta di K (StatQuest)"><img loading="lazy" src="https://i.ytimg.com/vi/4b5d3muPQmA/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>K-means e la scelta di K (StatQuest) · <a href="https://www.youtube.com/watch?v=4b5d3muPQmA">apri su YouTube</a></figcaption></figure>
+
+<p>:::</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Comprimere un&#x27;immagine con pochi colori</p>
+<p>Le slide 45–47 usano k-means per le immagini. Ogni pixel è un punto con tre coordinate (rosso, verde, blu). K-means con K = 2, 3 o 10 trova K colori rappresentativi e ogni pixel prende il colore del suo centro. Il risultato è una segmentazione: zone omogenee. Ed è anche una compressione: invece di 24 bit per pixel basta salvare il numero del gruppo. Nell'esempio classico del manuale di Christopher Bishop (2006) da cui viene la figura, il file scende a circa il 4% dell'originale con K = 2, l'8% con K = 3 e il 17% con K = 10. Meno colori, file più piccolo, meno dettagli. La slide 47 mostra lo stesso principio (<em>vector quantization</em>) su un ritratto dello statistico Ronald Fisher, dal manuale <em>The Elements of Statistical Learning</em>: con 200 "codici" l'immagine resta buona a 1,9 bit per pixel, con soli 4 codici scende a 0,5 bit per pixel.</p>
+</aside>
+<h2 id="quando-k-means-sbaglia-e-come-accorgersene">Quando k-means sbaglia, e come accorgersene</h2>
+<p>K-means è un'<em>euristica</em>: una procedura che di solito funziona bene ma non garantisce la soluzione migliore. Le slide 48–51 mostrano tre trappole.</p>
+<ol>
+<li><strong>I centri iniziali contano</strong> (slide 48–49). Se due centri partono nella stessa nuvola di punti, l'algoritmo può fermarsi in un <em>ottimo locale</em>: una nuvola divisa in due e due nuvole unite in un gruppo solo. Si è fermato perché nessun piccolo spostamento migliora, non perché la soluzione sia buona. Rimedi: lanciare più volte con partenze diverse e tenere la soluzione migliore, usare inizializzazioni più furbe (per esempio <em>k-means++</em>, che sceglie centri iniziali lontani tra loro), dividere o unire gruppi in base alla varianza.</li>
+<li><strong>K va scelto</strong>. K-means non sa quanti gruppi ci sono davvero: glielo dici tu. Prova più valori e guarda se i gruppi sono distinti e utilizzabili.</li>
+<li><strong>Gruppi che non sono "palle"</strong> (slide 50–51). Se i dati formano due anelli uno dentro l'altro, k-means taglia a metà invece di separare gli anelli, perché cerca gruppi compatti intorno a un centro. La soluzione della slide 51: cambiare le variabili. Se descrivi ogni punto con la distanza dal centro (R) e l'angolo (θ), i due anelli diventano due gruppi ben separati sul valore di R.</li>
+</ol>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Segmentare i clienti di una palestra (caso ipotetico)</p>
+<ol>
+<li>Variabili: ingressi al mese e spesa extra al mese (corsi, integratori). Le porti sulla stessa scala.</li>
+<li>Provi K = 2, 3, 4, 5 e per ogni K lanci k-means 10 volte con partenze diverse.</li>
+<li>Con K = 3 ottieni gruppi chiari: "assidui che spendono", "assidui che non spendono", "occasionali". Con K = 5 due gruppi sono quasi uguali.</li>
+<li>Scegli K = 3, dai un nome a ogni gruppo e lo fai validare a chi gestisce le offerte.</li>
+<li>Solo ora decidi le azioni: offerte sui corsi per il secondo gruppo, campagna di riattivazione per il terzo.</li>
+</ol>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> K-means si è fermato: nessun punto cambia più gruppo. Vuol dire che hai trovato i gruppi migliori?</summary>
+<div class="answer">
+<p>No. Vuol dire solo che l'algoritmo è arrivato a un punto fermo. Può essere un ottimo locale dovuto ai centri iniziali, oppure i gruppi possono essere sbagliati perché K o la misura di distanza non vanno bene. Si controlla rilanciando con partenze diverse e guardando se i gruppi hanno senso.</p>
+</div>
+</details>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span> · Il filo del corso</p>
+<p>Alberi e k-means sono due modi opposti di usare i dati: uno impara da risposte note e prevede, l'altro cerca strutture dove le risposte non ci sono. Nelle aziende si usano spesso insieme: il clustering crea i segmenti di clienti, un modello supervisionato stima per ciascun segmento il rischio di abbandono o il valore atteso.</p>
+</aside></article></div>
+<section class="study" id="richiamo"><h2>Richiamo a libro chiuso</h2>
+<p class="hint">Chiudi la pagina e rispondi a voce o per iscritto. Poi riapri e confronta.</p><ol class="recall"><li>Disegna l&#x27;albero della challenge churn (giorni inattivi &gt; 20, poi reclami ≥ 2) e indica foglie, previsioni ed errori.</li><li>Spiega con un esempio la differenza tra expressivity (cosa un modello può rappresentare) e generalizzazione (come va su casi nuovi).</li><li>Descrivi k-means in quattro passaggi, senza guardare, e spiega perché si ferma.</li><li>Elenca tre motivi per cui k-means può dare gruppi sbagliati e un rimedio per ciascuno.</li></ol></section>
+<section class="study" id="quiz" data-key="big-data-ai-2026-10-20"><h2>Quiz</h2>
+<p class="hint">Conta il primo tentativo. Dopo ogni risposta leggi il perché.</p>
+<ol class="quiz"><li class="q" data-answer="2"><p class="q-text">Un albero usa la domanda &#x27;area &gt; 80 m²?&#x27; e nelle foglie scrive &#x27;compra&#x27; o &#x27;non compra&#x27;. Che tipo di albero è?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Di regressione: la domanda usa un numero</button></li><li><button type="button" class="opt" data-i="1">Di clustering: divide gli appartamenti in gruppi</button></li><li><button type="button" class="opt" data-i="2">Di classificazione: la foglia è una categoria</button></li><li><button type="button" class="opt" data-i="3">Nessuno dei due: gli alberi non usano numeri</button></li></ol><div class="why" hidden><p>Il tipo di albero dipende dal target nella foglia, non dalla domanda. &#x27;Compra/non compra&#x27; è una categoria, quindi è classificazione. Una soglia numerica può comparire in entrambi i tipi; il clustering non ha foglie con risposte giuste; e gli alberi usano numeri con le soglie.</p></div></li><li class="q" data-answer="0"><p class="q-text">Nell&#x27;albero churn (giorni inattivi &gt; 20, poi reclami ≥ 2) il cliente D ha 35 giorni inattivi, 0 reclami e nella realtà se n&#x27;è andato. Che errore è?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Falso negativo: il modello dice &#x27;resta&#x27; ma il cliente se ne va</button></li><li><button type="button" class="opt" data-i="1">Vero positivo: il modello ha visto giusto</button></li><li><button type="button" class="opt" data-i="2">Falso positivo: il modello lancia un falso allarme</button></li><li><button type="button" class="opt" data-i="3">Nessun errore, perché la foglia è mista</button></li></ol><div class="why" hidden><p>D finisce nella foglia &#x27;inattivo ma senza reclami&#x27;, che prevede &#x27;No&#x27; a maggioranza. La realtà è &#x27;Yes&#x27;: un abbandono non segnalato è un falso negativo. Il falso positivo sarebbe il contrario; una foglia mista non cancella l&#x27;errore, lo rende solo prevedibile.</p></div></li><li class="q" data-answer="0"><p class="q-text">Aggiungendo domande fino ad avere una foglia per ogni cliente, l&#x27;albero churn arriva al 100% di risposte esatte sui 10 clienti. Che cosa concludi?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Probabile overfitting: va provato su clienti nuovi</button></li><li><button type="button" class="opt" data-i="1">Il modello è perfetto e si può usare subito</button></li><li><button type="button" class="opt" data-i="2">Il problema era di regressione, non di classificazione</button></li><li><button type="button" class="opt" data-i="3">Serve scalare i dati prima di usare l&#x27;albero</button></li></ol><div class="why" hidden><p>Il 100% sul training con un albero che isola ogni record è la firma della memorizzazione: non dice nulla sui clienti futuri. Gli alberi non hanno bisogno di scalare i dati, e il target sì/no resta di classificazione.</p></div></li><li class="q" data-answer="1"><p class="q-text">Un&#x27;azienda deve spiegare a un ente di controllo perché ha rifiutato un prestito. Tra un albero poco profondo e un modello più preciso ma opaco, perché l&#x27;albero può essere preferibile?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Perché gli alberi non hanno bisogno di dati</button></li><li><button type="button" class="opt" data-i="1">Perché ogni decisione si legge come un percorso di regole</button></li><li><button type="button" class="opt" data-i="2">Perché gli alberi non sbagliano mai</button></li><li><button type="button" class="opt" data-i="3">Perché un albero è sempre più preciso</button></li></ol><div class="why" hidden><p>Il punto di forza degli alberi è l&#x27;interpretabilità: il percorso nodo per nodo è la motivazione. Non sono infallibili, servono comunque dati per costruirli e spesso sono meno precisi dei modelli complessi: è un compromesso, non un vantaggio gratuito.</p></div></li><li class="q" data-answer="2"><p class="q-text">Hai dati di 50.000 clienti senza alcuna etichetta e il marketing vuole &#x27;capire che tipi di clienti abbiamo&#x27;. Che cosa usi?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Un albero di regressione</button></li><li><button type="button" class="opt" data-i="1">Un albero di classificazione</button></li><li><button type="button" class="opt" data-i="2">Clustering, per esempio k-means</button></li><li><button type="button" class="opt" data-i="3">Nessun modello: senza etichette non si può fare nulla</button></li></ol><div class="why" hidden><p>Senza etichette non si può addestrare un albero (supervisionato), che ha bisogno della risposta giusta per imparare. Il clustering serve proprio a trovare gruppi senza sapere in anticipo cosa cercare. Poi però va controllato che i gruppi abbiano senso per il business.</p></div></li><li class="q" data-answer="3"><p class="q-text">Lanci k-means due volte sugli stessi dati con K=3 e ottieni gruppi diversi. Perché?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Perché k-means non converge mai</button></li><li><button type="button" class="opt" data-i="1">Perché K=3 non è ammesso</button></li><li><button type="button" class="opt" data-i="2">Perché i dati sono cambiati tra un lancio e l&#x27;altro</button></li><li><button type="button" class="opt" data-i="3">Perché i centri iniziali sono scelti a caso e l&#x27;algoritmo può fermarsi in un ottimo locale</button></li></ol><div class="why" hidden><p>K-means converge sempre, ma alla soluzione &#x27;più vicina&#x27; al punto di partenza: con centri iniziali diversi può fermarsi in soluzioni diverse (ottimo locale). Per questo si lancia più volte o si usano inizializzazioni migliori. I dati non sono cambiati e K=3 è ammesso.</p></div></li><li class="q" data-answer="2"><p class="q-text">I tuoi punti formano due anelli concentrici. K-means con K=2 taglia gli anelli a metà invece di separarli. Che cosa provi?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Togliere metà dei punti</button></li><li><button type="button" class="opt" data-i="1">Ridurre K a 1</button></li><li><button type="button" class="opt" data-i="2">Cambiare le variabili, per esempio usare la distanza dal centro (raggio)</button></li><li><button type="button" class="opt" data-i="3">Aumentare il numero di iterazioni</button></li></ol><div class="why" hidden><p>K-means cerca gruppi compatti intorno a un centro e non vede gli anelli. Se descrivi ogni punto con il raggio e l&#x27;angolo, gli anelli diventano due gruppi separati sul raggio: è il suggerimento della slide &#x27;changing the features can help&#x27;. Più iterazioni non cambiano la logica; K=1 e togliere punti non risolvono.</p></div></li><li class="q" data-answer="0"><p class="q-text">Comprimi un&#x27;immagine con k-means tenendo K colori. Che succede passando da K=10 a K=2?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Il file diventa più piccolo ma l&#x27;immagine perde molti dettagli</button></li><li><button type="button" class="opt" data-i="1">Non cambia nulla, K riguarda solo il tempo di calcolo</button></li><li><button type="button" class="opt" data-i="2">L&#x27;immagine diventa a colori più realistici</button></li><li><button type="button" class="opt" data-i="3">Il file diventa più grande e più nitido</button></li></ol><div class="why" hidden><p>Con K colori ogni pixel memorizza solo il numero del suo gruppo: meno gruppi, meno bit (circa 4% dell&#x27;originale con K=2 contro 17% con K=10) ma meno sfumature. È lo scambio tra compressione e qualità mostrato nelle slide di segmentazione.</p></div></li></ol><p class="score" aria-live="polite"></p>
+<button type="button" class="btn ghost reset">Ricomincia</button>
+<div class="print-only solutions"><h3>Soluzioni del quiz</h3><ol><li><strong>C</strong> — Il tipo di albero dipende dal target nella foglia, non dalla domanda. &#x27;Compra/non compra&#x27; è una categoria, quindi è classificazione. Una soglia numerica può comparire in entrambi i tipi; il clustering non ha foglie con risposte giuste; e gli alberi usano numeri con le soglie.</li><li><strong>A</strong> — D finisce nella foglia &#x27;inattivo ma senza reclami&#x27;, che prevede &#x27;No&#x27; a maggioranza. La realtà è &#x27;Yes&#x27;: un abbandono non segnalato è un falso negativo. Il falso positivo sarebbe il contrario; una foglia mista non cancella l&#x27;errore, lo rende solo prevedibile.</li><li><strong>A</strong> — Il 100% sul training con un albero che isola ogni record è la firma della memorizzazione: non dice nulla sui clienti futuri. Gli alberi non hanno bisogno di scalare i dati, e il target sì/no resta di classificazione.</li><li><strong>B</strong> — Il punto di forza degli alberi è l&#x27;interpretabilità: il percorso nodo per nodo è la motivazione. Non sono infallibili, servono comunque dati per costruirli e spesso sono meno precisi dei modelli complessi: è un compromesso, non un vantaggio gratuito.</li><li><strong>C</strong> — Senza etichette non si può addestrare un albero (supervisionato), che ha bisogno della risposta giusta per imparare. Il clustering serve proprio a trovare gruppi senza sapere in anticipo cosa cercare. Poi però va controllato che i gruppi abbiano senso per il business.</li><li><strong>D</strong> — K-means converge sempre, ma alla soluzione &#x27;più vicina&#x27; al punto di partenza: con centri iniziali diversi può fermarsi in soluzioni diverse (ottimo locale). Per questo si lancia più volte o si usano inizializzazioni migliori. I dati non sono cambiati e K=3 è ammesso.</li><li><strong>C</strong> — K-means cerca gruppi compatti intorno a un centro e non vede gli anelli. Se descrivi ogni punto con il raggio e l&#x27;angolo, gli anelli diventano due gruppi separati sul raggio: è il suggerimento della slide &#x27;changing the features can help&#x27;. Più iterazioni non cambiano la logica; K=1 e togliere punti non risolvono.</li><li><strong>A</strong> — Con K colori ogni pixel memorizza solo il numero del suo gruppo: meno gruppi, meno bit (circa 4% dell&#x27;originale con K=2 contro 17% con K=10) ma meno sfumature. È lo scambio tra compressione e qualità mostrato nelle slide di segmentazione.</li></ol></div></section>
+<section class="study" id="trasferimento"><h2>Applica a un caso nuovo</h2>
+<div class="prose"><p>Caso ipotetico. Una catena di supermercati ha due problemi. (a) Vuole sapere quali clienti con carta fedeltà smetteranno di venire nei prossimi due mesi. (b) Vuole capire 'che tipi di clienti' ha, per creare offerte diverse. Ha lo storico degli scontrini, le visite al mese, lo scontrino medio e, per il 2025, l'elenco di chi ha davvero smesso. Che modello usi per (a) e per (b), e quali rischi controlli?</p></div>
+<details class="box solution"><summary>Mostra una soluzione ragionata</summary><div class="prose"><p>(a) È un problema supervisionato di classificazione: per il 2025 conosci la risposta giusta (ha smesso sì/no). Un albero decisionale poco profondo è un buon inizio perché il marketing deve capire le regole (es. 'visite al mese &lt; 2 e scontrino in calo'). Rischi: overfitting, quindi limiti la profondità e provi il modello su un periodo successivo mai visto; costi degli errori, quindi decidi se pesa di più un falso negativo (cliente perso) o un falso positivo (sconto regalato a chi sarebbe rimasto). (b) È non supervisionato: non esiste un'etichetta 'tipo di cliente'. Usi k-means su variabili come frequenza e scontrino medio, messe sulla stessa scala perché k-means usa le distanze. Rischi: K scelto male (provi più valori e guardi se i gruppi sono utilizzabili), centri iniziali sfortunati (lanci più volte), gruppi senza senso commerciale (li descrivi e li fai validare dal marketing). Infine colleghi le due cose: per ogni gruppo puoi stimare il rischio di abbandono e decidere l'offerta.</p></div></details></section>
+<section class="study" id="decidi"><h2>Decidi tu</h2>
+<p class="hint">Mettiti nei panni di chi decide. Scegli, leggi la conseguenza, poi prova anche le altre strade.</p><div class="scenario"><h3>Il modello churn da mettere in produzione</h3>
+<p class="situation">Sei l&#x27;analista di un operatore telefonico. Il tuo albero churn ha 4 livelli e indovina il 92% dei casi sui dati di addestramento. Il direttore commerciale vuole usarlo da lunedì per decidere a chi regalare uno sconto del 20%.</p><p class="role">Che cosa proponi?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Lo metti in produzione subito: 92% è un ottimo risultato</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Il 92% è misurato sugli stessi clienti usati per costruire l&#x27;albero: potrebbe essere memoria, non capacità di prevedere. Rischi di regalare sconti a caso.</p></div></li><li><button type="button" class="choice" data-good="1">Lo provi prima su clienti di un periodo successivo e fissi quale errore costa di più tra sconto sprecato e cliente perso</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> Misuri la generalizzazione e scegli la soglia di intervento in base ai costi reali. Se su dati nuovi l&#x27;accuratezza crolla, riduci la profondità.</p></div></li><li><button type="button" class="choice" data-good="0">Aggiungi altri livelli per arrivare al 100%</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Peggiori l&#x27;overfitting: più livelli fanno memorizzare ogni cliente e rendono l&#x27;albero instabile e meno leggibile.</p></div></li></ol>
+<p class="lesson-link" hidden>Expressivity non è generalizzazione: un albero va giudicato su casi mai visti e sui costi degli errori, non sul punteggio di addestramento.</p></div><div class="scenario"><h3>Quanti segmenti di clienti?</h3>
+<p class="situation">Il marketing di un e-commerce di abbigliamento ti chiede di dividere i clienti in gruppi. Lanci k-means con K=12 e ottieni gruppi che differiscono di pochissimo. Il budget permette di gestire al massimo quattro campagne diverse.</p><p class="role">Come procedi?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Tieni K=12: più gruppi vuol dire più precisione</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Gruppi quasi uguali e ingestibili non portano a decisioni diverse: è il &#x27;gibberish&#x27; di cui avvertono le slide.</p></div></li><li><button type="button" class="choice" data-good="1">Provi K tra 3 e 5, lanci più volte con centri iniziali diversi e descrivi ogni gruppo in parole che il marketing capisce</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> Scegli K in base alla struttura dei dati e all&#x27;uso pratico, riduci il rischio di ottimo locale e controlli che i gruppi abbiano senso.</p></div></li><li><button type="button" class="choice" data-good="0">Rinunci al clustering e dividi i clienti per ordine alfabetico</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Il nome non dice nulla del comportamento d&#x27;acquisto: le campagne sarebbero casuali.</p></div></li></ol>
+<p class="lesson-link" hidden>Nel clustering non c&#x27;è una risposta giusta scritta: K, inizializzazione e significato dei gruppi vanno scelti e verificati da chi decide.</p></div></section>
+<section class="study" id="davedere"><h2>Da vedere</h2><p class="hint">Per la sera o il weekend: storie vere o ben documentate che rendono concreti i temi della lezione.</p><ul class="watch"><li class="watch-item"><span class="wk">Documentario · 2019</span>
+<strong><a href="https://en.wikipedia.org/wiki/The_Great_Hack">The Great Hack</a></strong>
+<p>Il caso Cambridge Analytica: elettori divisi in profili psicologici per mandare messaggi mirati. Mostra il lato oscuro della segmentazione con i dati.</p><p class="where">Dove: Netflix</p></li><li class="watch-item"><span class="wk">Documentario · 2020</span>
+<strong><a href="https://en.wikipedia.org/wiki/The_Social_Dilemma">The Social Dilemma</a></strong>
+<p>Ex dipendenti di grandi piattaforme spiegano come i modelli raggruppano e prevedono il comportamento degli utenti per tenerli attaccati allo schermo.</p><p class="where">Dove: Netflix</p></li></ul></section>
+<section class="study" id="flashcard"><h2>Flashcard</h2>
+<p class="hint">Tocca una carta per girarla. Le frecce ← → scorrono il mazzo.</p>
+<div class="deck"><ol class="cards"><li class="card" tabindex="0"><div class="front">Che cosa fanno nodo, ramo e foglia in un albero decisionale?</div><div class="back">Il nodo testa una variabile, il ramo sceglie una risposta, la foglia dà la previsione.</div></li><li class="card" tabindex="0"><div class="front">Classificazione o regressione: chi lo decide?</div><div class="back">Il target nella foglia: categoria = classificazione, numero = regressione.</div></li><li class="card" tabindex="0"><div class="front">Come tratta un albero una variabile continua?</div><div class="back">Con una soglia: valore minore/uguale da una parte, maggiore dall&#x27;altra.</div></li><li class="card" tabindex="0"><div class="front">Che cosa sono X, Y, f e H nella formalizzazione?</div><div class="back">X i casi possibili, Y le risposte, f la funzione vera sconosciuta, H l&#x27;insieme delle regole candidate (qui: alberi).</div></li><li class="card" tabindex="0"><div class="front">Che cos&#x27;è un decision stump?</div><div class="back">Un albero di profondità 1: una sola domanda.</div></li><li class="card" tabindex="0"><div class="front">Perché XOR non si risolve con una sola domanda?</div><div class="back">Perché conoscere solo A non basta: la risposta dipende anche da B. Servono due livelli.</div></li><li class="card" tabindex="0"><div class="front">Che forma hanno i confini di decisione di un albero?</div><div class="back">Tratti paralleli agli assi: dividono lo spazio in rettangoli (iper-rettangoli).</div></li><li class="card" tabindex="0"><div class="front">Tre pregi degli alberi decisionali?</div><div class="back">Facili da leggere, nessuna normalizzazione, colgono relazioni non lineari (e usabili per classificazione e regressione).</div></li><li class="card" tabindex="0"><div class="front">Tre difetti degli alberi decisionali?</div><div class="back">Overfitting se profondi, instabilità ai piccoli cambi nei dati, preferenza per variabili con molte categorie.</div></li><li class="card" tabindex="0"><div class="front">Che cosa prevede una foglia di un albero di regressione?</div><div class="back">La media del target dei casi che vi cadono; lo split cerca di ridurre l&#x27;errore quadratico dentro le foglie.</div></li><li class="card" tabindex="0"><div class="front">Che cos&#x27;è il clustering?</div><div class="back">Apprendimento non supervisionato che raggruppa casi simili senza etichette.</div></li><li class="card" tabindex="0"><div class="front">I due passi che k-means ripete?</div><div class="back">1) Assegna ogni punto al centro più vicino. 2) Sposta ogni centro nella media dei suoi punti.</div></li><li class="card" tabindex="0"><div class="front">Quando si ferma k-means?</div><div class="back">Quando nessun punto cambia gruppo. Converge sempre in un numero finito di passi.</div></li><li class="card" tabindex="0"><div class="front">Costo di un&#x27;iterazione di k-means?</div><div class="back">Assegnazione O(K·n), aggiornamento dei centri O(n).</div></li><li class="card" tabindex="0"><div class="front">Tre cose che possono far fallire k-means?</div><div class="back">Centri iniziali sfortunati (ottimo locale), K sbagliato, gruppi non compatti (es. anelli) con la distanza scelta.</div></li></ol>
+<div class="deck-nav"><button type="button" class="btn ghost prev" aria-label="Carta precedente">‹</button><span class="pos"></span><button type="button" class="btn ghost next" aria-label="Carta successiva">›</button></div></div></section>
+<section class="study" id="glossario"><h2>Glossario</h2>
+<label class="search"><span>Cerca un termine</span><input type="search" class="gl-filter" placeholder="es. soft power"></label>
+<dl class="glossary"><div class="term"><dt>Decision tree <span class=it>· albero decisionale</span></dt><dd>Modello che prevede facendo una domanda alla volta sulle caratteristiche di un caso. Esempio: &#x27;giorni inattivi &gt; 20?&#x27; poi &#x27;reclami ≥ 2?&#x27; e infine &#x27;probabile abbandono&#x27;.</dd></div><div class="term"><dt>Node / branch / leaf <span class=it>· nodo / ramo / foglia</span></dt><dd>Il nodo fa il test su una variabile, il ramo è la risposta scelta, la foglia contiene la previsione finale.</dd></div><div class="term"><dt>Feature <span class=it>· caratteristica / variabile in ingresso</span></dt><dd>Un dato che descrive il caso e che il modello usa per decidere, per esempio l&#x27;area in metri quadri di un appartamento.</dd></div><div class="term"><dt>Target <span class=it>· variabile da prevedere</span></dt><dd>La risposta che vogliamo ottenere: una categoria (churn sì/no) o un numero (prezzo in migliaia di euro).</dd></div><div class="term"><dt>Classification <span class=it>· classificazione</span></dt><dd>Prevedere una categoria. Esempio: questo cliente se ne andrà oppure resterà?</dd></div><div class="term"><dt>Regression <span class=it>· regressione</span></dt><dd>Prevedere un numero. In un albero di regressione la foglia restituisce la media dei casi che vi cadono, per esempio 241 mila euro.</dd></div><div class="term"><dt>Threshold <span class=it>· soglia</span></dt><dd>Valore che divide una variabile numerica in due rami: area ≤ 80 m² da una parte, area &gt; 80 m² dall&#x27;altra.</dd></div><div class="term"><dt>Overfitting <span class=it>· sovradattamento</span></dt><dd>Il modello impara a memoria i dati di addestramento, anche le loro stranezze, e sbaglia sui casi nuovi. Un albero troppo profondo ne è l&#x27;esempio tipico.</dd></div><div class="term"><dt>Decision stump <span class=it>· ceppo decisionale</span></dt><dd>Albero di profondità 1: una sola domanda e due foglie. Semplice ma spesso troppo grezzo.</dd></div><div class="term"><dt>Decision boundary <span class=it>· confine di decisione</span></dt><dd>La linea (o superficie) che separa le zone in cui il modello dà previsioni diverse. Negli alberi è fatta di tratti paralleli agli assi.</dd></div><div class="term"><dt>Residual <span class=it>· residuo</span></dt><dd>Valore reale meno valore previsto. Se l&#x27;appartamento vale 390 e l&#x27;albero dice 508, il residuo è −118: l&#x27;albero ha sovrastimato.</dd></div><div class="term"><dt>Unsupervised learning <span class=it>· apprendimento non supervisionato</span></dt><dd>Imparare da dati senza la risposta giusta già scritta: il modello cerca da solo strutture, per esempio gruppi di clienti simili.</dd></div><div class="term"><dt>Clustering <span class=it>· raggruppamento</span></dt><dd>Dividere i casi in gruppi tali che chi sta nello stesso gruppo si somiglia più che con gli altri. Esempio: segmentare i clienti per abitudini di acquisto.</dd></div><div class="term"><dt>K-means <span class=it>· k-medie</span></dt><dd>Algoritmo di clustering che fissa K gruppi e alterna: assegna i punti al centro più vicino, ricalcola ogni centro come media dei suoi punti.</dd></div><div class="term"><dt>Centroid <span class=it>· centroide</span></dt><dd>Il centro di un gruppo in k-means: la media delle coordinate dei punti assegnati a quel gruppo.</dd></div></dl><p class="empty" hidden>Nessun termine corrisponde. Prova con una parola più corta.</p></section>
+<section class="study" id="video"><h2>Video consigliati</h2><ul class="videos"><li class="video"><a href="https://www.youtube.com/watch?v=_L39rN6gz7Y" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/_L39rN6gz7Y/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=_L39rN6gz7Y"><strong>Decision and Classification Trees, Clearly Explained!!!</strong></a><p class="vmeta">StatQuest with Josh Starmer · 18 min · EN</p><p>Costruisce un albero di classificazione passo per passo, con la scelta della prima domanda e le foglie miste.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=g9c66TUylZ4" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/g9c66TUylZ4/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=g9c66TUylZ4"><strong>Regression Trees, Clearly Explained!!!</strong></a><p class="vmeta">StatQuest with Josh Starmer · 23 min · EN</p><p>Mostra come si sceglie la soglia che riduce l&#x27;errore quadratico: è la challenge 2 delle slide.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=4b5d3muPQmA" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/4b5d3muPQmA/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=4b5d3muPQmA"><strong>StatQuest: K-means clustering</strong></a><p class="vmeta">StatQuest with Josh Starmer · 8 min · EN</p><p>I due passi di k-means animati, più come scegliere K.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=d2FpK1qiDgs" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/d2FpK1qiDgs/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=d2FpK1qiDgs"><strong>Machine Learning: Clustering - K-means (spiegato facile)</strong></a><p class="vmeta">BRAINLINK · 6 min · IT</p><p>Lo stesso algoritmo spiegato in italiano, in sei minuti.</p></div></li></ul></section>
+<section class="study sources" id="fonti"><h2>Fonti</h2><ol><li>Slide Canvas 133958 — Rizzi, BigDataBsnsRizzi2026Lesson5 (53 pagine) — Unica fonte didattica: alberi decisionali pp. 3–18, challenge churn p. 20, challenge regressione p. 22, clustering e k-means pp. 23–51. Caricate su Canvas il 19/10/2026.</li><li>Preparazione locale dalle stesse slide (archivio Codex, 2026-10-20__preparazione-solo-materiali-docente.md) — Usata solo come appunto: i calcoli delle due challenge sono stati rifatti e confermati.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12117399/">Reilly B.M. et al., JAMA 2002;288(3):342-350 — regola decisionale per il dolore toracico al Cook County Hospital</a></li><li><a href="https://archive.ics.uci.edu/dataset/17/breast-cancer-wisconsin-diagnostic">UCI Machine Learning Repository — Breast Cancer Wisconsin (Diagnostic)</a></li><li><a href="https://cedar.buffalo.edu/~srihari/CSE574/Chap9/Ch9.1-Kmeans.pdf">Bishop, Pattern Recognition and Machine Learning (2006), §9.1.1 — k-means per segmentazione e compressione delle immagini (ripreso in slide universitarie)</a></li><li>Hastie, Tibshirani, Friedman, The Elements of Statistical Learning, fig. 14.9 (vector quantization, immagine di R. A. Fisher) — Didascalia riportata a p. 47 delle slide.</li></ol><details class="box verifica"><summary>Note di verifica</summary><div class="prose"><p>Nessuna registrazione: non sappiamo quali slide siano state svolte, cosa abbia aggiunto Rizzi a voce e che cosa abbia fatto Campana nella seconda parte. L'attribuzione al 20/10 è dedotta dalla data di caricamento su Canvas (19/10). Correzioni e precisazioni rispetto alle slide: (1) la slide 8 si intitola 'Regression Decision Tree' ma le foglie sono categorie (prescrivere o no macrolidi): è un albero di classificazione con soglie numeriche. (2) La slide 17 dice che la profondità 2 rappresenta funzioni 'di due feature': è vero lungo ogni percorso, ma rami diversi possono usare variabili diverse. (3) 'Iteratioons' a p. 42 è un refuso. (4) Le soluzioni delle due challenge non sono nelle slide: sono state calcolate qui sulle tabelle delle slide e controllate a mano e con un piccolo script. (5) Le percentuali 4%, 8%, 17% di p. 46 sono interpretate come rapporto di compressione (log2 K bit per pixel contro 24), coerente con la fonte dell'esempio (Bishop §9.1.1). (6) Le slide 4–6 mostrano un albero medico su dolore al petto ed ECG di cui non leggiamo il testo: il caso Cook County è aggiunto come esempio reale documentato e non è attribuito al docente. Le slide portano la firma 'Luca Rizzi 2025'.</p></div></details></section>
+<nav class="prevnext" aria-label="Altre lezioni"><a class="pn prev" href="/study-lab/big-data-ai/2026-10-13/"><span>Lezione precedente</span>13 ott · Dal lago di dati alla decisione: conservare tutto, scegliere il formato giusto, non confondere previsione e causa</a><a class="pn next" href="/study-lab/big-data-ai/2026-11-03/"><span>Lezione successiva</span>3 nov · Dal modello al reparto: misurare bene un modello e costruire un team analytics che il CEO usi davvero</a></nav></main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js" defer></script>
+</body></html>
