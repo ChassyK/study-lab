@@ -5,10 +5,10 @@
 <meta name="description" content="La lezione segue i dati dal deposito alla decisione. Prima il data lake: un grande deposito che accoglie dati di ogni tipo nel formato originale, utile solo se ">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/study-lab/assets/style.css">
 <link rel="icon" href="/study-lab/assets/favicon.svg">
-<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",themeVariables:{fontFamily:"Schibsted Grotesk, sans-serif",primaryColor:"#ffffff",primaryBorderColor:"#9aa6b2",lineColor:"#5a6675",fontSize:"17px"},flowchart:{useMaxWidth:true,htmlLabels:true}});</script></head>
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",themeVariables:{fontFamily:"-apple-system, BlinkMacSystemFont, Inter, sans-serif",primaryColor:"#ffffff",primaryBorderColor:"#d2d2d7",lineColor:"#86868b",primaryTextColor:"#1d1d1f",fontSize:"17px"},flowchart:{useMaxWidth:true,htmlLabels:true}});</script></head>
 <body class="p-lesson" data-course="bd">
 <a class="skip" href="#main">Vai al contenuto</a>
 <header class="topbar"><a class="brand" href="/study-lab/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5l8 6 8-6v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>Study Lab</a>
@@ -20,8 +20,8 @@
   <div class="date-mark"><span class="day">13</span><span class="month">ottobre<br>2026</span></div>
   <h1>Dal lago di dati alla decisione: conservare tutto, scegliere il formato giusto, non confondere previsione e causa</h1>
   <p class="title-en" lang="en">Data Lakes, File Formats (CSV, XML, JSON, Parquet) and AI Capabilities: Prediction, Classification, Personalization, Automation</p>
-  <p class="meta">Martedì · Rizzi, Campana · <span class="chip s-parziale">Parziale</span></p>
-  <p class="coverage">Nessuna registrazione PLAUD per questa giornata (slot Rizzi 10:00–11:30 e Campana 12:00–13:30). Testo ricostruito dalle slide Canvas 133640 &#x27;BigDataBsnsRizzi2026Lesson4&#x27; (42 pagine, caricate il 13/10) e dai dati del laboratorio Canvas 133641 (ZIP &#x27;Databricks Mixed Formats Lab Data&#x27;), letti direttamente. Le slide 6, 8, 27–32, 34–38 e 40 sono immagini: il loro contenuto è ripreso dalla lettura fatta in precedenza dal vecchio sistema e non è stato ricontrollato pagina per pagina in questo giro. Il file forecast.parquet non è stato riletto (manca un lettore Parquet sul Mac mini). Non sappiamo che cosa abbiano detto in aula né il contenuto della parte di Campana.</p>
+  <p class="meta">Martedì · Rizzi, Campana · <span class="chip s-completa">Completa</span></p>
+  <p class="coverage">Lezione ricostruita dai materiali: nessuna registrazione PLAUD salvata per questa giornata (slot Rizzi 10:00–11:30 e Campana 12:00–13:30) e nessun&#x27;altra parte trovata tra i file locali; il connettore PLAUD e il notebook NotebookLM non erano raggiungibili in questo giro, Canvas non accessibile. Fonti: slide Canvas 133640 &#x27;BigDataBsnsRizzi2026Lesson4&#x27; (42 pagine), tutte ricontrollate il 6/11/2026, comprese le slide-immagine 6, 8, 27–32, 34–38 e 40 guardate come immagine; i quattro file del laboratorio Canvas 133641 letti direttamente, compreso forecast.parquet (16 righe mese × regione decodificate). Divisione della giornata: nelle slide i blocchi marcati &#x27;B&#x27; (data lake, formati, laboratorio, pp. 2–25) e &#x27;A&#x27; (capacità dell&#x27;AI, previsione e causa, errori, warm-up, pp. 26–41) seguono la stessa convenzione della Lesson 2, dove B era Campana e A Rizzi: è un&#x27;inferenza, non una prova. Tutto il testo spiega le slide della sessione; casi, numeri ed esempi aggiunti sono integrazione con fonti dichiarate.</p>
 </header>
 <section class="brief" aria-labelledby="inbreve"><h2 id="inbreve">In breve</h2>
 <p class="lede">La lezione segue i dati dal deposito alla decisione. Prima il data lake: un grande deposito che accoglie dati di ogni tipo nel formato originale, utile solo se ha metadati, qualità, sicurezza e governance. Poi i formati di file (CSV, XML, JSON, Parquet) e come scegliere quello giusto, con un laboratorio Databricks che unisce quattro file in una vista affidabile. Infine le quattro cose che l&#x27;AI fa con i dati (prevedere, classificare, personalizzare, automatizzare) e l&#x27;errore più costoso: scambiare una previsione per la prova che un&#x27;azione funziona.</p><ul class="keys"><li>Un data lake conserva dati strutturati, semi-strutturati e non strutturati nel formato originale; lo schema si decide quando li usi (schema-on-read).</li><li>Senza metadati, qualità, sicurezza e governance un data lake diventa una palude di dati che nessuno sa usare.</li><li>L&#x27;architettura va dall&#x27;ingestione (batch o tempo reale) allo storage, alla distillazione e all&#x27;elaborazione, fino agli insight; un livello di operazioni unificate governa tutto.</li><li>CSV è semplice, XML rigoroso, JSON flessibile per API ed eventi, Parquet veloce per l&#x27;analisi: nessun formato vince, conta l&#x27;adattamento allo scopo.</li><li>Una vista affidabile richiede di pulire chiavi, date e duplicati prima di unire le tabelle: un doppione nel catalogo prodotti gonfia i ricavi.</li><li>L&#x27;AI con i dati fa quattro cose: prediction (stima), classification (etichetta), personalization (ordinamento per persona), automation (azione).</li><li>Un buon punteggio storico non prova un guadagno: attenzione a data leakage, feedback loop e alla differenza tra chi compra e chi compra grazie a te.</li><li>Per misurare l&#x27;effetto di un&#x27;azione serve un esperimento (test A/B), non una correlazione.</li></ul></section>
@@ -153,9 +153,109 @@
 <li><strong>Ricavo per vendita</strong> = quantità × prezzo. S001: 1.200 × 14,99 = 17.988,00 (gennaio, regione South). S002: 180 × 9,99 = 1.798,20 (gennaio, North). S006: 100 × 44,99 = 4.499,00 (marzo, North).</li>
 <li><strong>Totale corretto</strong>, tenendo una sola copia di P03 e di S008: <strong>35.677,80</strong> unità monetarie (i file non indicano la valuta).</li>
 <li><strong>Totale con il join ingenuo</strong>: ogni vendita di P03 si collega a due righe di catalogo (S003 e S006 contate due volte) e S008 resta doppia. Risultato <strong>45.973,80</strong>: 10.296,00 in più, quasi il 29% di ricavo che non esiste.</li>
-<li><strong>Confronto con la previsione</strong>: scostamento (<em>variance</em>) = reale − previsto; raggiungimento (<em>attainment</em>) = 100 × reale / previsto. Esempio ipotetico: reale 120, previsto 100 → scostamento +20, raggiungimento 120%. Se il previsto è zero, il raggiungimento non si calcola: si segnala.</li>
+<li><strong>Confronto con la previsione</strong>: scostamento (<em>variance</em>) = reale − previsto; raggiungimento (<em>attainment</em>) = 100 × reale / previsto. Se il previsto è zero, il raggiungimento non si calcola: si segnala.</li>
 </ol>
 </aside>
+<p>Il file <code>forecast.parquet</code> contiene 16 righe: una previsione di ricavo per ogni combinazione di 4 mesi (gennaio–aprile 2026) e 4 regioni (South, North, West, Central), in totale <strong>30.250</strong>. Ecco che cosa esce dal confronto con le vendite pulite (le celle senza vendite hanno reale 0):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mese × regione</th>
+<th>Reale</th>
+<th>Previsto</th>
+<th>Scostamento</th>
+<th>Attainment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-01 × South</td>
+<td>17.988,00</td>
+<td>2.200</td>
+<td>+15.788,00</td>
+<td>817,6%</td>
+</tr>
+<tr>
+<td>2026-01 × North</td>
+<td>1.798,20</td>
+<td>1.700</td>
+<td>+98,20</td>
+<td>105,8%</td>
+</tr>
+<tr>
+<td>2026-02 × South</td>
+<td>3.599,20</td>
+<td>2.400</td>
+<td>+1.199,20</td>
+<td>150,0%</td>
+</tr>
+<tr>
+<td>2026-02 × West</td>
+<td>2.248,50</td>
+<td>1.500</td>
+<td>+748,50</td>
+<td>149,9%</td>
+</tr>
+<tr>
+<td>2026-03 × South</td>
+<td>1.349,10</td>
+<td>2.500</td>
+<td>−1.150,90</td>
+<td>54,0%</td>
+</tr>
+<tr>
+<td>2026-03 × North</td>
+<td>4.499,00</td>
+<td>1.950</td>
+<td>+2.549,00</td>
+<td>230,7%</td>
+</tr>
+<tr>
+<td>2026-03 × Central</td>
+<td>1.998,00</td>
+<td>1.800</td>
+<td>+198,00</td>
+<td>111,0%</td>
+</tr>
+<tr>
+<td>2026-04 × West</td>
+<td>2.197,80</td>
+<td>1.850</td>
+<td>+347,80</td>
+<td>118,8%</td>
+</tr>
+<tr>
+<td>altre 8 celle</td>
+<td>0</td>
+<td>14.250</td>
+<td>−14.250</td>
+<td>0%</td>
+</tr>
+<tr>
+<td><strong>Totale</strong></td>
+<td><strong>35.677,80</strong></td>
+<td><strong>30.250</strong></td>
+<td><strong>+5.427,80</strong></td>
+<td><strong>117,9%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Leggere la tabella come un analista</p>
+<ol>
+<li>Il totale dice "sopra il piano del 18%": sembra una buona notizia.</li>
+<li>Ma più della metà del ricavo viene da una sola vendita, S001 (1.200 abbonamenti Premium a gennaio nel South, 817% del previsto).</li>
+<li>Senza S001 il reale scende a 17.689,80: il 58,5% del previsto, cioè sotto il piano di oltre il 40%.</li>
+<li>In più, metà delle celle mese × regione non ha nessuna vendita.</li>
+<li>Conclusione: prima di festeggiare si verifica S001 (è un contratto vero o un errore di battitura, magari 120 invece di 1.200?). Il numero giusto da mostrare dipende da una verifica, non dal codice.</li>
+</ol>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Il direttore guarda solo la card &quot;Attainment totale 117,9%&quot; della dashboard e vuole alzare il forecast di maggio. Che cosa gli fai vedere prima?</summary>
+<div class="answer">
+<p>La scomposizione per mese e regione e il peso di S001. Il 117,9% dipende quasi tutto da una vendita anomala ancora da verificare; senza di essa il risultato è al 58,5% del piano e metà delle celle è a zero. Alzare il forecast su questa base sarebbe un errore.</p>
+</div>
+</details>
 <aside class="box formula">
 <p class="box-title"><span class="box-kind">Formula</span> · Variance e attainment</p>
 <p>Variance = actual − forecast (stessa unità monetaria). Positivo = sopra il piano.
@@ -167,14 +267,51 @@ Esempio: actual 4.499, forecast 4.000 (ipotetico) → variance +499, attainment 
 <p>Un assistente AI scrive il codice in un secondo; capire se il totale è giusto resta compito tuo.</p>
 </aside>
 <h2 id="prevedere-classificare-personalizzare-automatizzare">Prevedere, classificare, personalizzare, automatizzare</h2>
-<p>La seconda parte delle slide (26–32) spiega che cosa fa l'AI con i dati. Le capacità sono quattro, e si distinguono da che cosa producono.</p>
+<p>La seconda parte delle slide (26–32) spiega che cosa fa l'AI con i dati. Il filo è un negozio di giocattoli sotto Natale (slide 27), con un unico "hub" che raccoglie vendite storiche, ricerche e prodotti visti, wishlist e carrello, carta fedeltà, scorte dei negozi e online, prezzi e promozioni, tempi dei fornitori, trend social ed eventi stagionali. Sugli stessi dati si possono fare quattro domande diverse: quante unità di un giocattolo nuovo venderò prima di Natale? questo pagamento online è legittimo o sospetto? quali giocattoli mostrare a questo cliente? devo riordinare un giocattolo che va forte? <strong>È la domanda di business a decidere l'analisi, non i dati.</strong> Le capacità sono quattro, e si distinguono da che cosa producono.</p>
 <ul>
 <li><strong>Prediction</strong> (previsione) → una <strong>stima</strong> o una probabilità. Esempio delle slide: la consegna di un pacco. Il modello combina disponibilità del prodotto, carico del magazzino, storico del corriere, distanza, traffico, meteo e festività, e dice "domani tra le 14 e le 17" o "85% di probabilità entro due giorni" (numeri illustrativi). Si misura con l'errore medio (quanto sbaglio in ore), con la quota di consegne arrivate nella finestra promessa e con la stabilità delle stime.</li>
-<li><strong>Classification</strong> (classificazione) → un'<strong>etichetta</strong>. Esempio: un pagamento è sospetto o legittimo? Segnali: importo, tipo di negozio, ora e luogo, dispositivo, abitudini, frequenza. Rischio basso: approvato; medio: verifica aggiuntiva; alto: revisione umana. Qui contano i due errori: il <strong>falso positivo</strong> (blocco un pagamento lecito, cliente infastidito) e il <strong>falso negativo</strong> (lascio passare una frode, perdita). Abbassare la soglia trova più frodi ma crea più falsi allarmi: la soglia si sceglie in base ai costi dei due errori.</li>
+<li><strong>Classification</strong> (classificazione) → un'<strong>etichetta</strong>. Esempio: un pagamento è sospetto o legittimo? Segnali: importo, tipo di negozio, ora e luogo, dispositivo, abitudini, frequenza. Rischio basso: approvato; medio: verifica aggiuntiva; alto: revisione umana. Qui contano i due errori: il <strong>falso positivo</strong> (blocco un pagamento lecito, cliente infastidito) e il <strong>falso negativo</strong> (lascio passare una frode, perdita). Abbassare la soglia trova più frodi ma crea più falsi allarmi: la soglia si sceglie in base ai costi dei due errori. Nel linguaggio dei modelli, "positivo" significa "ho trovato la cosa che cercavo" (la frode, il cibo avariato, il post da rimuovere), non "cosa buona". Le slide 29 e 36 aggiungono le metriche: la <em>precision</em> (dei pagamenti segnalati, quanti erano davvero frodi?), il <em>recall</em> (di tutte le frodi vere, quante ne ho trovate?), il <em>false-positive rate</em> (quanto spesso disturbo un cliente onesto) e l'<em>F1 score</em>, che bilancia precision e recall. Perché non basta l'accuratezza? Perché le frodi sono rare: un modello che dice sempre "legittimo" sarebbe accurato al 99% e inutile.</li>
 <li><strong>Personalization</strong> (personalizzazione) → una <strong>classifica</strong> di opzioni per una persona. Esempio: la musica. Ascolti completi, riascolti, skip, like, playlist e contesto (ora, dispositivo) dicono che cosa proporti. I metodi: <em>content-based</em> (brani simili a quelli che ascolti), <em>collaborative filtering</em> (cosa ascolta chi ti somiglia), <em>context-aware</em> (cosa ti serve adesso), <em>hybrid</em> (tutti insieme). Rischi: bolla di filtraggio, ripetizione, favorire solo i brani già famosi, privacy.</li>
 <li><strong>Automation</strong> (automazione) → un'<strong>azione</strong>. Esempio: la richiesta di un mutuo. Si verificano i documenti, si calcola il rapporto rata/reddito (<em>debt-to-income ratio</em> = rate mensili dei debiti / reddito mensile lordo; ipotesi: 800 / 3.200 = 25%) e si instrada la pratica. I livelli vanno da <em>manual</em> (decide la persona) ad <em>assisted</em> (il sistema raccomanda), <em>supervised</em> (una persona approva o cambia) e <em>conditional</em> (i casi chiari vanno da soli, le eccezioni a una persona). Per decisioni pesanti come un mutuo servono motivazioni comprensibili, registro delle decisioni, test di equità, possibilità di correggere e di fare ricorso.</li>
 </ul>
-<p>La slide 32 chiude il cerchio: dati → prevedere → classificare → personalizzare → agire → <strong>misurare</strong> → imparare, con la governance che attraversa ogni passaggio.</p>
+<p>La slide 32 chiude il cerchio: dati → prevedere → classificare → personalizzare → agire → <strong>misurare</strong> → imparare, con la governance (qualità, spiegabilità, equità, privacy, supervisione umana, monitoraggio) che attraversa ogni passaggio.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Capacità</th>
+<th>Domanda</th>
+<th>Metodi tipici</th>
+<th>Come si valuta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prediction</td>
+<td>che cosa succederà?</td>
+<td>regressione, serie storiche, gradient boosting</td>
+<td>errore di previsione, calibrazione</td>
+</tr>
+<tr>
+<td>Classification</td>
+<td>a che categoria appartiene?</td>
+<td>regressione logistica, alberi decisionali, reti neurali</td>
+<td>precision, recall, F1</td>
+</tr>
+<tr>
+<td>Personalization</td>
+<td>che cosa è più rilevante per questa persona?</td>
+<td>collaborative filtering, modelli sui contenuti, ranking</td>
+<td>coinvolgimento, varietà, soddisfazione</td>
+</tr>
+<tr>
+<td>Automation</td>
+<td>quale azione eseguire ora?</td>
+<td>regole, soglie, orchestrazione</td>
+<td>tempo risparmiato, tasso di eccezioni, qualità dell'esito</td>
+</tr>
+</tbody>
+</table></div>
+<p>Quando automatizzare? La regola della slide: conseguenze piccole e reversibili → più automazione; conseguenze gravi e difficili da annullare → più controllo umano. Un suggerimento musicale sbagliato si salta; un mutuo negato no.</p>
 <aside class="box collegamento">
 <p class="box-title"><span class="box-kind">Collegamento</span> · Lezione del 3 novembre</p>
 <p>Falsi positivi e falsi negativi tornano nella lezione del 3/11 con la matrice di confusione, la precision e il recall: lì impari a calcolarli. La lezione del 20/10 mostra invece il primo modello di classificazione, l'albero decisionale.</p>
@@ -190,7 +327,7 @@ Esempio: actual 4.499, forecast 4.000 (ipotetico) → variance +499, attainment 
 <p><strong>Trappola 1: popolarità non è personalizzazione.</strong> La pizza più venduta non è la pizza giusta per chi è vegano o cerca il prezzo più basso. Una classifica uguale per tutti misura la popolarità; la personalizzazione misura la rilevanza per una persona.</p>
 <p><strong>Trappola 2: guardare indietro non è prevedere (data leakage).</strong> Un modello può sembrare perfetto perché, senza volerlo, usa informazioni del futuro. Gli esempi delle slide: usare le vendite reali di domani per prevedere la domanda di domani; usare il fatto che un video è stato guardato tutto per prevedere se verrà guardato; usare l'ora di arrivo reale per prevedere il ritardo. Il rimedio: fissare il momento della decisione, addestrare sul passato e testare sul periodo successivo.</p>
 <p><strong>Trappola 3: il circolo che si autoalimenta (feedback loop).</strong> Il sistema raccomanda, le persone vedono, reagiscono, il modello impara da quella reazione. La pizza messa in cima riceve più ordini anche perché è in cima; un prodotto nuovo mai mostrato non riceve clic e quindi "sembra" poco gradito. Rimedi: mostrare ogni tanto opzioni meno esposte, confrontare le risposte tenendo conto dell'esposizione, controllare varietà e soddisfazione nel tempo.</p>
-<p>E infine la distinzione più importante: <strong>predire chi comprerà</strong> non è <strong>misurare chi compra grazie a te</strong>. Per la seconda serve un <em>A/B test</em>: si assegnano gli utenti <strong>a caso</strong> alla versione attuale (A) o a quella nuova (B), si misura la stessa cosa nello stesso periodo e la differenza stima l'effetto. Esempio ipotetico: 12 acquisti su 100 in B, 10 su 100 in A → +2 punti percentuali. Con campioni così piccoli, però, la differenza può essere dovuta al caso.</p>
+<p>E infine la distinzione più importante: <strong>predire chi comprerà</strong> non è <strong>misurare chi compra grazie a te</strong>. Per la seconda serve un <em>A/B test</em>: si assegnano gli utenti <strong>a caso</strong> alla versione attuale (A) o a quella nuova (B), si misura la stessa cosa nello stesso periodo e la differenza stima l'effetto. Esempio ipotetico: 12 acquisti su 100 in B, 10 su 100 in A → +2 punti percentuali. Con campioni così piccoli, però, la differenza può essere dovuta al caso. La slide 38 aggiunge due regole pratiche. Primo, <strong>pianifica prima</strong>: decidi metrica, numero di utenti e durata del test prima di guardare i risultati, altrimenti finisci per fermarti quando il numero ti piace. Secondo, misura la cosa giusta: per uno sconto del 10% sulla pizza non basta contare gli ordini, conta il <strong>profitto per cliente assegnato</strong>, perché lo sconto riduce il margine anche a chi avrebbe ordinato comunque.</p>
 <aside class="box caso">
 <p class="box-title"><span class="box-kind">Caso reale</span> · eBay e gli annunci che non servivano</p>
 <p>eBay spendeva molto in annunci a pagamento sui motori di ricerca, anche sulle parole "ebay" e simili. I dati osservati sembravano dare ragione: chi cliccava sugli annunci comprava. Tre economisti, Thomas Blake, Chris Nosko e Steven Tadelis, hanno fatto esperimenti sul campo con eBay: hanno sospeso gli annunci sul marchio su alcuni motori di ricerca e, per le altre parole chiave, li hanno spenti in alcune zone degli Stati Uniti lasciandoli accesi in altre, confrontando le vendite. Risultato (NBER Working Paper 20171, 2014): gli annunci sul nome del marchio non portavano benefici misurabili nel breve periodo, perché chi cercava "ebay" sarebbe arrivato comunque con il link gratuito. Gli altri annunci funzionavano soprattutto su clienti nuovi o occasionali, mentre la spesa andava in gran parte a clienti abituali che avrebbero comprato lo stesso. Nel contesto studiato il rendimento medio risultava negativo. Lezione: un'azione mostrata a chi è già propenso a comprare sembra efficace anche quando non lo è. Solo un confronto casuale separa la propensione dall'effetto. Il risultato vale per eBay in quel periodo, non per tutta la pubblicità.</p>
@@ -223,7 +360,7 @@ else{r.textContent='La differenza sta dentro il margine: potrebbe essere solo ca
 <h2 id="imparare-dagli-errori-quando-i-dati-portano-fuori-strada">Imparare dagli errori: quando i dati portano fuori strada</h2>
 <p>La slide 39 cita una frase di Samuel Beckett ("Ever tried. Ever failed. No matter. Try again. Fail again. Fail better.") e la slide 40 mostra tre casi di fallimento. Ognuno insegna un limite diverso.</p>
 <ul>
-<li><strong>Zillow Offers (2021)</strong>: il portale immobiliare americano comprava case basandosi sulle stime di prezzo del suo algoritmo, per rivenderle. Quando i prezzi si sono mossi in modo inatteso, si è trovato con troppe case pagate troppo. A novembre 2021 ha annunciato la chiusura dell'attività (comunicazione ufficiale alla SEC). Lezione: una previsione buona "in media" diventa pericolosa quando su di essa impegni molti soldi; servono limiti di esposizione e attenzione all'incertezza.</li>
+<li><strong>Zillow Offers (2021)</strong>: il portale immobiliare americano comprava case basandosi sulle stime di prezzo del suo algoritmo, per rivenderle. Quando i prezzi si sono mossi in modo inatteso, si è trovato con troppe case pagate troppo. Nel terzo trimestre 2021 ha registrato una svalutazione delle case in magazzino di 304,4 milioni di dollari e il 2 novembre 2021 ha annunciato la chiusura dell'attività, con un taglio di circa il 25% del personale (documenti ufficiali alla SEC). Lezione: una previsione buona "in media" diventa pericolosa quando su di essa impegni molti soldi; servono limiti di esposizione e attenzione all'incertezza.</li>
 <li><strong>Amazon e la selezione del personale (2018)</strong>: secondo Reuters, Amazon ha abbandonato un sistema sperimentale che valutava i curriculum perché, addestrato su dieci anni di candidature in prevalenza maschili, penalizzava i curriculum con riferimenti femminili. Lezione: un modello impara anche le ingiustizie del passato; bisogna controllare i risultati per gruppi e le variabili che fanno da "spia" (<em>proxy</em>).</li>
 <li><strong>eBay (2014)</strong>: il caso visto sopra. Lezione: senza un esperimento, scambi chi avrebbe comprato comunque per un effetto della tua azione.</li>
 </ul>
@@ -270,7 +407,7 @@ else{r.textContent='La differenza sta dentro il margine: potrebbe essere solo ca
 <p>Mostra dall&#x27;interno personalizzazione e feedback loop: il feed impara da ciò che ti mostra e ti mostra sempre più di ciò che ha imparato.</p><p class="where">Dove: Netflix</p></li></ul></section>
 <section class="study" id="flashcard"><h2>Flashcard</h2>
 <p class="hint">Tocca una carta per girarla. Le frecce ← → scorrono il mazzo.</p>
-<div class="deck"><ol class="cards"><li class="card" tabindex="0"><div class="front">Che cos&#x27;è un data lake?</div><div class="back">Un deposito di dati di ogni tipo nel formato originale, analizzati in seguito con schema-on-read.</div></li><li class="card" tabindex="0"><div class="front">Data lake o data warehouse: differenza chiave?</div><div class="back">Lake: dati grezzi di ogni tipo, struttura decisa alla lettura. Warehouse: dati puliti e strutturati prima, per analisi note.</div></li><li class="card" tabindex="0"><div class="front">I sei livelli dell&#x27;architettura di un data lake nelle slide?</div><div class="back">Ingestion, storage (HDFS, zona di atterraggio), distillation, processing, insights, unified operations.</div></li><li class="card" tabindex="0"><div class="front">Tre componenti di sicurezza di un data lake?</div><div class="back">Autenticazione, autorizzazione, accounting (tracciamento) e protezione dei dati, a ogni livello.</div></li><li class="card" tabindex="0"><div class="front">Che cosa traccia il data auditing?</div><div class="back">Le modifiche agli elementi importanti: come, quando e chi li ha cambiati. Serve a rischio e conformità.</div></li><li class="card" tabindex="0"><div class="front">Le quattro fasi di maturità di un data lake?</div><div class="back">1) Acquisire dati su larga scala. 2) Costruire il muscolo analitico. 3) Data warehouse e lake lavorano insieme. 4) Capacità enterprise nel lake (governance, ciclo di vita, metadati).</div></li><li class="card" tabindex="0"><div class="front">Il superpotere di ciascun formato?</div><div class="back">CSV semplicità, XML validazione con schema, JSON flessibilità per API ed eventi, Parquet velocità di analisi (colonnare e compresso).</div></li><li class="card" tabindex="0"><div class="front">Le tre domande per scegliere il formato?</div><div class="back">I dati sono piatti? Devono modificarli persone? Il lavoro è analitico?</div></li><li class="card" tabindex="0"><div class="front">Schema comune nei data lake per i formati?</div><div class="back">Ingerire formati testuali → pulire → pubblicare in Parquet/Delta.</div></li><li class="card" tabindex="0"><div class="front">Le cinque fasi del laboratorio Databricks?</div><div class="back">Ingest, polish, combine, compare (con il forecast), present (dashboard), più il controllo umano su righe, chiavi e totali.</div></li><li class="card" tabindex="0"><div class="front">Formule di variance e attainment?</div><div class="back">Variance = actual − forecast. Attainment % = 100 × actual / forecast (non definito se forecast = 0).</div></li><li class="card" tabindex="0"><div class="front">Le quattro capacità dell&#x27;AI e i loro output?</div><div class="back">Prediction → stima o probabilità; classification → etichetta; personalization → classifica per persona; automation → azione.</div></li><li class="card" tabindex="0"><div class="front">Che cos&#x27;è il data leakage?</div><div class="back">Usare in addestramento informazioni che al momento della decisione non ci sono: il punteggio è gonfiato.</div></li><li class="card" tabindex="0"><div class="front">Che cos&#x27;è un feedback loop nelle raccomandazioni?</div><div class="back">Ciò che è mostrato riceve più clic, il modello lo mostra ancora di più: i clic non sono preferenze pure.</div></li><li class="card" tabindex="0"><div class="front">Come si misura se un&#x27;azione cambia il comportamento?</div><div class="back">Con un test A/B: gruppi assegnati a caso, stessa metrica, stessa finestra; effetto = risultato B − risultato A.</div></li></ol>
+<div class="deck"><ol class="cards"><li class="card" tabindex="0"><div class="front">Che cos&#x27;è un data lake?</div><div class="back">Un deposito di dati di ogni tipo nel formato originale, analizzati in seguito con schema-on-read.</div></li><li class="card" tabindex="0"><div class="front">Data lake o data warehouse: differenza chiave?</div><div class="back">Lake: dati grezzi di ogni tipo, struttura decisa alla lettura. Warehouse: dati puliti e strutturati prima, per analisi note.</div></li><li class="card" tabindex="0"><div class="front">I sei livelli dell&#x27;architettura di un data lake nelle slide?</div><div class="back">Ingestion, storage (HDFS, zona di atterraggio), distillation, processing, insights, unified operations.</div></li><li class="card" tabindex="0"><div class="front">Precision e recall in una riga?</div><div class="back">Precision: dei casi segnalati, quanti erano davvero il target. Recall: di tutti i casi target reali, quanti ne ho trovati. L&#x27;F1 bilancia le due.</div></li><li class="card" tabindex="0"><div class="front">Che cosa traccia il data auditing?</div><div class="back">Le modifiche agli elementi importanti: come, quando e chi li ha cambiati. Serve a rischio e conformità.</div></li><li class="card" tabindex="0"><div class="front">Le quattro fasi di maturità di un data lake?</div><div class="back">1) Acquisire dati su larga scala. 2) Costruire il muscolo analitico. 3) Data warehouse e lake lavorano insieme. 4) Capacità enterprise nel lake (governance, ciclo di vita, metadati).</div></li><li class="card" tabindex="0"><div class="front">Il superpotere di ciascun formato?</div><div class="back">CSV semplicità, XML validazione con schema, JSON flessibilità per API ed eventi, Parquet velocità di analisi (colonnare e compresso).</div></li><li class="card" tabindex="0"><div class="front">Le tre domande per scegliere il formato?</div><div class="back">I dati sono piatti? Devono modificarli persone? Il lavoro è analitico?</div></li><li class="card" tabindex="0"><div class="front">Schema comune nei data lake per i formati?</div><div class="back">Ingerire formati testuali → pulire → pubblicare in Parquet/Delta.</div></li><li class="card" tabindex="0"><div class="front">Le cinque fasi del laboratorio Databricks?</div><div class="back">Ingest, polish, combine, compare (con il forecast), present (dashboard), più il controllo umano su righe, chiavi e totali.</div></li><li class="card" tabindex="0"><div class="front">Formule di variance e attainment?</div><div class="back">Variance = actual − forecast. Attainment % = 100 × actual / forecast (non definito se forecast = 0).</div></li><li class="card" tabindex="0"><div class="front">Le quattro capacità dell&#x27;AI e i loro output?</div><div class="back">Prediction → stima o probabilità; classification → etichetta; personalization → classifica per persona; automation → azione.</div></li><li class="card" tabindex="0"><div class="front">Che cos&#x27;è il data leakage?</div><div class="back">Usare in addestramento informazioni che al momento della decisione non ci sono: il punteggio è gonfiato.</div></li><li class="card" tabindex="0"><div class="front">Che cos&#x27;è un feedback loop nelle raccomandazioni?</div><div class="back">Ciò che è mostrato riceve più clic, il modello lo mostra ancora di più: i clic non sono preferenze pure.</div></li><li class="card" tabindex="0"><div class="front">Come si misura se un&#x27;azione cambia il comportamento?</div><div class="back">Con un test A/B: gruppi assegnati a caso, stessa metrica, stessa finestra; effetto = risultato B − risultato A.</div></li></ol>
 <div class="deck-nav"><button type="button" class="btn ghost prev" aria-label="Carta precedente">‹</button><span class="pos"></span><button type="button" class="btn ghost next" aria-label="Carta successiva">›</button></div></div></section>
 <section class="study" id="glossario"><h2>Glossario</h2>
 <label class="search"><span>Cerca un termine</span><input type="search" class="gl-filter" placeholder="es. soft power"></label>
@@ -280,7 +417,7 @@ else{r.textContent='La differenza sta dentro il margine: potrebbe essere solo ca
 <div><a href="https://www.youtube.com/watch?v=Grx95nfsz08"><strong>Data Warehouse vs Data Lake vs Lakehouse: Which One Should You Build?</strong></a><p class="vmeta">Data with Baraa · 19 min · EN</p><p>Versione più lunga e visiva, con esempi di quando scegliere ciascuna architettura.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=5NA57Pfpdr4" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/5NA57Pfpdr4/mqdefault.jpg" alt=""></a>
 <div><a href="https://www.youtube.com/watch?v=5NA57Pfpdr4"><strong>Parquet File Format - Explained to a 5 Year Old!</strong></a><p class="vmeta">Data Mozart · 11 min · EN</p><p>Perché salvare per colonne rende Parquet veloce e compatto: completa le slide sui formati.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=faUX6fwYRHM" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/faUX6fwYRHM/mqdefault.jpg" alt=""></a>
 <div><a href="https://www.youtube.com/watch?v=faUX6fwYRHM"><strong>A/B Testing Course 004: The Correlation vs. Causation Problem</strong></a><p class="vmeta">Data36 · 5 min · EN</p><p>In cinque minuti perché una correlazione non basta e serve un esperimento.</p></div></li></ul></section>
-<section class="study sources" id="fonti"><h2>Fonti</h2><ol><li>Slide Canvas 133640 — Rizzi, BigDataBsnsRizzi2026Lesson4 (42 pagine) — Data lake pp. 2–14, formati pp. 15–23, laboratorio pp. 24–25, capacità AI pp. 26–32, previsione vs causalità pp. 33–38, casi di errore pp. 39–40, warm-up p. 41.</li><li>Canvas 133641 — Databricks Mixed Formats Lab Data (ZIP) — customers.csv, products.xml, sales.json letti direttamente il 5/11/2026; ricavi ricalcolati. forecast.parquet non riletto.</li><li>Archivio Codex 2026-10-13__spiegazione-estesa.md — Usato solo come appunto per le slide-immagine (pp. 27–32, 34–38, 40); non copiato.</li><li><a href="https://www.nber.org/papers/w20171">Blake, Nosko, Tadelis — Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment, NBER WP 20171 (2014)</a></li><li><a href="https://parquet.apache.org/docs/overview/">Apache Parquet — documentazione ufficiale</a></li><li><a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G">Reuters, 10/10/2018 — Amazon scraps secret AI recruiting tool that showed bias against women</a></li><li><a href="https://www.sec.gov/Archives/edgar/data/1617640/000161764021000085/z-20211102.htm">Zillow Group — Form 8-K del 2 novembre 2021 (chiusura Zillow Offers)</a></li></ol><details class="box verifica"><summary>Note di verifica</summary><div class="prose"><p>Nessuna registrazione: non sappiamo quali slide siano state svolte né che cosa abbia trattato Campana. Correzioni e precisazioni rispetto alle slide: (1) p. 3 'nessun limite di dimensione' è una semplificazione: i limiti dipendono da tecnologia e costi. (2) p. 5 'più volume di dati = analisi migliori' non è automatico: dati duplicati o non rappresentativi peggiorano l'analisi; nel testo è riformulato. (3) p. 4 'architettura piatta' del lake contro 'file e cartelle' del warehouse: semplificazione didattica, anche i lake usano cartelle, partizioni e cataloghi. (4) p. 12: la descrizione dello Stage 1 ripete la frase dello Stage 2; nel testo lo Stage 1 è spiegato come acquisizione di dati su larga scala, come dice il titolo. (5) p. 14 'design driven by what is available instead of what is required' è un refuso logico frequente nelle fonti divulgative; nel testo si spiega il senso (accogliere ciò che c'è senza fissare prima lo schema). (6) Nel JSON di p. 20 ci sono virgolette tipografiche che renderebbero il file non valido. (7) Ricavi del laboratorio ricalcolati dai file: 35.677,80 unità monetarie con una sola copia di P03 e S008, 45.973,80 con il join ingenuo; la valuta non è indicata nei file. (8) I casi Zillow e Amazon sono citati dalle slide (p. 40, immagine): qui sono riportati in modo essenziale con fonti esterne (8-K SEC; Reuters 2018, la cui pagina blocca il controllo automatico del link). Il caso eBay è verificato sul paper NBER.</p></div></details></section>
+<section class="study sources" id="fonti"><h2>Fonti</h2><ol><li>Slide Canvas 133640 — Rizzi, BigDataBsnsRizzi2026Lesson4 (42 pagine) — Data lake pp. 2–14, formati pp. 15–23, laboratorio pp. 24–25, capacità AI pp. 26–32, previsione vs causalità pp. 33–38, casi di errore pp. 39–40, warm-up p. 41.</li><li>Canvas 133641 — Databricks Mixed Formats Lab Data (ZIP) — customers.csv, products.xml, sales.json letti il 5/11/2026; forecast.parquet decodificato il 6/11/2026 (16 righe, totale previsto 30.250); ricavi, scostamenti e attainment ricalcolati.</li><li>Archivio Codex 2026-10-13__spiegazione-estesa.md — Usato solo come appunto per le slide-immagine (pp. 27–32, 34–38, 40); non copiato.</li><li><a href="https://www.nber.org/papers/w20171">Blake, Nosko, Tadelis — Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment, NBER WP 20171 (2014)</a></li><li><a href="https://parquet.apache.org/docs/overview/">Apache Parquet — documentazione ufficiale</a></li><li><a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G">Reuters, 10/10/2018 — Amazon scraps secret AI recruiting tool that showed bias against women</a></li><li><a href="https://www.sec.gov/Archives/edgar/data/1617640/000161764021000087/z-20210930.htm">Zillow Group — Form 10-Q, terzo trimestre 2021 (svalutazione scorte Zillow Offers di 304,4 milioni di dollari)</a></li><li><a href="https://www.sec.gov/Archives/edgar/data/1617640/000161764021000085/z-20211102.htm">Zillow Group — Form 8-K del 2 novembre 2021 (chiusura Zillow Offers)</a></li></ol><details class="box verifica"><summary>Note di verifica</summary><div class="prose"><p>Nessuna registrazione: non sappiamo che cosa sia stato detto in aula né se tutte le slide siano state svolte; il testo spiega tutte le 42 slide, quindi copre il programma della sessione. Correzioni e precisazioni rispetto alle slide: (1) p. 3 'nessun limite di dimensione' è una semplificazione: i limiti dipendono da tecnologia e costi. (2) p. 5 'più volume di dati = analisi migliori' non è automatico: dati duplicati o non rappresentativi peggiorano l'analisi; nel testo è riformulato. (3) p. 4 'architettura piatta' del lake contro 'file e cartelle' del warehouse: semplificazione didattica, anche i lake usano cartelle, partizioni e cataloghi. (4) p. 12: la descrizione dello Stage 1 ripete la frase dello Stage 2; nel testo lo Stage 1 è spiegato come acquisizione di dati su larga scala, come dice il titolo. (5) p. 14 'design driven by what is available instead of what is required' è un refuso logico frequente nelle fonti divulgative; nel testo si spiega il senso (accogliere ciò che c'è senza fissare prima lo schema). (6) Nel JSON di p. 20 ci sono virgolette tipografiche che renderebbero il file non valido. (7) Ricavi del laboratorio ricalcolati dai file: 35.677,80 unità monetarie con una sola copia di P03 e S008, 45.973,80 con il join ingenuo; la valuta non è indicata nei file. Il forecast (forecast.parquet, 16 righe, totale 30.250) è stato decodificato con un piccolo lettore scritto per l'occasione e controllato con le statistiche min/max del file (1.200 e 2.650); scostamenti e attainment della tabella nel testo sono calcolati da questi valori. (8) I casi Zillow e Amazon sono citati dalle slide (p. 40, immagine): qui sono riportati con fonti esterne (8-K e 10-Q SEC: svalutazione delle scorte di 304,4 milioni di dollari nel terzo trimestre 2021 e taglio di circa il 25% del personale; Reuters 2018, la cui pagina blocca il controllo automatico del link). Il caso eBay è verificato sul paper NBER. (9) Le formule e i numeri dell'esempio sul mutuo e del test A/B sono ipotetici e dichiarati. (10) Quale docente abbia svolto quale parte è dedotto dai marcatori A/B delle slide, non verificato.</p></div></details></section>
 <nav class="prevnext" aria-label="Altre lezioni"><a class="pn prev" href="/study-lab/big-data-ai/2026-10-06/"><span>Lezione precedente</span>6 ott · Dentro il motore dell&#x27;AI: come imparano le macchine, come un LLM sceglie la parola dopo, e una dashboard che racconta una storia</a><a class="pn next" href="/study-lab/big-data-ai/2026-10-20/"><span>Lezione successiva</span>20 ott · Fare domande ai dati e trovare gruppi: alberi decisionali e k-means</a></nav></main>
 <footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
 <script src="/study-lab/assets/app.js" defer></script>

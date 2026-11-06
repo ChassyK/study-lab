@@ -12,13 +12,11 @@
   const fill = $(".rail-fill");
   const art = $(".lesson");
   if (fill && art) {
-    const wide = () => matchMedia("(min-width: 961px)").matches;
     const onScroll = () => {
       const r = art.getBoundingClientRect();
       const total = r.height - innerHeight;
       const p = Math.max(0, Math.min(1, -r.top / (total || 1)));
-      fill.style[wide() ? "height" : "width"] = (p * 100).toFixed(1) + "%";
-      fill.style[wide() ? "width" : "height"] = "100%";
+      fill.style.width = (p * 100).toFixed(1) + "%";
     };
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);

@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decidere dove pensa la macchina: IoT, edge, fog e cloud al servizio di un&#x27;azione che vale soldi — Big Data &amp; AI</title>
+<meta name="description" content="La lezione porta i dati fuori dall&#x27;ufficio e dentro le cose: turbine, macchine, camion frigo, orologi. L&#x27;Internet of Things misura il mondo fisico, ma il valore">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",themeVariables:{fontFamily:"-apple-system, BlinkMacSystemFont, Inter, sans-serif",primaryColor:"#ffffff",primaryBorderColor:"#d2d2d7",lineColor:"#86868b",primaryTextColor:"#1d1d1f",fontSize:"17px"},flowchart:{useMaxWidth:true,htmlLabels:true}});</script></head>
+<body class="p-lesson" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5l8 6 8-6v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>Study Lab</a>
+<nav class="topnav" aria-label="Corsi"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></nav></header>
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
+<main id="main" class="lesson">
+<header class="lesson-head">
+  <p class="crumbs"><a href="/study-lab/">Corsi</a> / <a href="/study-lab/big-data-ai/">Big Data &amp; AI</a></p>
+  <div class="date-mark"><span class="day">04</span><span class="month">novembre<br>2026</span></div>
+  <h1>Decidere dove pensa la macchina: IoT, edge, fog e cloud al servizio di un&#x27;azione che vale soldi</h1>
+  <p class="title-en" lang="en">IoT, AI, Fog, Edge &amp; Cloud — Architecture, Business Value, Workgroup (Dubai Challenge)</p>
+  <p class="meta">Mercoledì · Campana, Rizzi · <span class="chip s-completa">Completa</span></p>
+  <p class="coverage">Lezione ricostruita dai materiali. Nessuna registrazione PLAUD per questa giornata (slot Campana 10:00–11:30 e Rizzi 12:00–13:30): su PLAUD il 4/11 c&#x27;è solo una registrazione personale delle 14:44, non aperta. Fonte d&#x27;aula: slide Canvas 134188 &#x27;BigDataBsnsRizzi2026Lesson7&#x27; (32 pagine, caricate il 2/11; in copertina &#x27;Lesson 6&#x27;). Spiegate tutte: parte B architettura e valore (pp. 2–23), parte A con il ripasso dei dati IoT (p. 26), il laboratorio EEG/MindWave legato al documentario &#x27;Man on Wire&#x27; (pp. 27–29) e la consegna del lavoro di gruppo &#x27;Dubai Challenge&#x27; (p. 30). Le slide-immagine 3, 13, 25, 27, 29 e 30 sono state guardate come immagine. Integrazioni mie, dichiarate: caso Mirai 2016, fonte del caso Siemens, esempi svolti, laboratori numerici, video e film.</p>
+</header>
+<section class="brief" aria-labelledby="inbreve"><h2 id="inbreve">In breve</h2>
+<p class="lede">La lezione porta i dati fuori dall&#x27;ufficio e dentro le cose: turbine, macchine, camion frigo, orologi. L&#x27;Internet of Things misura il mondo fisico, ma il valore nasce solo quando la misura fa scattare un&#x27;azione utile in tempo. Da qui la domanda chiave: dove si fa il calcolo? Vicino al sensore (edge), nel sito (fog) o in un centro remoto (cloud)? La risposta dipende dalla scadenza della decisione, dalla rete, dalla sensibilità dei dati e dal costo. Tre casi (eolico, fabbrica, logistica del freddo) e un conto economico mostrano come si sceglie e si finanzia un pilota.</p><ul class="keys"><li>L&#x27;IoT collega oggetti fisici e sistemi digitali con cinque passi: misurare, collegare, elaborare, decidere, agire.</li><li>Un dato IoT crea valore solo se sostiene un&#x27;azione utile e misurabile: sense → interpret → act → measure.</li><li>Edge, fog e cloud sono un continuum: dispositivo, sito, centro globale. Il calcolo va dove lo chiede la scadenza della decisione.</li><li>Si porta il calcolo vicino ai dispositivi per quattro motivi: tempo di risposta, banda, resilienza, controllo dei dati.</li><li>Il circuito locale (ingest, filter, analyze, act, sync) agisce entro la scadenza; al cloud salgono solo eventi e riassunti.</li><li>Il cloud addestra e migliora i modelli sulla flotta; l&#x27;edge li esegue. Ogni aggiornamento va testato, versionato e reversibile.</li><li>Sicurezza e continuità: identità dei dispositivi, aggiornamenti firmati, buffer degli eventi; l&#x27;analytics non sostituisce il controllore di sicurezza.</li><li>Un pilota si sceglie con baseline, asset rappresentativi, costo di ciclo di vita e un&#x27;ipotesi critica dichiarata.</li></ul></section>
+<div class="lesson-grid">
+<nav class="toc" aria-label="In questa lezione"><p class="toc-h">Spiegazione</p><ol><li><a href="#un-sensore-non-vale-niente-finche-qualcuno-non-agisce">Un sensore non vale niente finché qualcuno non agisce</a></li><li><a href="#dove-deve-pensare-la-macchina-edge-fog-e-cloud">Dove deve pensare la macchina: edge, fog e cloud</a></li><li><a href="#chi-misura-chi-calcola-chi-agisce-dispositivi-dati-e-reti">Chi misura, chi calcola, chi agisce: dispositivi, dati e reti</a></li><li><a href="#il-circuito-locale-decidere-entro-la-scadenza-poi-raccontarl">Il circuito locale: decidere entro la scadenza, poi raccontarlo al cloud</a></li><li><a href="#una-flotta-connessa-e-anche-una-porta-aperta">Una flotta connessa è anche una porta aperta</a></li><li><a href="#tre-casi-turbine-schede-elettroniche-camion-frigo">Tre casi: turbine, schede elettroniche, camion frigo</a></li><li><a href="#il-pilota-che-merita-l-investimento-il-dubai-challenge">Il pilota che merita l'investimento: il Dubai Challenge</a></li><li><a href="#dal-cuore-al-cervello-quando-il-sensore-misura-una-persona">Dal cuore al cervello: quando il sensore misura una persona</a></li></ol>
+<p class="toc-h">Mettiti alla prova</p><ul><li><a href="#richiamo">Richiamo</a></li><li><a href="#quiz">Quiz</a></li><li><a href="#trasferimento">Applica</a></li><li><a href="#decidi">Decidi tu</a></li><li><a href="#davedere">Da vedere</a></li><li><a href="#flashcard">Flashcard</a></li><li><a href="#glossario">Glossario</a></li><li><a href="#video">Video</a></li></ul>
+<div class="toc-actions"><a class="btn" href="2026-11-04__lezione.pdf" download>Scarica PDF</a><a class="btn ghost" href="https://notebook.google.com/notebook/075a6b17-6b0d-4565-a05f-d532d2bfa1b0">Apri NotebookLM</a></div></nav>
+<article class="prose"><h2 id="un-sensore-non-vale-niente-finche-qualcuno-non-agisce">Un sensore non vale niente finché qualcuno non agisce</h2>
+<p>La lezione cambia scena. Finora i dati arrivavano da clic, pagamenti, database e social. Ora arrivano dalle <strong>cose</strong>: un contatore elettrico, un camion, una macchina industriale, un orologio al polso. È l'<em>Internet of Things</em> (IoT, Internet delle cose): una rete di oggetti fisici che, grazie a sensori, software e connettività, raccolgono e scambiano dati.</p>
+<p>La slide di apertura descrive l'IoT in cinque passi:</p>
+<ol>
+<li><strong>Sense</strong> (misurare): il sensore trasforma il mondo fisico in un numero, per esempio la vibrazione di un motore.</li>
+<li><strong>Connect</strong> (collegare): il dato viaggia su una rete verso chi lo usa.</li>
+<li><strong>Process</strong> (elaborare): le letture grezze diventano informazione ("la vibrazione cresce da tre giorni").</li>
+<li><strong>Decide</strong> (decidere): una regola, un modello di AI o una persona sceglie che cosa fare.</li>
+<li><strong>Act</strong> (agire): parte un allarme o un'azione approvata, per esempio abbassare il raffreddamento.</li>
+</ol>
+<p>Gli esempi di tutti i giorni sono tre: l'<strong>edificio intelligente</strong> (la temperatura regola il condizionamento), la <strong>fabbrica connessa</strong> (la vibrazione aiuta a pianificare la manutenzione), il <strong>monitoraggio della salute</strong> (i segnali del cuore aiutano il medico). Due precisazioni importanti della slide: l'elaborazione può avvenire sul dispositivo, al bordo della rete o nel cloud; e l'IoT <strong>non ha sempre bisogno di AI</strong>, né di una connessione diretta a internet per ogni dispositivo.</p>
+<p>Subito dopo, le slide riscrivono la catena dal punto di vista del business: <strong>sense → interpret → act → measure</strong>. Un evento fisico, un'interpretazione locale, una risposta operativa, un risultato economico. La frase da sottolineare è questa: <em>la raccolta di dati crea valore solo quando sostiene un'azione utile</em>.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>L'IoT non vende dati, vende azioni tempestive: se nessuna decisione cambia, i sensori sono solo un costo.</p>
+</aside>
+<figure class="yt" data-id="CObyT2P9C-U" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Cos&#x27;è l&#x27;Internet of Things (Registro .it, 5 min, IT)"><img loading="lazy" src="https://i.ytimg.com/vi/CObyT2P9C-U/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Cos&#x27;è l&#x27;Internet of Things (Registro .it, 5 min, IT) · <a href="https://www.youtube.com/watch?v=CObyT2P9C-U">apri su YouTube</a></figcaption></figure>
+
+<p>È lo stesso principio della lezione del 25 settembre ("prima il perché, poi lo strumento") e del caso del CEO del 3 novembre: un'azienda con "dashboard ovunque" non decide meglio. Con l'IoT il rischio è identico, solo più costoso, perché ogni sensore va comprato, installato, alimentato e mantenuto.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un ospedale mette braccialetti con sensori a tutti i pazienti, ma i dati vengono letti solo a fine turno. Dove si rompe la catena?</summary>
+<div class="answer">
+<p>Tra interpret e act. I dati ci sono, ma l'informazione arriva dopo il momento in cui serviva agire. Il valore si sblocca solo se un allarme raggiunge in tempo l'infermiere giusto, con una procedura chiara su che cosa fare.</p>
+</div>
+</details>
+<h2 id="dove-deve-pensare-la-macchina-edge-fog-e-cloud">Dove deve pensare la macchina: edge, fog e cloud</h2>
+<p>Una volta raccolto il dato, dove lo si elabora? Le slide presentano <strong>un continuum con tre ruoli</strong>:</p>
+<ul>
+<li><strong>Cloud</strong>: risorse centralizzate e condivise, con portata globale. Ha tanta potenza e tutto lo storico, ma è lontano.</li>
+<li><strong>Fog</strong> (nebbia, cioè una nuvola "bassa", vicino a terra): uno strato intermedio e distribuito che coordina i dispositivi di un sito. Ha portata di sito.</li>
+<li><strong>Edge</strong> (bordo): l'elaborazione avviene sul dispositivo o vicinissimo alla fonte del dato. Fa inferenza locale e risponde subito. Ha portata di dispositivo.</li>
+</ul>
+<p>Perché non mandare tutto al cloud, che è più potente? Le slide danno quattro motivi per portare il calcolo vicino ai dispositivi:</p>
+<ol>
+<li><strong>Tempo di risposta</strong>: si riduce il ritardo della rete (la <em>latency</em>, latenza).</li>
+<li><strong>Banda</strong>: si filtrano sul posto flussi di dati densi, come video o vibrazioni campionate migliaia di volte al secondo, invece di spedirli interi.</li>
+<li><strong>Resilienza</strong>: il sito continua a lavorare anche se la rete cade.</li>
+<li><strong>Controllo dei dati</strong>: alcuni dati restano in sede. Attenzione però: privacy e tempi di conservazione richiedono comunque regole esplicite. Tenere un dato in fabbrica non lo rende automaticamente "a norma".</li>
+</ol>
+<p>La regola che riassume tutto: <strong>la posizione del calcolo segue la scadenza della decisione</strong>, la connettività, la sensibilità dei dati, la potenza richiesta e il costo di ciclo di vita.</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+    A[Sensori e macchine] --&gt; B[Edge: decide in millisecondi]
+    B --&gt; C[Fog: coordina il sito]
+    C --&gt; D[Cloud: storico e addestramento]
+    D --&gt;|modelli approvati| B
+    B --&gt; E[Controllore o operatore]
+</pre></figure>
+<p><strong>Il nodo fog.</strong> In un sito con tre macchine, ognuna con il suo edge locale, il nodo fog fa quattro cose: <strong>aggrega</strong> i dati delle macchine, le <strong>coordina</strong>, tiene i dati in <strong>buffer</strong> (memoria tampone) quando la rete è lenta o assente e fa da <strong>ponte tra protocolli</strong>, cioè traduce tra "lingue" di dispositivi diversi. Non è una macchina speciale: può girare su un gateway, un router, un PC industriale o un server di sito.</p>
+<figure class="yt" data-id="qn6GDlMgoPA" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: What Is Edge Computing? (RealPars, 9 min)"><img loading="lazy" src="https://i.ytimg.com/vi/qn6GDlMgoPA/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>What Is Edge Computing? (RealPars, 9 min) · <a href="https://www.youtube.com/watch?v=qn6GDlMgoPA">apri su YouTube</a></figcaption></figure>
+
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Quanta strada fa un&#x27;auto mentre aspetta il cloud (numeri illustrativi)</p>
+<ol>
+<li>Un'auto viaggia a 100 km/h, cioè 100.000 m / 3.600 s ≈ 27,8 metri al secondo.</li>
+<li>Se la decisione si prende all'edge in 50 millisecondi (0,05 s), l'auto percorre 27,8 × 0,05 ≈ 1,4 metri.</li>
+<li>Se invece serve un giro verso un data center lontano che, tra rete e calcolo, richiede 200 ms, l'auto percorre 27,8 × 0,2 ≈ 5,6 metri.</li>
+<li>Quattro metri in più prima di frenare sono la differenza tra fermarsi e urtare. Per questo le funzioni critiche stanno a bordo, mentre il cloud serve a imparare dall'insieme delle auto.
+I tempi sono ipotetici, scelti per far vedere l'ordine di grandezza.</li>
+</ol>
+</aside>
+<figure class="yt" data-id="yOP5-3_WFus" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Is edge computing really faster? (Fireship, 8 min)"><img loading="lazy" src="https://i.ytimg.com/vi/yOP5-3_WFus/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Is edge computing really faster? (Fireship, 8 min) · <a href="https://www.youtube.com/watch?v=yOP5-3_WFus">apri su YouTube</a></figcaption></figure>
+
+<h2 id="chi-misura-chi-calcola-chi-agisce-dispositivi-dati-e-reti">Chi misura, chi calcola, chi agisce: dispositivi, dati e reti</h2>
+<p>Le slide distinguono <strong>sei famiglie di dispositivi</strong>, con un invito preciso: separare chi <strong>misura</strong>, chi <strong>calcola</strong> e chi <strong>agisce</strong>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Famiglia</th>
+<th>Che cosa fa</th>
+<th>Dati tipici</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sensori</td>
+<td>misurano</td>
+<td>temperatura (°C), vibrazione (m/s²), immagini e video</td>
+</tr>
+<tr>
+<td>Attuatori</td>
+<td>agiscono e riportano lo stato</td>
+<td>posizione della valvola (%), giri del motore (RPM), stato di guasto</td>
+</tr>
+<tr>
+<td>Nodi a microcontrollore</td>
+<td>piccoli computer che leggono i sensori</td>
+<td>campioni, tensione della batteria (V), tempo di attività (s)</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td>collegano e instradano</td>
+<td>flussi di telemetria, eventi di connessione, potenza del segnale (dBm)</td>
+</tr>
+<tr>
+<td>Edge server</td>
+<td>calcolano vicino alla fonte</td>
+<td>punteggi di anomalia, etichette di difetto, conteggi di eventi</td>
+</tr>
+<tr>
+<td>Consumer e wearable</td>
+<td>accompagnano le persone</td>
+<td>coordinate GPS, battito (bpm), passi</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nota l'ultima riga della slide: <em>che cosa produce un dispositivo dipende dai sensori installati, dal feedback degli attuatori e dal software</em>. Due dispositivi uguali possono generare dati diversi se cambia il software. E nota anche che l'edge server non produce misure, ma <strong>giudizi</strong> ("anomalia 0,87", "difetto: sì"): è già un dato elaborato, che vale quanto il modello che lo produce.</p>
+<p><strong>La rete segue il lavoro.</strong> Non esiste la rete migliore in assoluto, ma quella adatta:</p>
+<ul>
+<li><strong>Vicino</strong> (pochi metri): <em>Bluetooth Low Energy</em>, per wearable e beacon.</li>
+<li><strong>Sito locale</strong> (un edificio, una fabbrica): <em>Zigbee</em> o <em>Thread</em> per sensori a basso consumo, <em>Wi-Fi</em> per telecamere e dati più pesanti.</li>
+<li><strong>Area vasta</strong> (chilometri, mezzi in movimento): <em>LoRaWAN</em> (pochi dati, grandi distanze, batterie che durano anni), <em>cellular IoT</em> e <em>5G</em> per mobilità e volumi maggiori.</li>
+</ul>
+<p>I criteri di scelta sono cinque: copertura, velocità dei dati, consumo, affidabilità e costo totale. Una boa in mezzo al mare che manda una misura ogni ora non ha bisogno del 5G; un'auto che manda video sì.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Devi monitorare l&#x27;umidità del terreno in 300 vigneti sparsi su una collina, senza corrente elettrica. Quale rete scegli?</summary>
+<div class="answer">
+<p>Una rete a lungo raggio e basso consumo come LoRaWAN: i dati sono pochi (una misura ogni tanto), le distanze grandi e i sensori vanno a batteria. Il Wi-Fi non copre la collina e consuma troppo; il 5G sarebbe sprecato e più caro.</p>
+</div>
+</details>
+<h2 id="il-circuito-locale-decidere-entro-la-scadenza-poi-raccontarl">Il circuito locale: decidere entro la scadenza, poi raccontarlo al cloud</h2>
+<p>Come lavora, concretamente, l'edge? Le slide descrivono una <strong>pipeline live</strong> in cinque fasi:</p>
+<ol>
+<li><strong>Ingest</strong>: raccogliere le letture.</li>
+<li><strong>Filter</strong>: pulirle e marcarle con l'ora esatta (<em>timestamp</em>).</li>
+<li><strong>Analyze</strong>: applicare regole o un modello di AI.</li>
+<li><strong>Act</strong>: far partire una risposta <strong>approvata</strong>.</li>
+<li><strong>Sync</strong>: mandare al centro eventi e riassunti.</li>
+</ol>
+<p>In dettaglio: la pipeline marca l'ora dei dati in arrivo, ne controlla la validità, raggruppa le letture in <strong>finestre di tempo</strong> (per esempio "media degli ultimi 10 secondi"), ne ricava variabili utili (<em>feature</em>), valuta una regola o un modello e, se serve, fa scattare l'azione. Il circuito locale agisce entro la sua scadenza; i sistemi centrali ricevono solo una selezione dei dati.</p>
+<p>Le <strong>quattro tecniche</strong> per decidere in tempo reale sono:</p>
+<ul>
+<li><strong>Streaming</strong>: calcoli continui su finestre e aggregati (ricordi il <em>batch contro streaming</em> del 29 settembre? Qui siamo nello streaming puro).</li>
+<li><strong>Edge AI</strong>: modelli compatti eseguiti sul posto.</li>
+<li><strong>Event rules</strong>: soglie e stati ("se la temperatura supera X per più di Y minuti&hellip;").</li>
+<li><strong>Buffering</strong>: conserva ora, inoltra dopo.</li>
+</ul>
+<p>La slide aggiunge un <strong>budget di tempo illustrativo</strong>: 50 ms in tutto, divisi in 20 ms per catturare il dato, 15 ms per prepararlo e fare l'inferenza, 15 ms per comunicare e agire. Non è un dato di prestazione reale: serve a ragionare come un progettista, che parte dalla scadenza e la divide tra le fasi.</p>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Il budget dei millisecondi</p><div class="lab-body"><div class="row"><label>Scadenza della decisione (ms) <input type="range" id="eb-dl" min="10" max="500" value="50"></label> <output id="eb-dlo">50</output></div>
+<div class="row"><label>Cattura del dato (ms) <input type="range" id="eb-cap" min="1" max="100" value="20"></label> <output id="eb-capo">20</output></div>
+<div class="row"><label>Preparazione e inferenza (ms) <input type="range" id="eb-inf" min="1" max="200" value="15"></label> <output id="eb-info">15</output></div>
+<div class="row"><label>Comunicazione e azione (ms) <input type="range" id="eb-act" min="1" max="200" value="15"></label> <output id="eb-acto">15</output></div>
+<div class="row"><label>Andata e ritorno verso il cloud (ms, 0 = tutto all'edge) <input type="range" id="eb-net" min="0" max="300" value="0"></label> <output id="eb-neto">0</output></div>
+<p class="out" id="eb-out"></p>
+<p class="note">Valori di partenza: il budget illustrativo della slide (20 + 15 + 15 = 50 ms). Prova ad aggiungere 120 ms di rete: la decisione arriva tardi e va spostata all'edge.</p>
+<script>
+(function(){
+  const ids=['dl','cap','inf','act','net'], el={};
+  ids.forEach(k=>el[k]=document.getElementById('eb-'+k));
+  function upd(){
+    const v={}; ids.forEach(k=>{v[k]=+el[k].value; document.getElementById('eb-'+k+'o').textContent=v[k];});
+    const tot=v.cap+v.inf+v.act+v.net, m=v.dl-tot;
+    document.getElementById('eb-out').textContent = 'Tempo totale '+tot+' ms su '+v.dl+' ms disponibili: '+(m>=0?'in tempo, margine '+m+' ms.':'in ritardo di '+(-m)+' ms: accorcia la catena o sposta il calcolo più vicino al dato.');
+  }
+  ids.forEach(k=>el[k].addEventListener('input',upd)); upd();
+})();
+</script></div></figure>
+
+<p><strong>L'architettura completa.</strong> La slide "Inside the edge architecture" mette insieme i pezzi. I <strong>sensori</strong> catturano dati fisici e li mandano all'<strong>edge runtime</strong>, che convalida i dati ed esegue le analisi. L'edge manda <strong>output approvati</strong> al <strong>controllore o all'operatore</strong>, che esegue le azioni approvate. In alto, il <strong>server di sito (fog)</strong> coordina i dispositivi e spedisce dati selezionati ai <strong>servizi cloud</strong>, che fanno analisi sulla flotta e addestrano i modelli. Dal cloud torna verso l'edge un <strong>rilascio controllato</strong> di modelli e configurazioni: <em>test, approva, torna indietro se serve</em>. Sotto tutto, tre responsabilità trasversali: <strong>sicurezza, monitoraggio, gestione dei dispositivi</strong>.</p>
+<p>E una frase in evidenza che vale per tutta la lezione: <em>l'analytics supporta le decisioni, non sostituisce un controllore di sicurezza certificato</em>. Se un modello sbaglia, la valvola di sicurezza di una caldaia deve scattare comunque.</p>
+<p><strong>Decisioni locali, apprendimento condiviso.</strong> All'edge restano i dati live e l'inferenza locale; al cloud salgono eventi selezionati e riassunti, per lo storico e l'addestramento. Il ciclo è: <em>deploy</em> (testare, versionare, poter tornare indietro), <em>improve</em> (validare i modelli sui dati della flotta), e sempre <em>monitor</em>: deriva del modello, falsi allarmi, qualità dei dati, risultati di business. È la stessa valutazione onesta della lezione di ieri, applicata a migliaia di dispositivi.</p>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span></p>
+<p>Il 3 novembre la pipeline di machine learning finiva con "deployment e monitoraggio". Oggi vediamo che cosa vuol dire quando il modello gira su una turbina in mezzo al mare: il deployment diventa un aggiornamento remoto firmato, il monitoraggio deve riconoscere il <em>model drift</em> macchina per macchina.</p>
+</aside>
+<h2 id="una-flotta-connessa-e-anche-una-porta-aperta">Una flotta connessa è anche una porta aperta</h2>
+<p>Più dispositivi colleghi, più porte apri. Le slide dividono la sicurezza della flotta in due colonne.</p>
+<p><strong>Proteggere</strong>: (1) ogni dispositivo ha un'<strong>identità</strong> propria; (2) accesso e dati sono <strong>protetti</strong>; (3) gli aggiornamenti sono <strong>firmati</strong> (si verifica che vengano davvero dal produttore) e c'è sempre la possibilità di tornare alla versione precedente (<em>rollback</em>).</p>
+<p><strong>Continuare a lavorare</strong>: (1) durante un'interruzione girano le funzioni locali approvate; (2) gli eventi prioritari vanno in buffer; (3) al ritorno della rete ci si sincronizza. Le slide chiedono di <strong>testare</strong> davvero le interruzioni e i limiti di memoria: un buffer che si riempie in 20 minuti non regge un blackout di tre ore. E ancora: i controllori di sicurezza mantengono le loro funzioni di protezione in ogni caso.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Mirai: le telecamere che spensero mezzo internet (2016)</p>
+<p>Nel 2016 un malware chiamato Mirai ha cercato in rete telecamere IP e videoregistratori che usavano ancora <strong>nome utente e password di fabbrica</strong>, li ha infettati e li ha trasformati in un esercito di dispositivi telecomandati (<em>botnet</em>). A fine settembre 2016 l'autore ha pubblicato il codice, rendendolo disponibile a chiunque. Il 21 ottobre 2016 diverse botnet Mirai hanno sommerso di traffico Dyn, un'azienda che gestisce il servizio DNS (la "rubrica" che traduce i nomi dei siti in indirizzi) per molti grandi siti: per ore, soprattutto negli Stati Uniti, molti servizi online famosi sono risultati irraggiungibili. Il Dipartimento della Sicurezza Interna americano ha seguito l'incidente e ha richiamato i produttori alla sicurezza dei dispositivi connessi. La lezione per le aziende: un dispositivo da pochi euro senza identità sicura e senza aggiornamenti non è un rischio solo per chi lo compra, ma per tutti.</p>
+</aside>
+<figure class="yt" data-id="pX89hL7IqTY" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: The Cheap Cameras That Broke the Internet (Runs On, 8 min)"><img loading="lazy" src="https://i.ytimg.com/vi/pX89hL7IqTY/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>The Cheap Cameras That Broke the Internet (Runs On, 8 min) · <a href="https://www.youtube.com/watch?v=pX89hL7IqTY">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Perché &quot;aggiornamenti firmati con rollback&quot; è sia una misura di sicurezza sia una misura di continuità?</summary>
+<div class="answer">
+<p>La firma impedisce che qualcuno installi software falso sui dispositivi (sicurezza). Il rollback permette di tornare subito alla versione precedente se un aggiornamento legittimo ma difettoso blocca le macchine (continuità). Senza il primo sei vulnerabile, senza il secondo un errore ferma tutta la flotta.</p>
+</div>
+</details>
+<h2 id="tre-casi-turbine-schede-elettroniche-camion-frigo">Tre casi: turbine, schede elettroniche, camion frigo</h2>
+<p>Le slide valutano il valore con tre casi diversi. Prima però fissano <strong>opportunità</strong> e <strong>requisiti</strong> di esecuzione:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Opportunità di business</th>
+<th>Requisito per realizzarla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meno fermi e meno sprechi</td>
+<td>Integrazione di dispositivi diversi</td>
+</tr>
+<tr>
+<td>Abbonamenti di monitoraggio</td>
+<td>Aggiornamenti remoti e supporto</td>
+</tr>
+<tr>
+<td>Contratti a risultato</td>
+<td>Adozione e costo totale di ciclo di vita</td>
+</tr>
+</tbody>
+</table></div>
+<p>Il valore richiede una <strong>baseline misurabile</strong>, un <strong>proprietario della decisione</strong> e un <strong>modello operativo</strong>. I "contratti a risultato" (<em>outcome contracts</em>) sono il passo più interessante: il fornitore non vende la macchina, ma la disponibilità garantita ("paghi per le ore in cui la turbina produce"). È la "società dei risultati" della prima lezione, resa possibile dai sensori.</p>
+<p><strong>Caso 1 — Energia eolica offshore.</strong> La sala controllo combina la telemetria di tutta la flotta. Mostra la <strong>potenza attuale in MW</strong> (megawatt: quanta energia produce la turbina in questo istante), l'<strong>energia prodotta in MWh</strong> (megawattora) in un periodo dichiarato esplicitamente, e lo <strong>stato di salute</strong> (vibrazioni, calore, allarmi). Velocità e direzione del vento aiutano gli operatori a capire se un calo di produzione dipende dal meteo o da un guasto. L'architettura ha quattro livelli: l'<strong>edge della turbina</strong> (sensori, contatori, analisi locali delle condizioni), il <strong>server fog del parco</strong> (allinea nel tempo la telemetria, aggrega, tiene in buffer), la <strong>sala controllo</strong> (analisi in streaming, SCADA, operatori) e il <strong>cloud</strong> (storico della flotta e miglioramento dei modelli). Le decisioni operative: indagare i cali di produzione, pianificare squadre, ricambi e accesso alle turbine. In mare l'accesso dipende da onde e meteo: sapere prima quale turbina sta peggiorando vale moltissimo.</p>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · MW e MWh non sono la stessa cosa</p>
+<ul>
+<li><strong>Potenza (MW)</strong>: quanta energia al secondo, in questo momento. È un'istantanea.</li>
+<li><strong>Energia (MWh)</strong> = potenza × tempo. Una turbina che produce in media 3 MW per 2 ore genera 3 × 2 = <strong>6 MWh</strong>.</li>
+<li>Per questo la slide chiede di dichiarare sempre il periodo: "6 MWh" senza dire "in due ore" o "in un giorno" non significa nulla.</li>
+</ul>
+</aside>
+<figure class="dati"><iframe loading="lazy" src="https://ourworldindata.org/grapher/share-electricity-wind" title="Quota di elettricità prodotta dal vento, per paese" allow="web-share; clipboard-write"></iframe><figcaption>Quota di elettricità prodotta dal vento, per paese · Dati interattivi: Our World in Data. Cambia paesi e anni dal grafico. <a href="https://ourworldindata.org/grapher/share-electricity-wind">Apri a schermo intero</a></figcaption></figure>
+
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Il conto economico delle turbine (scenario didattico delle slide)</p>
+<ol>
+<li>Investimento iniziale: <strong>300 k€</strong>.</li>
+<li>Perdite evitate ogni anno (meno fermi, interventi programmati meglio): <strong>240 k€</strong>.</li>
+<li>Costi operativi annui del sistema: <strong>60 k€</strong>.</li>
+<li>Beneficio netto annuo: 240 − 60 = <strong>180 k€</strong>.</li>
+<li><em>Simple payback</em>: 300 / 180 ≈ <strong>1,7 anni</strong>.</li>
+<li>Prova di stress: se le perdite evitate si dimezzano (120 k€), il beneficio netto scende a 120 − 60 = 60 k€ e il payback sale a 300 / 60 = <strong>5 anni</strong>. Un dimezzamento del beneficio triplica il tempo di recupero, perché i costi operativi restano fissi.
+Le slide dicono chiaramente che sono cifre ipotetiche, non risultati di clienti reali.</li>
+</ol>
+</aside>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Quando si ripaga il pilota?</p><div class="lab-body"><div class="row"><label>Investimento iniziale (k€) <input type="range" id="pb-inv" min="50" max="1000" step="10" value="300"></label> <output id="pb-invo">300</output></div>
+<div class="row"><label>Perdite evitate all'anno (k€) <input type="range" id="pb-ben" min="0" max="600" step="10" value="240"></label> <output id="pb-beno">240</output></div>
+<div class="row"><label>Costi operativi all'anno (k€) <input type="range" id="pb-op" min="0" max="300" step="5" value="60"></label> <output id="pb-opo">60</output></div>
+<p class="out" id="pb-out"></p>
+<p class="note">Valori di partenza: lo scenario ipotetico delle slide. Porta le perdite evitate a 120: il payback passa da 1,7 a 5 anni.</p>
+<script>
+(function(){
+  const ids=['inv','ben','op'], el={};
+  ids.forEach(k=>el[k]=document.getElementById('pb-'+k));
+  function upd(){
+    const v={}; ids.forEach(k=>{v[k]=+el[k].value; document.getElementById('pb-'+k+'o').textContent=v[k];});
+    const net=v.ben-v.op;
+    document.getElementById('pb-out').textContent = net<=0 ? 'Beneficio netto '+net+' k€: il progetto non si ripaga mai.' : 'Beneficio netto '+net+' k€ all\'anno · payback '+(v.inv/net).toFixed(1)+' anni · in 5 anni guadagno netto '+(5*net-v.inv)+' k€.';
+  }
+  ids.forEach(k=>el[k].addEventListener('input',upd)); upd();
+})();
+</script></div></figure>
+
+<figure class="yt" data-id="BApzsgq32mM" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Machine learning per la manutenzione predittiva (RealPars, 6 min)"><img loading="lazy" src="https://i.ytimg.com/vi/BApzsgq32mM/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Machine learning per la manutenzione predittiva (RealPars, 6 min) · <a href="https://www.youtube.com/watch?v=BApzsgq32mM">apri su YouTube</a></figcaption></figure>
+
+<p><strong>Caso 2 — Ispezione in fabbrica alla velocità della linea.</strong> Siemens descrive un esempio nell'elettronica: un modello di AI addestrato nel cloud gira su un dispositivo edge e prevede, dai dati di produzione, la qualità delle schede elettroniche (PCB, i circuiti stampati). L'azienda dichiara una riduzione del <strong>30%</strong> dello sforzo di test a raggi X.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Siemens Amberg: meno raggi X grazie ai dati di processo</p>
+<p>In una presentazione del 2019 (ZVEI/Siemens, ETSI AI Summit) Siemens racconta l'impianto elettronico di Amberg, in Germania: invece di passare ai raggi X tutte le schede, un modello usa i parametri di produzione raccolti in tempo reale per prevedere quali schede rischiano difetti, e solo quelle vanno al controllo. Siemens dichiara fino al 30% di test a raggi X in meno e un investimento evitato in nuove macchine a raggi X. Attenzione: le slide stesse lo chiamano "risultato riportato dal fornitore per un'applicazione": è un dato aziendale, non verificato in modo indipendente. Per decidere a casa tua serve la tua baseline.</p>
+</aside>
+<p><strong>Caso 3 — Catena del freddo in movimento.</strong> Un camion frigo misura la temperatura del carico. Il ciclo è <strong>detect</strong> (rileva un'escursione di temperatura), <strong>respond</strong> (l'autista agisce subito, sul posto), <strong>monetize</strong> (il servizio si vende come abbonamento per veicolo). Il punto sottile della slide: sono i <strong>limiti specifici del prodotto</strong> e le procedure a decidere la risposta. Un'escursione non dice "merce rovinata": segnala che bisogna <strong>valutare</strong> il rischio che lo sia.</p>
+<p><strong>Confronto.</strong> Eolico: disponibilità degli impianti e manutenzione. Fabbrica: qualità del prodotto e reazione dell'ispezione. Logistica: condizione del prodotto e intervento sulla spedizione. Le slide citano anche i <strong>semafori adattivi</strong>, che coordinano la risposta a un incrocio in base al traffico rilevato.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Nei tre casi, che cosa hanno in comune le azioni che creano valore?</summary>
+<div class="answer">
+<p>Sono tutte azioni locali e tempestive collegate a un risultato misurabile: mandare la squadra giusta alla turbina giusta, scartare la scheda prima del test costoso, correggere la temperatura prima che il carico si rovini. Cambia il settore, non la logica sense → interpret → act → measure.</p>
+</div>
+</details>
+<h2 id="il-pilota-che-merita-l-investimento-il-dubai-challenge">Il pilota che merita l'investimento: il Dubai Challenge</h2>
+<p>L'ultima slide teorica dice come si passa dall'idea all'investimento, in quattro fasi:</p>
+<ol>
+<li><strong>Baseline</strong>: quanto si perde oggi e in quanto tempo si reagisce. Senza punto di partenza, nessun miglioramento si può dimostrare.</li>
+<li><strong>Pilot</strong>: su asset <strong>rappresentativi</strong>, comprese le interruzioni di rete (non solo le macchine nuove nel sito migliore).</li>
+<li><strong>Measure</strong>: valore e <strong>costo completo di ciclo di vita</strong>.</li>
+<li><strong>Scale</strong>: supporto e rilascio controllato.</li>
+</ol>
+<p>La domanda finale è quella del lavoro di gruppo: <strong>quale pilota merita l'investimento?</strong> Ogni proposta deve contenere <strong>2 misure di business, 1 misura tecnica e 1 ipotesi critica</strong>. La proposta più forte è quella che collega un'<strong>azione locale tempestiva</strong> a un <strong>risultato misurabile</strong>.</p>
+<p>La slide del lavoro di gruppo, intitolata "Dubai Challenge", mostra proprio i tre mondi visti in lezione (turbina, fabbrica con robot e telecamera, camion frigo) collegati a un cloud. Il testo della consegna non è nelle slide: la ricostruzione più coerente è che ogni gruppo dovesse scegliere e difendere un pilota con la struttura appena vista. Dubai è un contesto adatto: caldo estremo (la catena del freddo è critica), forte spinta pubblica sulla <em>smart city</em> e sulle rinnovabili.</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Una proposta completa per il pilota della logistica (ipotetica)</p>
+<ol>
+<li><strong>Azione locale</strong>: quando la temperatura del carico supera il limite del prodotto per più di 10 minuti, l'autista riceve un avviso e una procedura (controllare porte e impianto, avvisare la centrale).</li>
+<li><strong>Misura di business 1</strong>: valore della merce scartata per 100 consegne.</li>
+<li><strong>Misura di business 2</strong>: reclami dei clienti per merce non conforme.</li>
+<li><strong>Misura tecnica</strong>: tempo medio tra l'escursione e l'avviso all'autista (obiettivo: sotto i 2 minuti, anche dove la copertura cellulare manca, grazie al buffer).</li>
+<li><strong>Ipotesi critica</strong>: gli autisti reagiscono davvero all'avviso entro 15 minuti. Se il pilota mostra che non succede, il problema non è tecnico ma di processo e incentivi.</li>
+<li><strong>Disegno</strong>: 20 camion con il sistema e 20 senza, stesse rotte, per tre mesi.</li>
+</ol>
+</aside>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Non si finanzia la tecnologia: si finanzia un'azione più rapida e migliore, misurata contro una baseline, con un'ipotesi critica che il pilota può smentire.</p>
+</aside>
+<h2 id="dal-cuore-al-cervello-quando-il-sensore-misura-una-persona">Dal cuore al cervello: quando il sensore misura una persona</h2>
+<p>La parte A della lezione torna sui dati prodotti dai dispositivi e porta due esempi di <strong>dispositivi medici</strong>, poi un laboratorio con un sensore sul corpo.</p>
+<p><strong>Spirometro ed ECG.</strong> Lo schema è identico a quello industriale, in quattro passi: <em>dati del dispositivo → analisi → azione clinica → benefici potenziali</em>. Lo <strong>spirometro</strong> misura flusso e volume d'aria nel tempo; l'analisi controlla qualità e ripetibilità della prova e calcola il <strong>FEV1</strong> (volume espirato nel primo secondo) e la <strong>FVC</strong> (volume totale espirato con forza), oltre al rapporto FEV1/FVC; il medico valuta la funzione polmonare e la risposta alla terapia. L'<strong>ECG</strong> (elettrocardiogramma) registra la tensione elettrica del cuore nel tempo (in millivolt), con forme d'onda marcate con l'ora; l'analisi controlla la qualità del segnale, riconosce i battiti, calcola frequenza (bpm) e ritmo; il medico rivede i tratti segnalati e decide i passi successivi. La formula della slide: <strong>qualità del dato + interpretazione clinica + azione appropriata = potenziale valore per la salute</strong>. E la frase di prudenza: il dato del dispositivo o l'AI da soli non fanno una diagnosi né garantiscono risultati migliori.</p>
+<p><strong>Il laboratorio EEG e "Man on Wire".</strong> Le slide citano il documentario <em>Man on Wire</em> (2008) sulla traversata di Philippe Petit su un cavo teso tra le Torri Gemelle, nel 1974: l'immagine perfetta della concentrazione estrema. Poi passano a una fascia EEG da consumo (MindWave, con un sensore sulla fronte) e a un "gioco del filo" basato sull'attenzione.</p>
+<p>L'<strong>EEG</strong> registra piccolissime variazioni di tensione sullo scalpo. La <em>band power</em> indica quanta energia del segnale cade in una certa fascia di frequenze. Le fasce convenzionali (approssimate, e diverse da dispositivo a dispositivo):</p>
+<ul>
+<li><strong>Delta</strong> (circa 0,5–4 Hz): ritmi lenti, tipici del sonno profondo. Da svegli, sulla fronte, battiti di ciglia e movimenti possono gonfiare questa fascia.</li>
+<li><strong>Theta</strong> (circa 4–8 Hz): sonnolenza e alcuni compiti di memoria e controllo. <strong>Non</strong> è un misuratore di creatività o meditazione.</li>
+<li><strong>Alpha</strong> (circa 8–13 Hz): veglia rilassata, più forte a occhi chiusi e nella parte posteriore della testa. Più alpha non vuol dire sempre più calma.</li>
+<li><strong>Beta</strong> (circa 13–30 Hz): elaborazione attiva e allerta. Anche la tensione muscolare aggiunge potenza ad alta frequenza.</li>
+</ul>
+<p>Tutte le fasce coesistono, e il loro significato dipende dal compito, dalla persona e dalla posizione del sensore.</p>
+<p>I punteggi <strong>Attention</strong> e <strong>Meditation</strong> del dispositivo nascono così: EEG dalla fronte → elaborazione del segnale → algoritmi proprietari "eSense" → due indici da 1 a 100 (0 = non disponibile). Le formule e i pesi <strong>non sono pubblici</strong>, nessuno dei due è una singola banda o un rapporto alfa/beta, e <strong>non sono una percentuale del cervello</strong>.</p>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Il punteggio mostrato dall&#x27;app del laboratorio</p>
+<p><strong>Display = 95 × ln[1 + 3 × (raw/100)²] / ln(4)</strong>, con tetto a 95.
+- raw = 100 → ln(4)/ln(4) = 1 → <strong>95</strong>.
+- raw = 50 → 1 + 3 × 0,25 = 1,75; ln(1,75) ≈ 0,560; 0,560 / 1,386 ≈ 0,404 → <strong>≈ 38</strong>.
+- raw = 20 → 1 + 3 × 0,04 = 1,12; ln(1,12) ≈ 0,113 → 0,113 / 1,386 × 95 ≈ <strong>8</strong>.
+- <strong>Baseline</strong> = mediana dei punteggi durante 20 secondi di calibrazione; <strong>risultato</strong> = media dei punteggi mostrati negli ultimi 10 secondi; <strong>variazione</strong> = risultato − baseline.
+Interpretazione: la scala è non lineare, quindi un passo da 20 a 50 di raw non vale come uno da 50 a 80. È una scelta di presentazione dell'app, non una legge del cervello: per questo si confronta ognuno con la propria baseline.</p>
+</aside>
+<figure class="yt" data-id="gvpuOBezW0w" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: What Do Different Brainwaves Mean? (SciShow Psych, 5 min)"><img loading="lazy" src="https://i.ytimg.com/vi/gvpuOBezW0w/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>What Do Different Brainwaves Mean? (SciShow Psych, 5 min) · <a href="https://www.youtube.com/watch?v=gvpuOBezW0w">apri su YouTube</a></figcaption></figure>
+
+<p>Il laboratorio, in piccolo, ripete tutta la lezione: un sensore misura una persona (sense), un algoritmo trasforma il segnale in un indice (interpret), il gioco reagisce (act), e il confronto con la baseline dice se è cambiato qualcosa (measure). E ripete anche le avvertenze: un indice proprietario va letto con prudenza, il contatto dell'elettrodo conta, e la potenza di una banda non è una lettura dei pensieri.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;azienda vuole usare fasce EEG da consumo per valutare la concentrazione dei dipendenti durante le riunioni. Che cosa obietti?</summary>
+<div class="answer">
+<p>Tre cose. Tecnica: l'indice è proprietario, sensibile a movimenti e muscoli, e non misura direttamente la concentrazione. Statistica: senza baseline individuale e condizioni controllate i confronti tra persone non hanno senso. Etica e legale: sono dati sulla salute (categorie particolari dell'articolo 9 del GDPR, con protezione rafforzata), e il rapporto di lavoro rende il consenso poco libero. È l'esempio perfetto di dato che "si può raccogliere" ma non dovrebbe guidare decisioni sulle persone.</p>
+</div>
+</details></article></div>
+<section class="study" id="richiamo"><h2>Richiamo a libro chiuso</h2>
+<p class="hint">Chiudi la pagina e rispondi a voce o per iscritto. Poi riapri e confronta.</p><ol class="recall"><li>Disegna a memoria l&#x27;architettura edge: sensori, edge runtime, server fog, cloud, controllore/operatore, e indica che cosa viaggia su ogni freccia.</li><li>Spiega con un esempio tuo perché la posizione del calcolo deve seguire la scadenza della decisione.</li><li>Rifai il conto del caso eolico (investimento, beneficio netto, payback, scenario prudente) senza guardare.</li><li>Quali sono i rischi di sicurezza di una flotta IoT e quali tre difese indicano le slide?</li></ol></section>
+<section class="study" id="quiz" data-key="big-data-ai-2026-11-04"><h2>Quiz</h2>
+<p class="hint">Conta il primo tentativo. Dopo ogni risposta leggi il perché.</p>
+<ol class="quiz"><li class="q" data-answer="0"><p class="q-text">Una linea di imbottigliamento deve scartare una bottiglia difettosa entro 40 millisecondi da quando passa sotto la telecamera. La connessione al cloud ha un ritardo medio di 120 ms. Dove esegui il modello di visione?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">All&#x27;edge, vicino alla telecamera: la scadenza è più corta del giro verso il cloud</button></li><li><button type="button" class="opt" data-i="1">Nel cloud, perché ha più potenza di calcolo</button></li><li><button type="button" class="opt" data-i="2">Non serve un modello: basta guardare la dashboard il giorno dopo</button></li><li><button type="button" class="opt" data-i="3">Nel fog, ma solo di notte</button></li></ol><div class="why" hidden><p>La posizione del calcolo segue la scadenza della decisione. Con 40 ms disponibili e 120 ms solo di rete, il cloud arriva tardi qualunque sia la sua potenza. Il fog &#x27;di notte&#x27; non risponde al vincolo in tempo reale; la dashboard del giorno dopo misura, ma non agisce.</p></div></li><li class="q" data-answer="0"><p class="q-text">Un&#x27;azienda installa 5.000 sensori di vibrazione ma, dopo un anno, nessuna decisione di manutenzione è cambiata. Quale anello manca nella catena del valore delle slide?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Act e measure: nessuna azione è collegata ai dati e nessun risultato viene misurato</button></li><li><button type="button" class="opt" data-i="1">Connettività: bisogna passare al 5G</button></li><li><button type="button" class="opt" data-i="2">Il cloud: i dati vanno spostati altrove</button></li><li><button type="button" class="opt" data-i="3">Sense: servono altri sensori</button></li></ol><div class="why" hidden><p>Le slide dicono che la raccolta crea valore solo quando sostiene un&#x27;azione utile. Qui si misura e forse si interpreta, ma nessuno agisce né misura il risultato. Altri sensori, 5G o un altro cloud aumentano costi e dati senza chiudere il cerchio.</p></div></li><li class="q" data-answer="1"><p class="q-text">Quale compito è più adatto al cloud, in un&#x27;architettura edge-fog-cloud?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Tenere in memoria gli eventi durante un&#x27;interruzione di rete del sito</button></li><li><button type="button" class="opt" data-i="1">Addestrare un nuovo modello di guasto sui dati storici di tutta la flotta</button></li><li><button type="button" class="opt" data-i="2">Fermare un motore che vibra oltre la soglia di sicurezza</button></li><li><button type="button" class="opt" data-i="3">Filtrare e marcare con l&#x27;ora mille letture al secondo di un sensore</button></li></ol><div class="why" hidden><p>Il cloud ha lo storico e la visione di flotta: è il posto per addestrare e migliorare i modelli. Fermare il motore è un&#x27;azione locale urgente (edge o controllore di sicurezza); filtrare i flussi densi si fa vicino alla fonte; il buffer durante le interruzioni sta per definizione in locale.</p></div></li><li class="q" data-answer="3"><p class="q-text">Turbine eoliche: investimento 300 k€, perdite evitate 240 k€/anno, costi operativi 60 k€/anno. Se le perdite evitate si dimezzano, quanto diventa il payback?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">2,5 anni</button></li><li><button type="button" class="opt" data-i="1">1,7 anni</button></li><li><button type="button" class="opt" data-i="2">3,3 anni</button></li><li><button type="button" class="opt" data-i="3">5 anni</button></li></ol><div class="why" hidden><p>Perdite evitate dimezzate = 120 k€; beneficio netto = 120 − 60 = 60 k€; payback = 300 / 60 = 5 anni (è il dato della slide). 3,3 anni dimezza il beneficio netto (90 k€) invece delle perdite evitate: sbaglia perché i costi operativi restano interi. 1,7 anni è il caso base; 2,5 non corrisponde a nessun calcolo coerente.</p></div></li><li class="q" data-answer="2"><p class="q-text">Perché le slide insistono che il pilota misuri il &#x27;costo di ciclo di vita&#x27; e non solo il costo dei sensori?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Perché così il payback sembra più breve</button></li><li><button type="button" class="opt" data-i="1">Perché il ciclo di vita riguarda solo il riciclo dei rifiuti elettronici</button></li><li><button type="button" class="opt" data-i="2">Perché aggiornamenti remoti, supporto, integrazione e sostituzioni possono costare più dell&#x27;hardware iniziale</button></li><li><button type="button" class="opt" data-i="3">Perché i sensori sono sempre gratuiti</button></li></ol><div class="why" hidden><p>Tra i requisiti di esecuzione le slide citano integrazione di dispositivi diversi, aggiornamenti remoti e supporto, adozione e costo di ciclo di vita: sono spese ricorrenti che decidono se il progetto rende. I sensori non sono gratis; il riciclo è solo una parte; e includere più costi allunga il payback, non lo accorcia.</p></div></li><li class="q" data-answer="3"><p class="q-text">Durante un&#x27;interruzione di rete di 3 ore, che cosa deve continuare a fare un sito progettato bene?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Cancellare i dati per non riempire la memoria</button></li><li><button type="button" class="opt" data-i="1">Passare il controllo di sicurezza al modello di AI</button></li><li><button type="button" class="opt" data-i="2">Fermare tutte le macchine finché il cloud non risponde</button></li><li><button type="button" class="opt" data-i="3">Eseguire le funzioni locali approvate, tenere in buffer gli eventi prioritari e sincronizzarsi al ritorno della rete</button></li></ol><div class="why" hidden><p>Sono i tre punti &#x27;Continue&#x27; della slide su sicurezza e resilienza. Fermare tutto rende il sito dipendente dal cloud; cancellare i dati perde eventi critici; e le slide ripetono che l&#x27;analytics supporta le decisioni ma non sostituisce un controllore di sicurezza certificato.</p></div></li><li class="q" data-answer="2"><p class="q-text">Un camion frigo registra 9 °C per 25 minuti su un carico di vaccini. Che cosa significa questo evento secondo l&#x27;impostazione delle slide?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Il carico è sicuramente da buttare</button></li><li><button type="button" class="opt" data-i="1">Non conta nulla finché la media del viaggio resta sotto soglia</button></li><li><button type="button" class="opt" data-i="2">È un&#x27;escursione che richiede una valutazione secondo i limiti del prodotto: segnala un rischio, non una certezza di danno</button></li><li><button type="button" class="opt" data-i="3">Serve solo a calcolare il canone dell&#x27;abbonamento</button></li></ol><div class="why" hidden><p>Le slide dicono che un&#x27;escursione di temperatura segnala la necessità di valutare il rischio, secondo limiti e procedure specifici del prodotto. Non è una sentenza automatica; la media del viaggio può nascondere un picco dannoso; il canone è il modello di ricavo, non l&#x27;interpretazione dell&#x27;evento.</p></div></li><li class="q" data-answer="2"><p class="q-text">Il punteggio &#x27;Attention&#x27; di una fascia EEG da consumo passa da 40 a 70 durante un esercizio. Che conclusione è corretta?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Lo studente ha una diagnosi di disturbo dell&#x27;attenzione</button></li><li><button type="button" class="opt" data-i="1">La concentrazione è aumentata esattamente del 75%</button></li><li><button type="button" class="opt" data-i="2">È cambiato un indice relativo proprietario: è un indizio da confrontare con la baseline, non una misura diretta della concentrazione</button></li><li><button type="button" class="opt" data-i="3">Le onde alfa sono raddoppiate</button></li></ol><div class="why" hidden><p>La slide spiega che Attention e Meditation sono indici 1–100 calcolati con algoritmi non pubblici, non una percentuale del cervello né una singola banda di frequenza; e che la potenza di banda non è una diagnosi. Quindi si legge come variazione rispetto alla propria baseline, con prudenza.</p></div></li></ol><p class="score" aria-live="polite"></p>
+<button type="button" class="btn ghost reset">Ricomincia</button>
+<div class="print-only solutions"><h3>Soluzioni del quiz</h3><ol><li><strong>A</strong> — La posizione del calcolo segue la scadenza della decisione. Con 40 ms disponibili e 120 ms solo di rete, il cloud arriva tardi qualunque sia la sua potenza. Il fog &#x27;di notte&#x27; non risponde al vincolo in tempo reale; la dashboard del giorno dopo misura, ma non agisce.</li><li><strong>A</strong> — Le slide dicono che la raccolta crea valore solo quando sostiene un&#x27;azione utile. Qui si misura e forse si interpreta, ma nessuno agisce né misura il risultato. Altri sensori, 5G o un altro cloud aumentano costi e dati senza chiudere il cerchio.</li><li><strong>B</strong> — Il cloud ha lo storico e la visione di flotta: è il posto per addestrare e migliorare i modelli. Fermare il motore è un&#x27;azione locale urgente (edge o controllore di sicurezza); filtrare i flussi densi si fa vicino alla fonte; il buffer durante le interruzioni sta per definizione in locale.</li><li><strong>D</strong> — Perdite evitate dimezzate = 120 k€; beneficio netto = 120 − 60 = 60 k€; payback = 300 / 60 = 5 anni (è il dato della slide). 3,3 anni dimezza il beneficio netto (90 k€) invece delle perdite evitate: sbaglia perché i costi operativi restano interi. 1,7 anni è il caso base; 2,5 non corrisponde a nessun calcolo coerente.</li><li><strong>C</strong> — Tra i requisiti di esecuzione le slide citano integrazione di dispositivi diversi, aggiornamenti remoti e supporto, adozione e costo di ciclo di vita: sono spese ricorrenti che decidono se il progetto rende. I sensori non sono gratis; il riciclo è solo una parte; e includere più costi allunga il payback, non lo accorcia.</li><li><strong>D</strong> — Sono i tre punti &#x27;Continue&#x27; della slide su sicurezza e resilienza. Fermare tutto rende il sito dipendente dal cloud; cancellare i dati perde eventi critici; e le slide ripetono che l&#x27;analytics supporta le decisioni ma non sostituisce un controllore di sicurezza certificato.</li><li><strong>C</strong> — Le slide dicono che un&#x27;escursione di temperatura segnala la necessità di valutare il rischio, secondo limiti e procedure specifici del prodotto. Non è una sentenza automatica; la media del viaggio può nascondere un picco dannoso; il canone è il modello di ricavo, non l&#x27;interpretazione dell&#x27;evento.</li><li><strong>C</strong> — La slide spiega che Attention e Meditation sono indici 1–100 calcolati con algoritmi non pubblici, non una percentuale del cervello né una singola banda di frequenza; e che la potenza di banda non è una diagnosi. Quindi si legge come variazione rispetto alla propria baseline, con prudenza.</li></ol></div></section>
+<section class="study" id="trasferimento"><h2>Applica a un caso nuovo</h2>
+<div class="prose"><p>Caso ipotetico. Una catena di 60 supermercati in Veneto vuole monitorare i banchi frigo. Oggi un addetto controlla i termometri due volte al giorno; nell'ultimo anno ha buttato merce per circa 180.000 €. Un fornitore propone sensori wireless, un gateway per negozio e un cruscotto centrale: 90.000 € di installazione e 30.000 € l'anno di abbonamento. Progetta l'architettura (cosa sta all'edge, nel fog e nel cloud), scegli la connettività e prepara la proposta di pilota con 2 misure di business, 1 misura tecnica e 1 ipotesi critica.</p></div>
+<details class="box solution"><summary>Mostra una soluzione ragionata</summary><div class="prose"><p>1) Azione e scadenza: la decisione utile è 'sposta la merce o chiama il tecnico prima che si guasti', con una scadenza di minuti, non di millisecondi. 2) Architettura: all'edge i sensori nei banchi misurano la temperatura ogni minuto e applicano una regola semplice (soglia + durata, per evitare falsi allarmi quando si apre la porta); nel fog il gateway di negozio aggrega, tiene in buffer se cade internet e manda l'allarme al telefono del capo reparto anche senza cloud; nel cloud lo storico di tutti i negozi serve a riconoscere i banchi che degradano (manutenzione predittiva) e a confrontare i negozi. 3) Connettività: dentro il negozio basta una rete locale a basso consumo (Zigbee/Thread o Wi-Fi), il gateway esce con la linea del negozio o con SIM cellulare di riserva. 4) Conto prudente: se il sistema evita metà delle perdite, 90 k€ di beneficio − 30 k€ di abbonamento = 60 k€ netti l'anno; payback = 90 / 60 = 1,5 anni. Se ne evita solo un terzo: 60 − 30 = 30 k€, payback 3 anni. 5) Pilota: 6 negozi rappresentativi (vecchi e nuovi, città e provincia) per 3 mesi, con 6 negozi di controllo. Misure di business: euro di merce buttata per negozio; minuti di lavoro risparmiati nei controlli. Misura tecnica: percentuale di allarmi veri sul totale (precision), perché troppi falsi allarmi fanno ignorare il sistema. Ipotesi critica: che il personale reagisca all'allarme entro 30 minuti; se non succede, la tecnologia non serve. 6) Decisione: si scala solo se i negozi pilota buttano meno merce dei negozi di controllo e il costo di ciclo di vita (batterie, sostituzioni, supporto) resta dentro il conto.</p></div></details></section>
+<section class="study" id="decidi"><h2>Decidi tu</h2>
+<p class="hint">Mettiti nei panni di chi decide. Scegli, leggi la conseguenza, poi prova anche le altre strade.</p><div class="scenario"><h3>Il pilota del Dubai Challenge</h3>
+<p class="situation">Il fondo che finanzia il vostro gruppo ha budget per un solo pilota tra tre: monitoraggio di 20 turbine offshore, ispezione AI su una linea di schede elettroniche, sensori su 50 camion frigo. Per le turbine avete due anni di dati di vibrazione e un responsabile manutenzione motivato; per la fabbrica il fornitore porta solo un dato di marketing; per i camion non sapete se gli autisti reagiranno agli allarmi.</p><p class="role">Sei il capo progetto. Quale pilota proponi?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="1">Le turbine: c&#x27;è una baseline nei dati, un responsabile della decisione e un&#x27;azione locale chiara (pianificare squadre e ricambi)</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> È la proposta più forte secondo le slide: collega un&#x27;azione tempestiva a un risultato misurabile, con baseline e proprietario. L&#x27;ipotesi critica da dichiarare è che gli allarmi anticipino davvero i guasti abbastanza da cambiare i piani.</p></div></li><li><button type="button" class="choice" data-good="0">La fabbrica: il fornitore promette il 30% in meno di test</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Il 30% è un risultato riportato dal fornitore su un&#x27;applicazione specifica: senza una vostra baseline non sapete se si ripete da voi. Si può fare, ma prima va misurato lo stato attuale.</p></div></li><li><button type="button" class="choice" data-good="0">I camion: tutti parlano di catena del freddo</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Il valore dipende dalla reazione dell&#x27;autista, che è proprio l&#x27;ipotesi non verificata. Scegliere per moda e non per prove è l&#x27;errore che il pilota dovrebbe evitare.</p></div></li></ol>
+<p class="lesson-link" hidden>Un pilota merita l&#x27;investimento quando ha baseline, proprietario della decisione, azione tempestiva e un&#x27;ipotesi critica esplicita da mettere alla prova.</p></div><div class="scenario"><h3>Aggiornare 2.000 dispositivi stanotte</h3>
+<p class="situation">Il team dati ha migliorato nel cloud il modello che rileva i difetti: in test riduce i falsi allarmi del 40%. Il commerciale vuole installarlo stanotte su tutti i 2.000 dispositivi edge dei clienti.</p><p class="role">Sei il responsabile della piattaforma. Che cosa fai?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Installi subito ovunque: il test è buono</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Un modello migliore in laboratorio può comportarsi male su macchine diverse. Senza rilascio graduale né rollback rischi di fermare migliaia di clienti insieme.</p></div></li><li><button type="button" class="choice" data-good="1">Rilascio controllato: versione firmata, prima su un piccolo gruppo di dispositivi, monitoraggio di falsi allarmi e qualità dei dati, rollback pronto</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> È il ciclo &#x27;Deploy: test, version and roll back&#x27; e &#x27;Improve: validate on fleet data&#x27; delle slide. Se il gruppo pilota va bene, allarghi; se no, torni alla versione precedente.</p></div></li><li><button type="button" class="choice" data-good="0">Non aggiorni mai: il vecchio modello funziona</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Rinunci a un miglioramento reale e ignori il model drift: col tempo il vecchio modello peggiorerà comunque. Il problema non è aggiornare, ma come.</p></div></li></ol>
+<p class="lesson-link" hidden>All&#x27;edge il modello si esegue, nel cloud si migliora: il passaggio tra i due va governato con versioni, test sulla flotta e possibilità di tornare indietro.</p></div></section>
+<section class="study" id="davedere"><h2>Da vedere</h2><p class="hint">Per la sera o il weekend: storie vere o ben documentate che rendono concreti i temi della lezione.</p><ul class="watch"><li class="watch-item"><span class="wk">Documentario · 2008</span>
+<strong><a href="https://en.wikipedia.org/wiki/Man_on_Wire">Man on Wire</a></strong>
+<p>È nelle slide della lezione: la traversata di Philippe Petit tra le Torri Gemelle nel 1974. Fa da filo al laboratorio sull&#x27;attenzione misurata con la fascia EEG: concentrazione, preparazione e controllo del rischio.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li><li class="watch-item"><span class="wk">Documentario · 2016</span>
+<strong><a href="https://en.wikipedia.org/wiki/Lo_and_Behold,_Reveries_of_the_Connected_World">Lo and Behold, Reveries of the Connected World</a></strong>
+<p>Werner Herzog racconta Internet, dai primi collegamenti alle macchine connesse: aiuta a vedere promesse e fragilità di un mondo in cui gli oggetti parlano.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li><li class="watch-item"><span class="wk">Documentario · 2016</span>
+<strong><a href="https://en.wikipedia.org/wiki/Zero_Days">Zero Days</a></strong>
+<p>Alex Gibney ricostruisce Stuxnet, il malware che ha colpito sistemi di controllo industriale: mostra perché la sicurezza di dispositivi e impianti è una questione strategica.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li></ul></section>
+<section class="study" id="flashcard"><h2>Flashcard</h2>
+<p class="hint">Tocca una carta per girarla. Le frecce ← → scorrono il mazzo.</p>
+<div class="deck"><ol class="cards"><li class="card" tabindex="0"><div class="front">I cinque passi dell&#x27;IoT nella slide &#x27;What is IoT&#x27;?</div><div class="back">Sense, connect, process, decide, act: misurare, collegare, elaborare, decidere, agire.</div></li><li class="card" tabindex="0"><div class="front">La catena del valore IoT in quattro parole?</div><div class="back">Sense (evento fisico) → interpret (insight locale) → act (risposta operativa) → measure (risultato di business).</div></li><li class="card" tabindex="0"><div class="front">Quattro motivi per portare il calcolo vicino ai dispositivi?</div><div class="back">Tempo di risposta, banda (filtrare flussi densi), resilienza durante le interruzioni, controllo dei dati sul sito.</div></li><li class="card" tabindex="0"><div class="front">Edge, fog, cloud: ambito di ciascuno?</div><div class="back">Edge = dispositivo; fog = sito; cloud = globale.</div></li><li class="card" tabindex="0"><div class="front">Cinque criteri per decidere dove calcolare?</div><div class="back">Scadenza della decisione, connettività, sensibilità dei dati, domanda di calcolo, costo di ciclo di vita.</div></li><li class="card" tabindex="0"><div class="front">Quattro compiti di un nodo fog?</div><div class="back">Aggregare, coordinare, tenere in buffer, fare da ponte tra protocolli.</div></li><li class="card" tabindex="0"><div class="front">Sei famiglie di dispositivi IoT?</div><div class="back">Sensori, attuatori, nodi a microcontrollore, gateway, edge server, dispositivi consumer e wearable.</div></li><li class="card" tabindex="0"><div class="front">Le cinque fasi della pipeline live all&#x27;edge?</div><div class="back">Ingest, filter (pulire e marcare l&#x27;ora), analyze (regole o AI), act (risposta approvata), sync (eventi e riassunti).</div></li><li class="card" tabindex="0"><div class="front">Quattro tecniche per decisioni in tempo reale?</div><div class="back">Streaming a finestre, edge AI con modelli compatti, regole a eventi con soglie, buffering store-and-forward.</div></li><li class="card" tabindex="0"><div class="front">Che cosa resta all&#x27;edge e che cosa va al cloud?</div><div class="back">All&#x27;edge dati live e inferenza locale; al cloud eventi selezionati e riassunti per storico, addestramento e validazione sulla flotta.</div></li><li class="card" tabindex="0"><div class="front">Tre misure di protezione e tre di continuità?</div><div class="back">Protect: identità del dispositivo, accesso e dati protetti, aggiornamenti firmati con rollback. Continue: funzioni locali approvate, buffer degli eventi prioritari, sincronizzazione al ritorno della rete.</div></li><li class="card" tabindex="0"><div class="front">Conto del caso eolico?</div><div class="back">240 k€ perdite evitate − 60 k€ costi = 180 k€ netti l&#x27;anno; 300 k€ / 180 k€ ≈ 1,7 anni; se le perdite evitate si dimezzano, 5 anni. Scenario didattico ipotetico.</div></li><li class="card" tabindex="0"><div class="front">Risultato dichiarato da Siemens nel caso di ispezione PCB?</div><div class="back">Circa −30% di sforzo di test a raggi X, con AI addestrata nel cloud ed eseguita all&#x27;edge. Dato del fornitore, non verificato in modo indipendente.</div></li><li class="card" tabindex="0"><div class="front">Le quattro fasi del pilota e cosa deve contenere la proposta?</div><div class="back">Baseline, pilot, measure, scale. Proposta: 2 misure di business, 1 misura tecnica, 1 ipotesi critica.</div></li><li class="card" tabindex="0"><div class="front">MW contro MWh?</div><div class="back">MW = potenza in questo istante; MWh = energia prodotta in un periodo dichiarato. 3 MW per 2 ore = 6 MWh.</div></li></ol>
+<div class="deck-nav"><button type="button" class="btn ghost prev" aria-label="Carta precedente">‹</button><span class="pos"></span><button type="button" class="btn ghost next" aria-label="Carta successiva">›</button></div></div></section>
+<section class="study" id="glossario"><h2>Glossario</h2>
+<label class="search"><span>Cerca un termine</span><input type="search" class="gl-filter" placeholder="es. soft power"></label>
+<dl class="glossary"><div class="term"><dt>Internet of Things (IoT) <span class=it>· Internet delle cose</span></dt><dd>Rete di oggetti fisici con sensori, software e connettività che raccolgono e scambiano dati. Esempio: un contatore elettrico intelligente che invia i consumi ogni 15 minuti.</dd></div><div class="term"><dt>Sensor <span class=it>· sensore</span></dt><dd>Dispositivo che misura il mondo fisico e lo trasforma in un numero: temperatura in °C, vibrazione in m/s², immagini.</dd></div><div class="term"><dt>Actuator <span class=it>· attuatore</span></dt><dd>Dispositivo che agisce sul mondo fisico su comando: apre una valvola, cambia la velocità di un motore. Restituisce anche il suo stato (posizione, guasto).</dd></div><div class="term"><dt>Gateway <span class=it>· ponte di rete</span></dt><dd>Apparecchio che raccoglie i dati di molti dispositivi vicini e li traduce tra protocolli diversi verso la rete o il cloud.</dd></div><div class="term"><dt>Edge computing <span class=it>· calcolo al bordo</span></dt><dd>Elaborare i dati sul dispositivo o vicinissimo alla fonte, per rispondere in millisecondi anche senza rete. Esempio: una telecamera che scarta un pezzo difettoso sulla linea.</dd></div><div class="term"><dt>Fog computing <span class=it>· calcolo nella nebbia</span></dt><dd>Strato intermedio a livello di sito (gateway, server di fabbrica) che coordina più dispositivi, aggrega, conserva in buffer e fa da ponte verso il cloud.</dd></div><div class="term"><dt>Cloud computing <span class=it>· calcolo nella nuvola</span></dt><dd>Risorse di calcolo e memoria centralizzate e condivise, usate per lo storico, le analisi su tutta la flotta e l&#x27;addestramento dei modelli.</dd></div><div class="term"><dt>Latency <span class=it>· latenza</span></dt><dd>Il ritardo tra l&#x27;evento e la risposta. Se la decisione va presa in 50 millisecondi, un giro fino a un data center lontano può non bastare.</dd></div><div class="term"><dt>Edge AI / inference <span class=it>· AI al bordo / inferenza</span></dt><dd>Eseguire localmente un modello già addestrato per ottenere una previsione (es. &#x27;pezzo difettoso: sì&#x27;). L&#x27;addestramento invece avviene di solito nel cloud.</dd></div><div class="term"><dt>Buffering (store and forward) <span class=it>· memorizza e inoltra</span></dt><dd>Se la rete cade, il dispositivo conserva gli eventi prioritari e li invia quando torna la connessione, senza perderli.</dd></div><div class="term"><dt>Telemetry <span class=it>· telemetria</span></dt><dd>Flusso continuo di misure inviate da una macchina remota: potenza, temperatura, segnale. È la materia prima della sala controllo.</dd></div><div class="term"><dt>SCADA <span class=it>· supervisione e controllo</span></dt><dd>Sistema industriale che raccoglie dati dagli impianti e permette agli operatori di monitorarli e comandarli da una sala controllo.</dd></div><div class="term"><dt>Model drift <span class=it>· deriva del modello</span></dt><dd>Le prestazioni di un modello calano perché il mondo cambia (usura, stagioni, nuovi prodotti). Va monitorata su tutta la flotta.</dd></div><div class="term"><dt>Payback period <span class=it>· periodo di recupero</span></dt><dd>Anni necessari perché il beneficio netto ripaghi l&#x27;investimento iniziale: investimento / beneficio netto annuo. 300 k€ / 180 k€ ≈ 1,7 anni.</dd></div></dl><p class="empty" hidden>Nessun termine corrisponde. Prova con una parola più corta.</p></section>
+<section class="study" id="video"><h2>Video consigliati</h2><ul class="videos"><li class="video"><a href="https://www.youtube.com/watch?v=CObyT2P9C-U" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/CObyT2P9C-U/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=CObyT2P9C-U"><strong>Cos&#x27;è l&#x27;Internet of Things? Scopri la rete che entra negli oggetti</strong></a><p class="vmeta">Registro .it · 5 min · IT</p><p>Introduzione in italiano all&#x27;IoT, utile per fissare i cinque passi prima della parte tecnica.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=qn6GDlMgoPA" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/qn6GDlMgoPA/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=qn6GDlMgoPA"><strong>What Is Edge Computing?</strong></a><p class="vmeta">RealPars · 9 min · EN</p><p>Edge computing spiegato con esempi industriali: corrisponde all&#x27;architettura della slide &#x27;Inside the edge architecture&#x27;.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=yOP5-3_WFus" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/yOP5-3_WFus/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=yOP5-3_WFus"><strong>Is &quot;edge&quot; computing really faster?</strong></a><p class="vmeta">Fireship · 8 min · EN</p><p>Mostra dove nasce davvero la latenza e quando l&#x27;edge conviene: utile per il criterio &#x27;la posizione segue la scadenza&#x27;.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=BApzsgq32mM" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/BApzsgq32mM/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=BApzsgq32mM"><strong>How to Use Machine Learning for Predictive Maintenance</strong></a><p class="vmeta">RealPars · 6 min · EN</p><p>Manutenzione predittiva su dati di vibrazione: è il cuore del caso delle turbine eoliche.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=pX89hL7IqTY" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/pX89hL7IqTY/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=pX89hL7IqTY"><strong>The Cheap Cameras That Broke the Internet (Mirai Botnet)</strong></a><p class="vmeta">Runs On · 8 min · EN</p><p>Racconta il caso Mirai: perché identità dei dispositivi e password di fabbrica sono un problema di business.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=_AlcRoqS65E" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/_AlcRoqS65E/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=_AlcRoqS65E"><strong>What is the Internet of Things? And why should you care?</strong></a><p class="vmeta">TEDx Talks · 17 min · EN</p><p>Visione d&#x27;insieme sul valore dell&#x27;IoT per le aziende, per chi vuole approfondire.</p></div></li></ul></section>
+<section class="study sources" id="fonti"><h2>Fonti</h2><ol><li>Slide Canvas 134188 — Rizzi, BigDataBsnsRizzi2026Lesson7 (32 pagine, caricate il 2/11/2026) — Fonte d&#x27;aula: IoT e valore (pp. 3–4), edge/fog/cloud (pp. 5–7), dispositivi e dati (pp. 8–9, 26), connettività (p. 10), pipeline e tecniche real-time (pp. 11–13), edge-cloud e sicurezza (pp. 14–15), opportunità (p. 16), casi eolico/fabbrica/logistica (pp. 17–22), pilota (p. 23), spirometro ed ECG (p. 27), Man on Wire ed EEG (pp. 28–29), Dubai Challenge (p. 30).</li><li>Slide Canvas &#x27;Big Data Week 1 Rizzi aggiornato&#x27; — agenda del corso — Usata per collocare la lezione nel programma e collegarla alle lezioni sul ML.</li><li><a href="https://docbox.etsi.org/workshop/2019/201904_SUMMIT_AI/S03_AI_MANUFACTURING/AI_ML_USE_MANUFACTURING_ZVEI_SIEMENS.pdf">Siemens/ZVEI — AI &amp; ML use in manufacturing (ETSI AI Summit, aprile 2019)</a></li><li><a href="https://krebsonsecurity.com/2016/10/hacked-cameras-dvrs-powered-todays-massive-internet-outage/">KrebsOnSecurity — Hacked Cameras, DVRs Powered Today&#x27;s Massive Internet Outage (21/10/2016)</a></li><li><a href="https://www.dhs.gov/news/2016/10/24/statement-secretary-johnson-recent-cyber-incident">U.S. Department of Homeland Security — Statement on recent cyber incident (24/10/2016)</a></li><li><a href="https://medlineplus.gov/ency/article/003868.htm">MedlinePlus — Electrocardiogram</a></li></ol><details class="box verifica"><summary>Note di verifica</summary><div class="prose"><p>Lezione ricostruita dai materiali: nessuna registrazione, quindi non sappiamo che cosa abbiano detto in aula Campana e Rizzi, come si siano divisi le slide né che cosa abbiano prodotto i gruppi. Il collegamento del pacchetto 134188 al 4/11 è dedotto: i pacchetti 134187 (pipeline e valutazione) e 134188 (IoT) sono stati caricati insieme il 2/11, prima delle due lezioni consecutive del 3 e 4/11; la copertina dice 'Lesson 6' ma il file si chiama Lesson7. Il testo della consegna del Dubai Challenge non è nelle slide (p. 30 ha solo il titolo e un'immagine con turbina, fabbrica e camion frigo): è ricostruito dalla slide 'Pilot design and investment decision' (p. 23), che chiede quale pilota meriti l'investimento. Il laboratorio EEG (pp. 28–29) è ricostruito dalla slide: la formula del punteggio visualizzato è della app usata in aula (MindWave Monitor 3.0), le bande di frequenza sono convenzionali e approssimate. Precisazioni: (1) il caso eolico è dichiarato dalla slide 'scenario didattico ipotetico'; il payback di 5 anni vale se si dimezzano le perdite evitate (120 − 60 = 60 k€), non il beneficio netto. (2) Il −30% di test a raggi X è un risultato riportato da Siemens (presentazione ZVEI/Siemens 2019 sull'impianto di Amberg, 'fino al 30%'), non verificato in modo indipendente. (3) Il caso Mirai e i film sono integrazioni mie, non attribuite al docente. Fonti non consultabili in questo giro: Canvas (login in attesa), notebook NotebookLM del corso (browser non disponibile), PLAUD in diretta (connettore non raggiungibile: usato l'elenco aggiornato alle 20:29 del 6/11).</p></div></details></section>
+<nav class="prevnext" aria-label="Altre lezioni"><a class="pn prev" href="/study-lab/big-data-ai/2026-11-03/"><span>Lezione precedente</span>3 nov · Dal modello al reparto: misurare bene un modello e costruire un team analytics che il CEO usi davvero</a></nav></main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js" defer></script>
+</body></html>
