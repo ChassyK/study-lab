@@ -491,3 +491,12 @@ details.domanda { border: 0; background: var(--surface); }
 .course-row h3 a { color: var(--ink); }
 .course-row h3 a:hover { color: var(--c); text-decoration: none; }
 .course-row h3::before { background: var(--c); }
+
+/* la colonna non deve mai superare lo schermo (telefono) */
+.lesson-grid { grid-template-columns: 15rem minmax(0, 1fr); }
+.prose, .study, .toc, .brief, .lesson-head { min-width: 0; }
+.prose { overflow-wrap: break-word; }
+.prose pre, .diagram, .table-wrap, .lab, .dati, .yt { max-width: 100%; }
+.diagram svg, .lab svg, .prose svg { max-width: 100%; height: auto; }
+.lab .row { grid-template-columns: repeat(auto-fit, minmax(min(10rem, 100%), 1fr)); }
+@media (max-width: 960px) { .lesson-grid { grid-template-columns: minmax(0, 1fr); } }
