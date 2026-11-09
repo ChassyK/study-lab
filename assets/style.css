@@ -500,3 +500,12 @@ details.domanda { border: 0; background: var(--surface); }
 .diagram svg, .lab svg, .prose svg { max-width: 100%; height: auto; }
 .lab .row { grid-template-columns: repeat(auto-fit, minmax(min(10rem, 100%), 1fr)); }
 @media (max-width: 960px) { .lesson-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* allenamento d'esame (midterm) */
+.midterm { margin-top: 1rem; }
+.midterm h3 { font: 700 1.05rem/1.3 var(--sans); margin: 2rem 0 .8rem; }
+.midterm-lessons { list-style: none; padding: 0; display: grid; gap: .5rem; }
+.midterm-lessons li { background: var(--surface); border: 1px solid var(--rule-2); border-radius: var(--r); padding: .7rem 1rem; display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
+.midterm-lessons a { text-decoration: none; flex: 1 1 16rem; }
+.midterm-lessons .chip { margin-left: auto; }
+.practice .q-text .chip { margin-left: .4rem; }

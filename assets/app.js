@@ -49,7 +49,7 @@
   });
 
   /* quiz: conta il primo tentativo (salvato nel browser) */
-  $$("section#quiz").forEach(sec => {
+  $$("section#quiz, .practice").forEach(sec => {
     const key = "quiz:" + sec.dataset.key;
     const qs = $$(".q", sec);
     const score = $(".score", sec);
