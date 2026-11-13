@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Far parlare ottanta commenti arrabbiati: NLP, sentiment ed emozioni per decidere dove investire — Big Data &amp; AI</title>
+<meta name="description" content="Gran parte dei dati di un&#x27;azienda è testo: recensioni, email, chat, trascrizioni. Il Natural Language Processing (NLP) insegna alle macchine a leggerlo, passand">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",themeVariables:{fontFamily:"-apple-system, BlinkMacSystemFont, Inter, sans-serif",primaryColor:"#ffffff",primaryBorderColor:"#d2d2d7",lineColor:"#86868b",primaryTextColor:"#1d1d1f",fontSize:"17px"},flowchart:{useMaxWidth:true,htmlLabels:true}});</script></head>
+<body class="p-lesson" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5l8 6 8-6v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>Study Lab</a>
+<nav class="topnav" aria-label="Corsi"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></nav></header>
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
+<main id="main" class="lesson">
+<header class="lesson-head">
+  <p class="crumbs"><a href="/study-lab/">Corsi</a> / <a href="/study-lab/big-data-ai/">Big Data &amp; AI</a></p>
+  <div class="date-mark"><span class="day">13</span><span class="month">novembre<br>2026</span></div>
+  <h1>Far parlare ottanta commenti arrabbiati: NLP, sentiment ed emozioni per decidere dove investire</h1>
+  <p class="title-en" lang="en">Text Analytics — Natural Language Processing, Sentiment Analysis, Emotion Analysis and the €50,000 Mystery challenge</p>
+  <p class="meta">Venerdì · Rizzi, Campana · <span class="chip s-completa">Completa</span></p>
+  <p class="coverage">Lezione ricostruita dai materiali. Nessuna registrazione PLAUD per questa giornata (slot Rizzi 14:30–16:00 e Campana 16:30–18:00; elenco PLAUD controllato alle 22:10 del 13/11: nessuna registrazione). Fonte d&#x27;aula: slide Canvas 136392 &#x27;BigDataBusinessRizzi2026Lesson8&#x27; (41 pagine, caricate l&#x27;11/11; in copertina &#x27;Lesson 7&#x27;), spiegate tutte: parte B Text Analytics e NLP (pp. 2–31: definizione, cinque fasi, sette passi di preparazione, applicazioni, vantaggi e limiti), parte A Sentiment Analysis (pp. 32–38: polarità, pipeline supervisionata, dalle emozioni alle decisioni d&#x27;investimento, ruota di Plutchik, RoBERTa GoEmotions), sfida di gruppo &#x27;The €50,000 Mystery&#x27; (pp. 39–40). Le slide 7, 16–21, 23 e 33–38 sono immagini e sono state lette come tali. Usato anche il file Canvas 136393 &#x27;customer_feedback.txt&#x27; (80 commenti dei clienti per la sfida), letto per intero. Integrazioni dichiarate: esempi svolti, casi reali (Ticketmaster 2022, regola FTC 2025, studio &#x27;Twitter mood&#x27; 2011) e collegamenti con le lezioni del 20/10 e del 3/11.</p>
+</header>
+<section class="brief" aria-labelledby="inbreve"><h2 id="inbreve">In breve</h2>
+<p class="lede">Gran parte dei dati di un&#x27;azienda è testo: recensioni, email, chat, trascrizioni. Il Natural Language Processing (NLP) insegna alle macchine a leggerlo, passando per cinque livelli di analisi e una catena di preparazione (segmentare, tokenizzare, togliere parole vuote, ridurre le parole alla radice, etichettarle). La sentiment analysis ne ricava il tono (positivo, negativo, neutro), l&#x27;analisi delle emozioni un profilo più fine (gioia, paura, rabbia). La lezione insiste sul punto decisivo: un punteggio non è una decisione. Per investire servono impatto, comportamento, rappresentatività e un test della causa, come nella sfida dei 50.000 euro su 80 commenti di clienti.</p><ul class="keys"><li>Il testo è un dato non strutturato: ambiguo, ridondante, pieno di metafore. L&#x27;NLP lo trasforma in qualcosa che una macchina può contare e confrontare.</li><li>Cinque livelli di comprensione: lessicale (parole), sintattico (struttura), semantico (significato), discorso (frasi vicine), pragmatico (intenzione).</li><li>Prima di ogni modello il testo si prepara: segmentazione, tokenizzazione, stop words, stemming, lemmatizzazione, part-of-speech, entità nominate.</li><li>Ogni passo di pulizia è una scelta: togliere &#x27;not&#x27; come parola vuota cancella proprio il segnale che serve alla sentiment analysis.</li><li>La sentiment analysis classifica il tono; un modello supervisionato rappresenta il testo come numeri, calcola punteggi per classe e li trasforma in probabilità con la softmax.</li><li>Sentiment non è emozione: Plutchik descrive otto emozioni primarie; un modello come RoBERTa GoEmotions dà 28 punteggi indipendenti, e un testo può averne più di uno.</li><li>I punteggi del modello misurano quanto il modello è sicuro dell&#x27;etichetta, non l&#x27;intensità dell&#x27;emozione né l&#x27;impatto economico.</li><li>Dal testo alla decisione: frequenza contro impatto, sentimento contro comportamento, campione contro realtà, correlazione contro causa. Prima si testa, poi si investe.</li></ul></section>
+<div class="lesson-grid">
+<nav class="toc" aria-label="In questa lezione"><p class="toc-h">Spiegazione</p><ol><li><a href="#il-testo-e-il-dato-piu-ricco-e-piu-disordinato-che-un-aziend">Il testo è il dato più ricco e più disordinato che un'azienda possiede</a></li><li><a href="#cinque-domande-che-una-macchina-si-fa-davanti-a-una-frase">Cinque domande che una macchina si fa davanti a una frase</a></li><li><a href="#prima-di-capire-bisogna-pulire-la-catena-di-preparazione-del">Prima di capire bisogna pulire: la catena di preparazione del testo</a></li><li><a href="#dove-l-nlp-lavora-gia-e-dove-inciampa">Dove l'NLP lavora già, e dove inciampa</a></li><li><a href="#positivo-negativo-neutro-come-una-macchina-giudica-il-tono">Positivo, negativo, neutro: come una macchina giudica il tono</a></li><li><a href="#oltre-il-pollice-su-o-giu-la-ruota-delle-emozioni-e-roberta">Oltre il pollice su o giù: la ruota delle emozioni e RoBERTa</a></li><li><a href="#un-punteggio-non-e-una-decisione-dai-commenti-all-investimen">Un punteggio non è una decisione: dai commenti all'investimento</a></li><li><a href="#il-mistero-dei-50-000-euro-la-sfida-di-gruppo">Il mistero dei 50.000 euro: la sfida di gruppo</a></li></ol>
+<p class="toc-h">Mettiti alla prova</p><ul><li><a href="#richiamo">Richiamo</a></li><li><a href="#quiz">Quiz</a></li><li><a href="#trasferimento">Applica</a></li><li><a href="#decidi">Decidi tu</a></li><li><a href="#davedere">Da vedere</a></li><li><a href="#flashcard">Flashcard</a></li><li><a href="#glossario">Glossario</a></li><li><a href="#video">Video</a></li></ul>
+<div class="toc-actions"><a class="btn" href="2026-11-13__lezione.pdf" download>Scarica PDF</a><a class="btn ghost" href="https://notebook.google.com/notebook/075a6b17-6b0d-4565-a05f-d532d2bfa1b0">Apri NotebookLM</a></div></nav>
+<article class="prose"><h2 id="il-testo-e-il-dato-piu-ricco-e-piu-disordinato-che-un-aziend">Il testo è il dato più ricco e più disordinato che un'azienda possiede</h2>
+<p>Pensa a quanti testi produce un'azienda in un giorno: email dei clienti, recensioni, chat con l'assistenza, post sui social, trascrizioni delle chiamate, articoli di giornale che la citano. Nelle prime lezioni del corso li abbiamo chiamati dati <em>non strutturati</em> (<em>unstructured data</em>): non stanno in righe e colonne, non hanno un formato fisso. Sono la parte "variety" dei Big Data, e spesso la più preziosa, perché dicono il <strong>perché</strong> dietro i numeri. Un cruscotto ti dice che le vendite online sono calate; i commenti ti dicono che il pulsante "Paga" su telefono era coperto dal banner dei cookie.</p>
+<p>Il problema è che un computer ragiona in numeri, mentre gli esseri umani si parlano in parole. Il <em>Natural Language Processing</em> (NLP, elaborazione del linguaggio naturale) è il ramo dell'intelligenza artificiale che riempie questo vuoto: dà alle macchine la capacità di leggere, capire e ricavare significato dalla lingua umana, scritta o parlata. Lo fa unendo due mondi: la <em>linguistica computazionale</em> (regole sulla struttura della lingua) e i modelli statistici, di machine learning e di deep learning.</p>
+<p>Perché è difficile? Basta confrontare la lingua naturale con quella dei computer su tre punti:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Caratteristica</th>
+<th>Lingua naturale</th>
+<th>Linguaggio formale (computer)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ambiguità</td>
+<td>Una frase può avere più sensi ("Ho visto l'uomo col binocolo")</td>
+<td>Progettato per avere un solo senso</td>
+</tr>
+<tr>
+<td>Ridondanza</td>
+<td>Ripete molto per farsi capire</td>
+<td>Dice il minimo indispensabile</td>
+</tr>
+<tr>
+<td>Letteralità</td>
+<td>Piena di modi di dire e metafore ("mi è caduto il mondo addosso")</td>
+<td>Significa esattamente ciò che scrive</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>L'NLP trasforma un testo ambiguo, ridondante e metaforico in qualcosa che una macchina può contare, confrontare e usare per decidere.</p>
+</aside>
+<p>I vantaggi: un sistema NLP risponde in pochi secondi a domande su qualunque argomento, lavora su quantità di testo che nessuna persona potrebbe leggere, senza stancarsi e in modo coerente, e soprattutto <strong>dà struttura a una fonte che struttura non ne ha</strong>. I limiti: domande formulate male o ambigue producono risposte sbagliate, e molti sistemi funzionano bene solo nel compito e nel dominio per cui sono stati costruiti.</p>
+<figure class="yt" data-id="hFyi2sSsm4E" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Come funziona l&#x27;elaborazione del linguaggio naturale (Zanichelli, 12 min, IT)"><img loading="lazy" src="https://i.ytimg.com/vi/hFyi2sSsm4E/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Come funziona l&#x27;elaborazione del linguaggio naturale (Zanichelli, 12 min, IT) · <a href="https://www.youtube.com/watch?v=hFyi2sSsm4E">apri su YouTube</a></figcaption></figure>
+
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span></p>
+<p>Nella lezione del 20 ottobre (alberi decisionali e k-means) i dati erano già numeri. Oggi il primo lavoro è proprio costruire quei numeri partendo dalle parole. Dopo, gli strumenti sono gli stessi: classificatori, gruppi, metriche.</p>
+</aside>
+<h2 id="cinque-domande-che-una-macchina-si-fa-davanti-a-una-frase">Cinque domande che una macchina si fa davanti a una frase</h2>
+<p>Capire una frase non è un passaggio solo. Si divide in cinque fasi, ognuna con una domanda diversa. Se una fase fallisce, la frase viene "scartata" o capita male.</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  A[Testo grezzo] --&gt; B[Lessicale: quali parole?]
+  B --&gt; C[Sintattica: struttura corretta?]
+  C --&gt; D[Semantica: ha senso?]
+  D --&gt; E[Discorso: cosa dicono le frasi vicine?]
+  E --&gt; F[Pragmatica: che cosa si vuole?]
+</pre></figure>
+<p><strong>1. Analisi lessicale o morfologica.</strong> Il testo viene diviso nei suoi pezzi più piccoli, i <em>token</em>: "He goes to college." diventa ['He', 'goes', 'to', 'college', '.'], cinque token. Allo stesso modo un paragrafo si divide in frasi (<em>sentence detection</em>).</p>
+<p><strong>2. Analisi sintattica (<em>parsing</em>).</strong> Si controlla se la frase è ben formata: ordine delle parole e grammatica. "College to goes he" fallisce qui.</p>
+<p><strong>3. Analisi semantica.</strong> Si controlla il significato letterale delle parole messe insieme. L'esempio più famoso è di Noam Chomsky (1957): "Colorless green ideas sleep furiously" (Idee verdi incolori dormono furiosamente). La grammatica è perfetta, ma un'idea non ha colore, non può essere verde e incolore insieme e non dorme. Allo stesso modo "Delhi goes to him" è corretta nella forma ma strana nel senso: una città non va da qualcuno.</p>
+<p><strong>4. Integrazione del discorso.</strong> Una frase si capisce anche grazie a quelle vicine. In "He wanted that", che cosa è "that"? Lo dice la frase prima. Per un'azienda conta molto: in una recensione, "non lo ricomprerei" si riferisce al prodotto citato tre righe sopra.</p>
+<p><strong>5. Analisi pragmatica.</strong> Si cerca l'intenzione reale, usando le regole di una conversazione cooperativa. "Puoi chiudere la finestra?" è una richiesta, non una domanda sulle tue capacità. Spesso la fase del discorso e quella pragmatica si trattano insieme.</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Una frase attraverso le cinque fasi</p>
+<p>Frase di un cliente: "Bella idea mettere il pulsante sotto il banner. Complimenti."
+1. Lessicale: 11 token, 2 frasi.
+2. Sintattica: entrambe le frasi sono ben formate.
+3. Semantica: il significato letterale è positivo ("bella idea", "complimenti").
+4. Discorso: la seconda frase si riferisce alla prima; il pulsante coperto è un problema.
+5. Pragmatica: chi scrive non fa i complimenti, si lamenta con ironia. Il senso reale è negativo.
+Il sarcasmo è un problema pragmatico: le prime tre fasi lo "passano" senza accorgersene.</p>
+</aside>
+<p>Per applicare queste fasi esistono due famiglie di metodi. Le <strong>regole scritte a mano</strong> sono trasparenti ma fragili: nessuno riesce a prevedere tutte le frasi. I metodi <strong>statistici e di machine learning</strong> imparano dai casi più frequenti negli esempi e reggono meglio gli errori di battitura e le parole nuove, perché non dipendono da chi ha scritto le regole.</p>
+<figure class="yt" data-id="oi0JXuL19TA" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Natural Language Processing (CrashCourse AI #7, 13 min)"><img loading="lazy" src="https://i.ytimg.com/vi/oi0JXuL19TA/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Natural Language Processing (CrashCourse AI #7, 13 min) · <a href="https://www.youtube.com/watch?v=oi0JXuL19TA">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un chatbot di una compagnia aerea riceve: &quot;Il volo di ieri? Fantastico, solo sei ore di ritardo.&quot; e risponde &quot;Siamo felici che il viaggio le sia piaciuto!&quot;. In quale fase si è perso e perché?</summary>
+<div class="answer">
+<p>Nella fase pragmatica (aiutata dal discorso). Il chatbot ha capito parole, struttura e significato letterale ("fantastico" è positivo), ma non l'intenzione: "sei ore di ritardo" rende ironico il "fantastico". Per riconoscerlo serve collegare le due parti della frase e conoscere il contesto (un ritardo è una cosa negativa).</p>
+</div>
+</details>
+<h2 id="prima-di-capire-bisogna-pulire-la-catena-di-preparazione-del">Prima di capire bisogna pulire: la catena di preparazione del testo</h2>
+<p>Prima di dare un testo a un algoritmo di machine learning (per esempio Naive Bayes), lo si prepara in sette passi, tutti illustrati sulla frase "The sky is clear, the stars are twinkling at night".</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Domanda a cui risponde</th>
+<th>Esempio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Segmentazione</td>
+<td>Dove finisce una frase?</td>
+<td>"The sky is clear" / "the stars are twinkling at night"</td>
+</tr>
+<tr>
+<td>2. Tokenizzazione</td>
+<td>Quali sono le singole parole?</td>
+<td>The · stars · are · twinkling · at · night</td>
+</tr>
+<tr>
+<td>3. Rimozione delle stop words</td>
+<td>Quali parole non portano significato?</td>
+<td>Restano: stars · twinkling · night</td>
+</tr>
+<tr>
+<td>4. Stemming</td>
+<td>Qual è la radice comune?</td>
+<td>skipping, skipped, skips → skip</td>
+</tr>
+<tr>
+<td>5. Lemmatizzazione</td>
+<td>Qual è la forma del dizionario?</td>
+<td>am, are, is → be</td>
+</tr>
+<tr>
+<td>6. Part-of-speech tagging</td>
+<td>Che ruolo ha ogni parola?</td>
+<td>The (determinante) · stars (nome) · are (ausiliare) · twinkling (verbo) · at (preposizione) · night (nome)</td>
+</tr>
+<tr>
+<td>7. Named entity recognition</td>
+<td>Ci sono persone, luoghi, aziende, cifre?</td>
+<td>"Ticketmaster" → organizzazione; "£65" → somma di denaro</td>
+</tr>
+</tbody>
+</table></div>
+<p>Qualche chiarimento sui passi più delicati.</p>
+<p><strong>Stemming e lemmatizzazione</strong> fanno un lavoro simile in modo diverso. Lo <em>stemming</em> taglia le desinenze con regole meccaniche: è veloce, ma a volte produce radici che non sono parole ("studies" → "studi"). La <em>lemmatizzazione</em> usa grammatica e dizionario e riconosce che "am", "are" e "is" sono forme dello stesso verbo "be", tenendo conto di tempo, modo e genere. In italiano, dove un verbo ha decine di forme ("andavo", "andrei", "vado"), la lemmatizzazione è quasi indispensabile.</p>
+<p><strong>Il part-of-speech tagging</strong> serve a distinguere parole uguali con ruoli diversi: "book a ticket" (verbo, prenotare) e "a good book" (nome, libro). Il risultato cambia molto per un'azienda: "book" come verbo in una chat significa intenzione d'acquisto.</p>
+<p><strong>Il named entity recognition</strong> trova le "cose con un nome": persone, luoghi, organizzazioni, somme, quantità, titoli di film. È ciò che permette di contare quante volte un'azienda viene nominata nelle notizie e con quale tono.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Ogni passo di pulizia è una scelta, non una regola neutra: togliere troppo cancella il segnale che cercavi.</p>
+</aside>
+<p>Ecco l'esempio più importante per la seconda parte della lezione. Molte liste standard di stop words contengono "not", "no", "never". Per contare gli argomenti di un testo va bene. Per il sentiment è un disastro: "The show was not good" diventa "show good". Lo stesso vale per i segni di punteggiatura: "!!!" e "?" portano emozione. Per questo i modelli moderni di sentiment (vedi più avanti) tengono la frase quasi intera: "keep context, negation and paragraph boundaries".</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Pulire un commento vero del dataset (CUST-041)</p>
+<p>Testo: "The Pay button was hidden behind the cookie banner on my phone. I missed out and I'm livid."
+1. Segmentazione: 2 frasi.
+2. Tokenizzazione: The · Pay · button · was · hidden · behind · the · cookie · banner · on · my · phone · . · I · missed · out · and · I · 'm · livid · .
+3. Stop words (lista standard): restano Pay · button · hidden · cookie · banner · phone · missed · livid.
+4. Lemmatizzazione: hidden → hide, missed → miss.
+5. POS: button, banner, phone = nomi; hide, miss = verbi; livid = aggettivo.
+6. NER: nessuna entità nominata.
+Risultato utile: tema "pagamento da telefono, banner cookie"; tono negativo forte ("livid" = furioso). Due informazioni diverse, entrambe preziose: il problema e la reazione.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Vuoi contare quante recensioni di un hotel parlano di &quot;colazione&quot;. Lemmatizzazione o stemming? E togli le stop words?</summary>
+<div class="answer">
+<p>Per contare un argomento vanno bene entrambi; la lemmatizzazione è più precisa (raggruppa "colazioni" e "colazione" senza creare radici strane). Le stop words si possono togliere: non servono a capire di che cosa si parla. Ma se poi vuoi sapere se la colazione è piaciuta, devi tornare al testo con le negazioni: "colazione non all'altezza" senza "non" sembrerebbe un complimento.</p>
+</div>
+</details>
+<h2 id="dove-l-nlp-lavora-gia-e-dove-inciampa">Dove l'NLP lavora già, e dove inciampa</h2>
+<p>La mappa delle applicazioni è lunga: traduzione tra lingue, riassunti, interazione vocale, comprensione del parlato, estrazione di informazioni, accesso alle informazioni, risposte alle domande, conversazione con il computer, correzione ortografica, strumenti di scrittura e di lettura in lingua straniera. Le più familiari:</p>
+<ul>
+<li><strong>Chatbot</strong>: rispondono alle domande frequenti sui siti, riducendo il lavoro dell'assistenza.</li>
+<li><strong>Traduzione automatica</strong>: Google Translate, Amazon Translate.</li>
+<li><strong>Correzione automatica e grammatica</strong>: dal telefono all'elaboratore di testi.</li>
+<li><strong>Assistenti virtuali</strong>: Siri, Alexa, Google Home capiscono comandi a voce.</li>
+<li><strong>Pubblicità mirata</strong>: ciò che scrivi e cerchi diventa un segnale per scegliere gli annunci.</li>
+<li><strong>Ricerca sul web</strong>: i motori di ricerca usano l'NLP per capire che cosa chiedi e di che cosa parla una pagina.</li>
+<li><strong>Question answering e text summarization</strong>: rispondere in linguaggio naturale e riassumere documenti lunghi.</li>
+</ul>
+<p>Una macchina capace di capire davvero la lingua umana risolverebbe quasi tutto il problema dell'intelligenza artificiale. Gli assistenti conversazionali di oggi si sono avvicinati molto, ma i limiti elencati restano veri in forma nuova: domande ambigue producono risposte sicure e sbagliate, e un sistema addestrato su un tipo di testo peggiora su un altro.</p>
+<p>Un limite chiave per il business è il <em>domain shift</em> (cambio di dominio): un modello che ha imparato da commenti su Reddit legge male la prosa letteraria, il gergo medico o i reclami di una biglietteria. La parola "sick" in un forum musicale può voler dire "fantastico".</p>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span></p>
+<p>Il principio è lo stesso della lezione del 4 novembre sull'IoT: un dato vale solo se fa scattare un'azione utile. Un riassunto automatico di mille email non serve a nulla se nessuno decide qualcosa leggendolo.</p>
+</aside>
+<h2 id="positivo-negativo-neutro-come-una-macchina-giudica-il-tono">Positivo, negativo, neutro: come una macchina giudica il tono</h2>
+<p>La <em>sentiment analysis</em> risponde a una domanda semplice: <strong>che atteggiamento esprime un testo?</strong> Tre frasi su un libro:</p>
+<ul>
+<li>"I loved this book." → positivo</li>
+<li>"The book has twelve chapters." → neutro (un fatto)</li>
+<li>"The plot was disappointing." → negativo</li>
+</ul>
+<p>Ma un testo può contenere giudizi diversi su aspetti diversi. "The writing is beautiful, but the ending is weak" è positivo sulla scrittura e negativo sul finale. Questo è il <em>sentiment per aspetto</em> (<em>aspect-based sentiment</em>), il più utile per un'azienda: non ti basta sapere che il cliente è scontento, vuoi sapere <strong>di che cosa</strong>.</p>
+<p>Due avvertenze. <strong>Sentiment non è emozione</strong>: il sentiment descrive l'atteggiamento, l'analisi delle emozioni identifica stati come gioia, paura, rabbia. "Ho paura che il pagamento sia andato due volte" e "Siete degli incapaci" sono entrambi negativi, ma il primo cliente va rassicurato, il secondo calmato. <strong>Il contesto conta</strong>: negazione, sarcasmo e dominio cambiano il significato, e le previsioni incerte vanno riviste da una persona.</p>
+<h3 id="come-funziona-un-classificatore-supervisionato">Come funziona un classificatore supervisionato</h3>
+<p>Una pipeline tipica ha cinque passi, qui sulla frase "I did not enjoy the ending."</p>
+<ol>
+<li><strong>Input</strong>: si tiene il contesto, comprese negazioni e confini dei paragrafi.</li>
+<li><strong>Tokenize</strong>: parole o pezzi di parola diventano numeri identificativi (token ID).</li>
+<li><strong>Represent</strong>: il testo diventa un vettore di numeri (<em>embedding</em>). I modelli contestuali calcolano il vettore di ogni parola guardando le altre: "enjoy" accanto a "not" è rappresentato diversamente da "enjoy" da solo.</li>
+<li><strong>Classify</strong>: un livello lineare trasforma il vettore <em>h</em> in un punteggio per classe, z = Wh + b.</li>
+<li><strong>Predict</strong>: la <em>softmax</em> trasforma i punteggi in probabilità e si sceglie la più alta.</li>
+</ol>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Dalla classe al punteggio alla probabilità</p>
+<p>z = W·h + b — h è il vettore che rappresenta il testo; W è una matrice di pesi imparati; b un termine fisso (bias). Il risultato z ha un numero per classe (positivo, neutro, negativo).
+p_i = e^(z_i) / (e^(z_pos) + e^(z_neu) + e^(z_neg)) — la softmax rende ogni punteggio positivo con l'esponenziale e divide per la somma, così le tre probabilità sommano a 1.
+Calcolo svolto con z = (−1,0; 0,5; 2,0): e^(−1) = 0,368; e^(0,5) = 1,649; e^(2) = 7,389; somma 9,406. Probabilità: positivo 0,039, neutro 0,175, negativo 0,786. Etichetta: negativo.
+Interpretazione: 0,786 dice quanto il modello "sostiene" l'etichetta. Non dice quanto il cliente è arrabbiato, e può essere mal calibrato (un 0,8 non è sempre giusto 8 volte su 10).</p>
+</aside>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Dai punteggi alle probabilità (softmax)</p><div class="lab-body"><div class="row"><label>Punteggio positivo z <input type="range" id="sm-p" min="-3" max="3" step="0.1" value="-1"></label> <output id="sm-po">-1</output></div>
+<div class="row"><label>Punteggio neutro z <input type="range" id="sm-n" min="-3" max="3" step="0.1" value="0.5"></label> <output id="sm-no">0.5</output></div>
+<div class="row"><label>Punteggio negativo z <input type="range" id="sm-g" min="-3" max="3" step="0.1" value="2"></label> <output id="sm-go">2</output></div>
+<p class="out" id="sm-out"></p>
+<p class="note">Valori di partenza: l'esempio della formula. Prova ad avvicinare i tre punteggi: le probabilità si livellano e la previsione diventa incerta, da far rivedere a una persona.</p>
+<script>
+(function(){
+  const ids=['p','n','g'], el={};
+  ids.forEach(k=>el[k]=document.getElementById('sm-'+k));
+  function upd(){
+    const v={}; ids.forEach(k=>{v[k]=+el[k].value; document.getElementById('sm-'+k+'o').textContent=v[k];});
+    const e={p:Math.exp(v.p),n:Math.exp(v.n),g:Math.exp(v.g)}, s=e.p+e.n+e.g;
+    const pr={p:e.p/s,n:e.n/s,g:e.g/s}, names={p:'positivo',n:'neutro',g:'negativo'};
+    let best='p'; ids.forEach(k=>{if(pr[k]>pr[best])best=k;});
+    const unsure = pr[best]<0.6 ? ' Previsione incerta: sotto 0,6 conviene una revisione umana.' : '';
+    document.getElementById('sm-out').textContent='Positivo '+pr.p.toFixed(3)+' · neutro '+pr.n.toFixed(3)+' · negativo '+pr.g.toFixed(3)+' → etichetta: '+names[best]+'.'+unsure;
+  }
+  ids.forEach(k=>el[k].addEventListener('input',upd)); upd();
+})();
+</script></div></figure>
+
+<h3 id="tre-approcci-e-come-si-impara">Tre approcci e come si impara</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Approccio</th>
+<th>Come funziona</th>
+<th>Punto forte</th>
+<th>Punto debole</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lessici con regole</td>
+<td>Liste di parole con un punteggio + regole (per esempio la negazione inverte il segno)</td>
+<td>Trasparente, nessun dato etichettato</td>
+<td>Non capisce sarcasmo e gergo nuovo</td>
+</tr>
+<tr>
+<td>ML tradizionale</td>
+<td>Testo → vettori sparsi TF-IDF (quanto una parola è tipica di un documento rispetto agli altri) → classificatore come regressione logistica o SVM</td>
+<td>Veloce, buono con abbastanza esempi</td>
+<td>Ignora l'ordine e il contesto delle parole</td>
+</tr>
+<tr>
+<td>Modelli contestuali</td>
+<td>Embedding imparati + rete neurale addestrata dall'inizio alla fine</td>
+<td>Capisce contesto e negazioni</td>
+<td>Costoso, meno trasparente, sensibile al dominio</td>
+</tr>
+</tbody>
+</table></div>
+<p>Il modello impara da <strong>esempi etichettati da persone</strong>: ogni testo ha la sua classe giusta. La <em>cross-entropy</em> misura quanto la previsione si allontana dalla classe vera; la <em>discesa del gradiente</em> (<em>gradient descent</em>) corregge i pesi W e b un poco alla volta per ridurre l'errore.</p>
+<p>Per testarlo si usano tre insiemi separati (addestramento, validazione, test) e le metriche già viste il 3 novembre: precision, recall, una <em>confusion matrix</em> con classi vere e previste e il <em>macro-F1</em>, cioè la media degli F1 delle tre classi. Il macro-F1 conta perché le classi sono spesso sbilanciate: se il 90% delle recensioni è positivo, un modello che dice sempre "positivo" ha il 90% di accuratezza e non serve a niente.</p>
+<figure class="yt" data-id="5HQCNAsSO-s" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: What is Sentiment Analysis? (IBM Technology, 10 min)"><img loading="lazy" src="https://i.ytimg.com/vi/5HQCNAsSO-s/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>What is Sentiment Analysis? (IBM Technology, 10 min) · <a href="https://www.youtube.com/watch?v=5HQCNAsSO-s">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;azienda addestra un modello di sentiment su recensioni di ristoranti e lo usa sulle email di reclamo della sua banca. L&#x27;accuratezza crolla. Perché, e che cosa fai?</summary>
+<div class="answer">
+<p>È un cambio di dominio: parole e toni dei reclami bancari ("addebito", "bloccato", "pratica") non c'erano negli esempi di addestramento, e le email sono più lunghe e formali. Si etichetta un campione di email della banca, si misura il modello su quel campione (precision, recall, macro-F1) e lo si rifinisce con quegli esempi. Fino ad allora le previsioni incerte vanno a una persona.</p>
+</div>
+</details>
+<h2 id="oltre-il-pollice-su-o-giu-la-ruota-delle-emozioni-e-roberta">Oltre il pollice su o giù: la ruota delle emozioni e RoBERTa</h2>
+<p>Positivo e negativo sono troppo grossolani per molte decisioni. Lo psicologo Robert Plutchik ha proposto una ruota con <strong>otto emozioni primarie</strong>, disposte in <strong>quattro coppie di opposti</strong>:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Primaria</th>
+<th>Forma più debole</th>
+<th>Forma più forte</th>
+<th>Opposto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gioia</td>
+<td>Serenità</td>
+<td>Estasi</td>
+<td>Tristezza</td>
+</tr>
+<tr>
+<td>Fiducia</td>
+<td>Accettazione</td>
+<td>Ammirazione</td>
+<td>Disgusto</td>
+</tr>
+<tr>
+<td>Paura</td>
+<td>Apprensione</td>
+<td>Terrore</td>
+<td>Rabbia</td>
+</tr>
+<tr>
+<td>Sorpresa</td>
+<td>Distrazione</td>
+<td>Stupore</td>
+<td>Anticipazione</td>
+</tr>
+<tr>
+<td>Tristezza</td>
+<td>Pensosità</td>
+<td>Dolore</td>
+<td>Gioia</td>
+</tr>
+<tr>
+<td>Disgusto</td>
+<td>Noia</td>
+<td>Repulsione</td>
+<td>Fiducia</td>
+</tr>
+<tr>
+<td>Rabbia</td>
+<td>Fastidio</td>
+<td>Furia</td>
+<td>Paura</td>
+</tr>
+<tr>
+<td>Anticipazione</td>
+<td>Interesse</td>
+<td>Vigilanza</td>
+<td>Sorpresa</td>
+</tr>
+</tbody>
+</table></div>
+<p>Tre idee della ruota: <strong>somiglianza</strong> (le emozioni vicine sono simili e sfumano l'una nell'altra), <strong>opposti</strong> (diametralmente opposte sulla ruota), <strong>mescolanze</strong> (<em>blends</em>): gioia + fiducia = amore; paura + sorpresa = soggezione; anticipazione + gioia = ottimismo. Un punto importante: è <strong>un quadro teorico per parlare delle emozioni, non un test diagnostico né un classificatore automatico</strong>.</p>
+<p>Per leggere le emozioni in un testo, si può usare un modello concreto: <em>RoBERTa</em> rifinito su <em>GoEmotions</em> (sulla piattaforma Hugging Face si chiama SamLowe/roberta-base-go_emotions). Si costruisce in due tappe:</p>
+<ol>
+<li><strong>Pre-addestramento</strong> (<em>pretrain</em>): RoBERTa, presentato da ricercatori di Facebook AI nel 2019, impara la lingua inglese nascondendo parole a caso nei testi e indovinandole (<em>masked tokens</em>). Così impara come le parole dipendono dal contesto.</li>
+<li><strong>Rifinitura</strong> (<em>fine-tune</em>): impara le etichette di emozione da GoEmotions, un insieme di commenti Reddit annotati a mano da Google Research (2020) con 27 emozioni più "neutral".</li>
+</ol>
+<p>Poi, su un testo nuovo come "I'm excited to see you, but worried about the trip":</p>
+<ol>
+<li>il testo viene diviso in pezzi di parola con la loro posizione;</li>
+<li>l'<em>auto-attenzione</em> (<em>self-attention</em>) del <em>Transformer</em> collega ogni pezzo agli altri ("worried" si lega a "trip");</li>
+<li>un livello di classificazione con <strong>sigmoide</strong> produce <strong>28 punteggi indipendenti</strong>;</li>
+<li>ogni punteggio si confronta con una soglia validata: qui escono sia "excitement" sia "nervousness".</li>
+</ol>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Sigmoide: ogni emozione per conto suo</p>
+<p>σ(z) = 1 / (1 + e^(−z)) — trasforma un punteggio qualunque in un numero tra 0 e 1, senza guardare gli altri.
+Esempio: z = 1,2 → 1 / (1 + 0,301) = 0,77; z = −0,4 → 1 / (1 + 1,492) = 0,40. Con soglia 0,5 la prima emozione viene assegnata, la seconda no.
+Differenza con la softmax: la softmax fa "competere" le classi (sommano a 1, ne vince una); la sigmoide le tratta come tante domande sì/no. Per questo i punteggi delle emozioni possono sommare più di 1.</p>
+</aside>
+<p>Tre regole di lettura: più etichette possono valere insieme; i punteggi non devono sommare al 100%; <strong>i punteggi non misurano l'intensità dell'emozione</strong>. Il modello ha anche limiti noti: negazione, ironia e sentimenti impliciti sono difficili; la prosa letteraria è diversa dai commenti Reddit; il modello non sa dire quale personaggio prova l'emozione. Per questo serve sempre una validazione su un campione annotato da persone.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Quanto è bravo davvero il modello GoEmotions</p>
+<p>La pagina ufficiale del modello su Hugging Face riporta, sul test di GoEmotions e con soglia 0,5 per tutte le etichette, accuratezza 0,474, precision 0,575, recall 0,396 e F1 0,450. Scegliendo una soglia diversa per ogni emozione, il macro-F1 sale a circa 0,54. Le differenze tra emozioni sono enormi: "gratitude" supera 0,9 di F1, mentre "relief", "pride" e "grief" sono vicine a zero, perché negli esempi di addestramento compaiono pochissimo. L'autore stesso segnala etichette ambigue, errori e duplicati nel dataset. Conclusione pratica: un modello pubblico e famoso può sbagliare più di metà delle etichette rare; prima di usarlo per decidere, si misura sul proprio testo.</p>
+</aside>
+<figure class="yt" data-id="SZorAJ4I-sA" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Transformers, explained (Google Cloud Tech, 9 min)"><img loading="lazy" src="https://i.ytimg.com/vi/SZorAJ4I-sA/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Transformers, explained (Google Cloud Tech, 9 min) · <a href="https://www.youtube.com/watch?v=SZorAJ4I-sA">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Nel file della sfida, CUST-034 scrive: &quot;I got tickets! I hated the queue, though; the frozen progress bar made me refresh and nearly lose everything.&quot; Un classificatore a tre classi con softmax e un modello di emozioni multi-etichetta: che cosa restituisce ciascuno, e quale è più utile?</summary>
+<div class="answer">
+<p>Il classificatore a tre classi deve scegliere una sola etichetta e probabilmente oscilla tra positivo e negativo, con probabilità vicine: un'informazione povera. Il modello multi-etichetta può assegnare sia gioia (o sollievo) sia rabbia e paura, perché ogni emozione ha il suo punteggio. È più utile: dice che il cliente ha comprato (esito positivo) ma che la coda ha quasi causato un abbandono (problema da risolvere).</p>
+</div>
+</details>
+<h2 id="un-punteggio-non-e-una-decisione-dai-commenti-all-investimen">Un punteggio non è una decisione: dai commenti all'investimento</h2>
+<p>Questa è la parte della lezione con più valore per un manager. La formula: <strong>segnali dal testo + prove di business + test = decisioni migliori</strong>. Le emozioni rivelano segnali; le priorità di business richiedono contesto. Quattro trappole da evitare:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Trappola</th>
+<th>Errore tipico</th>
+<th>Domanda giusta</th>
+<th>Prove da cercare</th>
+<th>Decisione</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequenza vs impatto</td>
+<td>"Se ne lamentano in tanti, quindi è prioritario"</td>
+<td>Quante persone sono colpite? Quanto si perde per ogni caso?</td>
+<td>Conteggi per tema, transazioni fallite, ricavi a rischio, costi di recupero</td>
+<td>Priorità all'impatto atteso, non al volume</td>
+</tr>
+<tr>
+<td>Sentimento vs comportamento</td>
+<td>"Sono arrabbiati, quindi se ne vanno"</td>
+<td>Il sentimento espresso prevede ciò che fanno?</td>
+<td>Riacquisti, disdette, conversione, fedeltà</td>
+<td>Collegare il testo agli esiti in un periodo definito</td>
+</tr>
+<tr>
+<td>Campione vs realtà</td>
+<td>"I commenti rappresentano tutti"</td>
+<td>Chi è rappresentato, chi manca, chi è sovrarappresentato?</td>
+<td>Canale, periodo, segmenti coperti, tassi di risposta, duplicati</td>
+<td>Dichiarare i limiti prima di generalizzare</td>
+</tr>
+<tr>
+<td>Correlazione vs causa</td>
+<td>"Il tema legato alla rabbia è la causa"</td>
+<td>Cambiare il processo migliora davvero il risultato?</td>
+<td>Controlli operativi, test controllati, gruppi confrontabili</td>
+<td>Testare il cambiamento prima di estenderlo</td>
+</tr>
+</tbody>
+</table></div>
+<p>Il flusso pratico in cinque passi: <strong>trova il segnale</strong> (raggruppa i temi e leggi il testo originale), <strong>verifica il modello</strong> (sarcasmo, emozioni miste, adattamento al dominio), <strong>stima il valore</strong> (portata, gravità, beneficio atteso e costo), <strong>testa il cambiamento</strong> (baseline, misura di successo, confronto), <strong>assegna e rivedi</strong> (finanzia le prove più forti e monitora i risultati).</p>
+<p>Il <em>business case</em> di ogni priorità si scrive così: problema + popolazione colpita + beneficio atteso + costo + incertezza. Le misure di successo vanno messe accanto al sentiment: conversione, fedeltà, tassi di errore, tempi di risoluzione. La domanda di chiusura è quella che ogni manager dovrebbe farsi: <strong>quale prova cambierebbe la nostra decisione d'investimento?</strong></p>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Quanto vale risolvere un problema? (numeri illustrativi)</p><div class="lab-body"><div class="row"><label>Clienti colpiti al mese <input type="range" id="vb-n" min="0" max="5000" step="50" value="400"></label> <output id="vb-no">400</output></div>
+<div class="row"><label>Perdita per cliente colpito (€) <input type="range" id="vb-l" min="0" max="200" step="5" value="30"></label> <output id="vb-lo">30</output></div>
+<div class="row"><label>Quota del problema eliminata dall'intervento (%) <input type="range" id="vb-r" min="0" max="100" step="5" value="70"></label> <output id="vb-ro">70</output></div>
+<div class="row"><label>Costo dell'intervento (€) <input type="range" id="vb-c" min="0" max="50000" step="500" value="15000"></label> <output id="vb-co">15000</output></div>
+<p class="out" id="vb-out"></p>
+<p class="note">Scenario ipotetico: 400 addebiti doppi al mese, 30 € di perdita ciascuno tra rimborso, assistenza e clienti persi. Prova un tema con tanti commenti ma perdita bassa (3.000 clienti, 2 €): il valore crolla. È la trappola frequenza contro impatto.</p>
+<script>
+(function(){
+  const ids=['n','l','r','c'], el={};
+  ids.forEach(k=>el[k]=document.getElementById('vb-'+k));
+  function upd(){
+    const v={}; ids.forEach(k=>{v[k]=+el[k].value; document.getElementById('vb-'+k+'o').textContent=v[k];});
+    const m=v.n*v.l*v.r/100, y=12*m-v.c;
+    const pb = m>0 ? (v.c/m).toFixed(1)+' mesi' : 'mai';
+    document.getElementById('vb-out').textContent='Beneficio atteso '+Math.round(m).toLocaleString('it-IT')+' € al mese · rientro in '+pb+' · saldo a un anno '+Math.round(y).toLocaleString('it-IT')+' €. Ricorda: è una stima da verificare con un test.';
+  }
+  ids.forEach(k=>el[k].addEventListener('input',upd)); upd();
+})();
+</script></div></figure>
+
+<p>Tre applicazioni d'impresa del sentiment, ognuna con la sua decisione:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Applicazione</th>
+<th>Testo analizzato</th>
+<th>Che cosa cerca</th>
+<th>Decisione</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intelligenza finanziaria</td>
+<td>Notizie e conference call sugli utili</td>
+<td>Aziende citate, eventi, cambi di tono</td>
+<td>Quali notizie far leggere prima agli analisti</td>
+</tr>
+<tr>
+<td>Rischio reputazionale</td>
+<td>Stampa e dichiarazioni pubbliche</td>
+<td>Temi e sentiment intorno all'organizzazione</td>
+<td>Indagare i problemi emergenti e preparare una risposta</td>
+</tr>
+<tr>
+<td>Coaching commerciale</td>
+<td>Trascrizioni di chiamate raccolte con consenso</td>
+<td>Obiezioni e momenti in cui il tono cambia</td>
+<td>Migliorare le domande di follow-up e la formazione</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · &quot;L&#x27;umore di Twitter prevede la Borsa&quot; (2011): una correlazione da maneggiare con cura</p>
+<p>Johan Bollen, Huina Mao e Xiao-Jun Zeng (Indiana University) analizzarono quasi 10 milioni di tweet del 2008 con due strumenti di analisi del tono e pubblicarono nel 2011, sul Journal of Computational Science, un risultato clamoroso: inserendo l'umore "calmo" del pubblico in un modello, la direzione giornaliera dell'indice Dow Jones veniva prevista con l'87,6% di accuratezza. La notizia fece il giro del mondo e nacquero fondi d'investimento "basati su Twitter". Tre dettagli raccontano le trappole viste sopra: la polarità positivo/negativo non migliorava la previsione (contava una dimensione specifica, la calma); il test copriva un periodo breve, circa 20 giorni di Borsa; il legame statistico (Granger) indica che un segnale precede l'altro, non che lo causa. Chi scrive su Twitter, poi, non è il mercato. È un caso utile per ricordare: correlazione contro causa, campione contro realtà.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Il tema &quot;coda virtuale&quot; è il più legato alla rabbia nei commenti della tua biglietteria. Il CTO propone di raddoppiare i server (300.000 €). Che cosa chiedi prima di firmare?</summary>
+<div class="answer">
+<p>Prima di tutto le prove dell'impatto: quanti clienti hanno abbandonato in coda, quanti biglietti non venduti, quanti rimborsi. Poi la causa: la rabbia nasce dalla lentezza dei server o dalla comunicazione (barra bloccata, stime sbagliate, perdita del posto)? Alcuni commenti del dataset lodano una coda che "spiegava perché non ricaricare la pagina": cambiare messaggi costa molto meno dei server. Infine un test: migliorare messaggi e tenuta del posto in una vendita, misurare abbandoni e conversione, e solo dopo decidere sui server.</p>
+</div>
+</details>
+<h2 id="il-mistero-dei-50-000-euro-la-sfida-di-gruppo">Il mistero dei 50.000 euro: la sfida di gruppo</h2>
+<p>La lezione si chiude con una sfida: <strong>un servizio sconosciuto, 80 commenti di clienti, otto priorità, 50.000 € da distribuire</strong>. I passi:</p>
+<ol>
+<li><strong>Download</strong>: scaricare il file dei commenti, leggerli e capire che servizio è.</li>
+<li><strong>Analyze</strong>: caricare il file nello strumento web "Emotion Lab" indicato nelle slide, esplorare la ruota delle emozioni, la nuvola di parole e le singole previsioni.</li>
+<li><strong>Decide</strong>: individuare otto priorità di miglioramento e assegnare a ciascuna un budget; il totale deve essere esattamente 50.000 €.</li>
+</ol>
+<p>Il gruppo deve <strong>scoprire</strong> (il servizio e i suoi problemi principali), <strong>giustificare</strong> (ogni priorità sostenuta da ID dei clienti e brevi citazioni) e <strong>assegnare</strong> (otto importi con benefici attesi e misure di successo). Il prodotto finale è un piano di budget basato sulle prove e un pitch di 3 minuti. Avvertenza: sfida il modello, perché sarcasmo ed emozioni miste possono ingannarlo, e i punteggi non sono intensità.</p>
+<p>Leggendo tutti gli 80 commenti, il servizio è chiaro: una <strong>biglietteria online per concerti</strong> (posti, coda virtuale, "gig", "band"). I commenti sono ordinati per tema; a una prima lettura emergono nove gruppi:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Commenti</th>
+<th>Tema</th>
+<th>Esempi positivi</th>
+<th>Esempi negativi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001–010</td>
+<td>Checkout, moduli e account</td>
+<td>002, 006 (pochi passi, acquisto da ospite)</td>
+<td>001, 003, 007, 010 (dati persi, account obbligatorio)</td>
+</tr>
+<tr>
+<td>011–020</td>
+<td>Pagamenti</td>
+<td>012, 018, 020 (Apple Pay, posti tenuti)</td>
+<td>011, 013, 016, 017 (rifiuti senza spiegazione, addebito doppio)</td>
+</tr>
+<tr>
+<td>021–030</td>
+<td>Assistenza clienti</td>
+<td>022, 026, 028, 030</td>
+<td>021, 023, 024, 027</td>
+</tr>
+<tr>
+<td>031–040</td>
+<td>Coda virtuale, crash, esaurito</td>
+<td>032, 037, 040</td>
+<td>031, 033, 035, 038, 039</td>
+</tr>
+<tr>
+<td>041–048</td>
+<td>Uso da telefono</td>
+<td>042, 047</td>
+<td>041, 043, 045, 048</td>
+</tr>
+<tr>
+<td>049–056</td>
+<td>Accessibilità</td>
+<td>050, 053, 056</td>
+<td>049, 051, 052, 054, 055</td>
+</tr>
+<tr>
+<td>057–064</td>
+<td>Prezzi e commissioni nascoste</td>
+<td>058, 062</td>
+<td>057, 059, 061, 063, 064</td>
+</tr>
+<tr>
+<td>065–072</td>
+<td>Mappa e scelta dei posti</td>
+<td>066, 070</td>
+<td>065, 067, 068, 069, 071, 072</td>
+</tr>
+<tr>
+<td>073–080</td>
+<td>Conferma e consegna dei biglietti</td>
+<td>074, 077, 079</td>
+<td>073, 075, 076, 078, 080</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nove gruppi per otto priorità: il gruppo deve fondere due temi (per esempio uso da telefono e accessibilità, entrambi problemi di interfaccia) o scartarne uno motivando. Ogni scelta va difesa con le prove.</p>
+<p>Il file è costruito per mettere alla prova il modello. Ci sono commenti <strong>sarcastici</strong>, in cui le parole positive nascondono rabbia: 004 ("Absolutely loved entering my address three times"), 010, 015, 027, 036, 046, 059, 076. E commenti <strong>misti</strong>, con un esito positivo e un'esperienza negativa: 005, 009, 017, 034, 044, 060. Altri mostrano emozioni che un semplice "negativo" nasconde: 011 e 073 parlano di <strong>paura</strong> (soldi usciti, nessun biglietto), 054 di <strong>umiliazione</strong> (biglietti per sedia a rotelle solo per telefono). Per l'investimento contano diversamente: la paura di aver perso soldi genera chiamate all'assistenza e rimborsi; l'esclusione delle persone con disabilità è anche un rischio legale e reputazionale.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Ticketmaster e il tour di Taylor Swift (novembre 2022)</p>
+<p>Il 15 novembre 2022 Ticketmaster aprì la prevendita "Verified Fan" per l'Eras Tour di Taylor Swift. Secondo l'azienda si erano registrate oltre 3,5 milioni di persone, il numero più alto della sua storia; il traffico, gonfiato da attacchi di bot e da fan senza codice d'invito, arrivò a 3,5 miliardi di richieste al sistema, quattro volte il picco precedente. Il sito rallentò e si bloccò, molti fan persero ore in coda o videro sparire i biglietti dal carrello, mentre in quel giorno furono venduti oltre 2 milioni di biglietti, record per un artista. Il 17 novembre Ticketmaster cancellò la vendita al pubblico generale, citando la domanda eccezionale e i biglietti rimasti insufficienti. Seguirono la critica pubblica della cantante, una lettera della senatrice Amy Klobuchar sulla concorrenza nel settore e un'audizione al Senato degli Stati Uniti a gennaio 2023. È la versione reale di molti commenti del dataset: code che non si muovono, crash al momento di pagare, carrelli svuotati.</p>
+</aside>
+<figure class="yt" data-id="sUip50IZE3s" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Taylor Swift&#x27;s Ticketmaster disaster (ABC News Nightline, 10 min)"><img loading="lazy" src="https://i.ytimg.com/vi/sUip50IZE3s/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Taylor Swift&#x27;s Ticketmaster disaster (ABC News Nightline, 10 min) · <a href="https://www.youtube.com/watch?v=sUip50IZE3s">apri su YouTube</a></figcaption></figure>
+
+<p>Il tema delle commissioni nascoste (057–064) ha anche una conseguenza normativa. Dal 12 maggio 2025, negli Stati Uniti, la regola della Federal Trade Commission sulle commissioni ingannevoli obbliga chi vende biglietti per eventi dal vivo a mostrare <strong>subito il prezzo totale</strong>, comprese le commissioni obbligatorie. Nel Regno Unito, da cui sembra venire il dataset (i prezzi sono in sterline), il tema dei costi rivelati solo alla fine è sotto osservazione delle autorità per la concorrenza. Per il gruppo è un argomento forte: una priorità che riduce un rischio legale vale più di quanto dicono i soli commenti.</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Una priorità scritta bene (ipotetica, per il pitch)</p>
+<p>Priorità: "Addebiti doppi e pagamenti in stato incerto".
+- Prove: CUST-011, 014, 015, 017, 019, 021 (sei commenti, paura e rabbia; 015 sarcastico). Citazione: "I'm terrified to try again and pay twice" (011).
+- Popolazione: tutti i clienti che pagano con carta; da verificare con i dati delle transazioni fallite.
+- Beneficio atteso: meno rimborsi, meno chiamate all'assistenza, meno abbandoni dopo un errore.
+- Intervento: messaggio chiaro con numero d'ordine anche quando il pagamento è "in attesa", blocco dei pagamenti doppi.
+- Budget: 9.000 € (esempio). Misura di successo: tasso di addebiti doppi e chiamate su "pagamento" nei due mesi successivi, confrontati con i due precedenti.
+- Incertezza dichiarata: sei commenti su ottanta non dicono quanti clienti sono colpiti; serve il dato delle transazioni.</p>
+</aside>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Nella sfida vince chi collega ogni euro a una prova, a un comportamento misurabile e a un test, non chi trova il tema con più commenti arrabbiati.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Il vostro gruppo nota che i commenti sull&#x27;accessibilità sono solo otto su ottanta. Un compagno propone di dare a quel tema il budget più basso. Come rispondi?</summary>
+<div class="answer">
+<p>La frequenza non misura l'impatto. Otto commenti possono rappresentare clienti che spesso non scrivono affatto (campione contro realtà), e chi non riesce a comprare perde l'intero acquisto, non un minuto di pazienza. In più l'esclusione delle persone con disabilità è un rischio legale e reputazionale, e alcune soluzioni (contrasto dei messaggi d'errore, tempo extra, mappa leggibile dai lettori di schermo) costano poco e hanno già commenti positivi che ne mostrano l'effetto (050, 053, 056). Il budget va deciso sull'impatto atteso e sul costo, con una misura di successo come il tasso di completamento degli acquisti con tecnologie assistive.</p>
+</div>
+</details></article></div>
+<section class="study" id="richiamo"><h2>Richiamo a libro chiuso</h2>
+<p class="hint">Chiudi la pagina e rispondi a voce o per iscritto. Poi riapri e confronta.</p><ol class="recall"><li>Descrivi le cinque fasi dell&#x27;NLP con un esempio di frase che fallisce in ciascuna.</li><li>Spiega i sette passi di preparazione del testo e indica quale può danneggiare la sentiment analysis e perché.</li><li>Spiega la differenza tra un classificatore di sentiment a tre classi (softmax) e un modello di emozioni multi-etichetta (sigmoide).</li><li>Elenca il flusso in cinque passi che porta da un insieme di commenti a una decisione d&#x27;investimento e il ruolo del giudizio umano.</li></ol></section>
+<section class="study" id="quiz" data-key="big-data-ai-2026-11-13"><h2>Quiz</h2>
+<p class="hint">Conta il primo tentativo. Dopo ogni risposta leggi il perché.</p>
+<ol class="quiz"><li class="q" data-answer="1"><p class="q-text">Un&#x27;app di recensioni toglie dai testi tutte le stop words prima di calcolare il sentiment, usando una lista standard che contiene anche &#x27;not&#x27;. Che cosa succede alla frase &#x27;The concert was not good&#x27;?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Viene scartata, perché senza verbo la frase non supera il parsing</button></li><li><button type="button" class="opt" data-i="1">Resta &#x27;concert good&#x27;: il modello rischia di leggerla come positiva</button></li><li><button type="button" class="opt" data-i="2">Resta invariata, perché le stop words non toccano mai gli aggettivi</button></li><li><button type="button" class="opt" data-i="3">Diventa più chiara, perché il modello si concentra sulle parole utili</button></li></ol><div class="why" hidden><p>Togliere &#x27;not&#x27; (e &#x27;was&#x27;, &#x27;the&#x27;) lascia &#x27;concert good&#x27;: sparisce la negazione, che è proprio il segnale decisivo. La seconda confonde le liste di stop words con un filtro grammaticale: la lista standard contiene la negazione. La terza ripete la regola generale (le stop words alleggeriscono) applicandola al caso sbagliato. La quarta confonde la preparazione del testo con l&#x27;analisi sintattica: togliere parole non fa scartare la frase.</p></div></li><li class="q" data-answer="2"><p class="q-text">Un assistente vocale riceve &#x27;Puoi chiudere la finestra?&#x27; e risponde &#x27;Sì, posso&#x27;. Quale livello di analisi ha fallito?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Semantico: non ha capito il significato di &#x27;finestra&#x27;</button></li><li><button type="button" class="opt" data-i="1">Sintattico: ha letto male l&#x27;ordine delle parole</button></li><li><button type="button" class="opt" data-i="2">Pragmatico: ha preso una richiesta per una domanda</button></li><li><button type="button" class="opt" data-i="3">Lessicale: non ha diviso bene la frase in parole</button></li></ol><div class="why" hidden><p>La frase è stata capita parola per parola e nella sua struttura; manca l&#x27;intenzione: chi parla chiede un&#x27;azione, non informazioni sulla capacità. Questo è il livello pragmatico. Il lessicale riguarda la divisione in token, che qui è corretta. Il semantico riguarda il significato letterale, che l&#x27;assistente ha colto (sa cos&#x27;è una finestra). Il sintattico controlla la struttura, che qui è regolare.</p></div></li><li class="q" data-answer="0"><p class="q-text">Un modello di sentiment dà a una recensione i punteggi z = (positivo 2, neutro 0, negativo 0). Che cosa restituisce la softmax per &#x27;positivo&#x27;?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Circa 0,79: e² diviso la somma degli esponenziali</button></li><li><button type="button" class="opt" data-i="1">Esattamente 1: è l&#x27;unico punteggio diverso da zero</button></li><li><button type="button" class="opt" data-i="2">Circa 0,67: due terzi, perché 2 su 3 punti</button></li><li><button type="button" class="opt" data-i="3">Circa 0,88: la sigmoide del punteggio 2</button></li></ol><div class="why" hidden><p>Softmax: e² ≈ 7,39; e⁰ = 1 per le altre due; somma ≈ 9,39; 7,39 / 9,39 ≈ 0,79. La prima divide i punteggi grezzi senza esponenziale, errore comune. La terza confonde &#x27;punteggio zero&#x27; con &#x27;probabilità zero&#x27;: e⁰ = 1, non 0. La quarta applica la sigmoide, che si usa per etichette indipendenti, non per tre classi che si escludono.</p></div></li><li class="q" data-answer="2"><p class="q-text">Il modello di emozioni assegna a un commento 0,91 per &#x27;anger&#x27; e 0,62 per &#x27;fear&#x27;. Che conclusione è corretta?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Il cliente è più arrabbiato che spaventato del 47%</button></li><li><button type="button" class="opt" data-i="1">Le due emozioni si escludono: vale solo la rabbia</button></li><li><button type="button" class="opt" data-i="2">Entrambe superano 0,5: il commento ha due etichette</button></li><li><button type="button" class="opt" data-i="3">I punteggi sono sbagliati perché la somma supera 1</button></li></ol><div class="why" hidden><p>Nel modello multi-etichetta ogni emozione ha un punteggio indipendente (sigmoide) e si confronta con una soglia: qui due etichette. La prima legge i punteggi come intensità, che il modello non misura. La seconda applica la logica della softmax a un modello che non la usa. La terza pretende che le probabilità sommino a 1, regola valida solo per classi esclusive.</p></div></li><li class="q" data-answer="2"><p class="q-text">Una biglietteria ha 300 commenti sulla coda virtuale (fastidio) e 12 su addebiti doppi (danno di 80 € ciascuno, più rimborso). Il budget basta per un solo intervento. Quale ragionamento è corretto?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Coda: 300 commenti contro 12 dimostrano la priorità</button></li><li><button type="button" class="opt" data-i="1">Coda: il sentiment medio è il più negativo dei due</button></li><li><button type="button" class="opt" data-i="2">Addebiti: pesare persone colpite per perdita e costo</button></li><li><button type="button" class="opt" data-i="3">Nessuno: 312 commenti sono pochi per decidere</button></li></ol><div class="why" hidden><p>È la trappola frequenza contro impatto: contano persone colpite, perdita per evento e costo della soluzione, non il volume dei commenti. La prima usa il volume come prova di impatto. La terza usa il tono come misura economica, ma il punteggio non è impatto. La quarta rinuncia a decidere invece di cercare dati di supporto (transazioni fallite, rimborsi), che si possono contare.</p></div></li><li class="q" data-answer="0"><p class="q-text">Dopo una campagna, i commenti negativi su un&#x27;app calano del 30%, ma i clienti che abbandonano restano gli stessi. Che cosa insegna?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Il sentiment espresso non prova il comportamento</button></li><li><button type="button" class="opt" data-i="1">La campagna ha funzionato: il sentiment è migliorato</button></li><li><button type="button" class="opt" data-i="2">I clienti mentono nei commenti, che vanno ignorati</button></li><li><button type="button" class="opt" data-i="3">Il modello di sentiment è rotto e va riaddestrato</button></li></ol><div class="why" hidden><p>Sentimento contro comportamento: ciò che si scrive non coincide con ciò che si fa, quindi il testo va collegato a esiti misurati (abbandoni, acquisti). La seconda scambia il segnale per il risultato. La terza dà la colpa al modello senza prove: può aver misurato bene i commenti. La quarta butta via il testo, che resta un indizio utile se collegato ai comportamenti.</p></div></li><li class="q" data-answer="0"><p class="q-text">Un&#x27;analisi dei commenti online dice che il 70% dei clienti odia la nuova interfaccia. Prima di riprogettarla, che cosa chiedi?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Chi scrive i commenti e chi resta in silenzio</button></li><li><button type="button" class="opt" data-i="1">Se il 70% è calcolato con stemming o lemmatizzazione</button></li><li><button type="button" class="opt" data-i="2">Quale modello è stato usato e con quale accuratezza</button></li><li><button type="button" class="opt" data-i="3">Se i commenti contengono parole di rabbia o disgusto</button></li></ol><div class="why" hidden><p>Campione contro realtà: chi commenta online (spesso chi è scontento) può non rappresentare tutti i clienti; servono canale, periodo, copertura dei segmenti. La prima è utile ma secondaria: un modello perfetto su un campione distorto resta distorto. La seconda è un dettaglio tecnico che non cambia la rappresentatività. La quarta raffina l&#x27;emozione ma non dice quanto pesa nella clientela.</p></div></li><li class="q" data-answer="3"><p class="q-text">Nel dataset della sfida, CUST-004 dice: &#x27;Absolutely loved entering my address three times.&#x27; Un modello lo etichetta &#x27;joy&#x27; con 0,88. Come si comporta un analista prudente?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Toglie il commento perché è fuori tema</button></li><li><button type="button" class="opt" data-i="1">Abbassa la soglia per tutte le emozioni del file</button></li><li><button type="button" class="opt" data-i="2">Tiene l&#x27;etichetta: 0,88 è un punteggio molto alto</button></li><li><button type="button" class="opt" data-i="3">Rilegge il testo: è sarcasmo, va corretto a mano</button></li></ol><div class="why" hidden><p>Il sarcasmo inverte il senso letterale (&#x27;loved&#x27; + un&#x27;esperienza frustrante): è il limite dichiarato del modello e va gestito con revisione umana. La prima scambia la sicurezza del modello per verità. La seconda cambia una regola generale per un errore di contesto, peggiorando tutto il resto. La terza è sbagliata: il commento parla di un problema reale del checkout (inserire tre volte l&#x27;indirizzo).</p></div></li></ol><p class="score" aria-live="polite"></p>
+<button type="button" class="btn ghost reset">Ricomincia</button>
+<div class="print-only solutions"><h3>Soluzioni del quiz</h3><ol><li><strong>B</strong> — Togliere &#x27;not&#x27; (e &#x27;was&#x27;, &#x27;the&#x27;) lascia &#x27;concert good&#x27;: sparisce la negazione, che è proprio il segnale decisivo. La seconda confonde le liste di stop words con un filtro grammaticale: la lista standard contiene la negazione. La terza ripete la regola generale (le stop words alleggeriscono) applicandola al caso sbagliato. La quarta confonde la preparazione del testo con l&#x27;analisi sintattica: togliere parole non fa scartare la frase.</li><li><strong>C</strong> — La frase è stata capita parola per parola e nella sua struttura; manca l&#x27;intenzione: chi parla chiede un&#x27;azione, non informazioni sulla capacità. Questo è il livello pragmatico. Il lessicale riguarda la divisione in token, che qui è corretta. Il semantico riguarda il significato letterale, che l&#x27;assistente ha colto (sa cos&#x27;è una finestra). Il sintattico controlla la struttura, che qui è regolare.</li><li><strong>A</strong> — Softmax: e² ≈ 7,39; e⁰ = 1 per le altre due; somma ≈ 9,39; 7,39 / 9,39 ≈ 0,79. La prima divide i punteggi grezzi senza esponenziale, errore comune. La terza confonde &#x27;punteggio zero&#x27; con &#x27;probabilità zero&#x27;: e⁰ = 1, non 0. La quarta applica la sigmoide, che si usa per etichette indipendenti, non per tre classi che si escludono.</li><li><strong>C</strong> — Nel modello multi-etichetta ogni emozione ha un punteggio indipendente (sigmoide) e si confronta con una soglia: qui due etichette. La prima legge i punteggi come intensità, che il modello non misura. La seconda applica la logica della softmax a un modello che non la usa. La terza pretende che le probabilità sommino a 1, regola valida solo per classi esclusive.</li><li><strong>C</strong> — È la trappola frequenza contro impatto: contano persone colpite, perdita per evento e costo della soluzione, non il volume dei commenti. La prima usa il volume come prova di impatto. La terza usa il tono come misura economica, ma il punteggio non è impatto. La quarta rinuncia a decidere invece di cercare dati di supporto (transazioni fallite, rimborsi), che si possono contare.</li><li><strong>A</strong> — Sentimento contro comportamento: ciò che si scrive non coincide con ciò che si fa, quindi il testo va collegato a esiti misurati (abbandoni, acquisti). La seconda scambia il segnale per il risultato. La terza dà la colpa al modello senza prove: può aver misurato bene i commenti. La quarta butta via il testo, che resta un indizio utile se collegato ai comportamenti.</li><li><strong>A</strong> — Campione contro realtà: chi commenta online (spesso chi è scontento) può non rappresentare tutti i clienti; servono canale, periodo, copertura dei segmenti. La prima è utile ma secondaria: un modello perfetto su un campione distorto resta distorto. La seconda è un dettaglio tecnico che non cambia la rappresentatività. La quarta raffina l&#x27;emozione ma non dice quanto pesa nella clientela.</li><li><strong>D</strong> — Il sarcasmo inverte il senso letterale (&#x27;loved&#x27; + un&#x27;esperienza frustrante): è il limite dichiarato del modello e va gestito con revisione umana. La prima scambia la sicurezza del modello per verità. La seconda cambia una regola generale per un errore di contesto, peggiorando tutto il resto. La terza è sbagliata: il commento parla di un problema reale del checkout (inserire tre volte l&#x27;indirizzo).</li></ol></div></section>
+<section class="study" id="trasferimento"><h2>Applica a un caso nuovo</h2>
+<div class="prose"><p>Caso ipotetico. Una catena di palestre riceve 2.000 recensioni all'anno su Google. Un modello di sentiment dice che il 40% è negativo e che la parola più associata alla rabbia è 'docce'. Il direttore vuole spendere 200.000 € per rifare le docce di tutte le sedi. Che cosa gli consigli, passo per passo?</p></div>
+<details class="box solution"><summary>Mostra una soluzione ragionata</summary><div class="prose"><p>1) Trova il segnale: raggruppa le recensioni negative per tema e rileggi i testi originali; verifica se 'docce' compare in tutte le sedi o in poche. 2) Verifica il modello: controlla sarcasmo e testi misti, e se il modello, nato su altri testi, legge bene il gergo delle palestre. 3) Campione contro realtà: chi scrive recensioni su Google è una parte dei clienti; confronta con un sondaggio interno o con le disdette. 4) Frequenza contro impatto: collega le recensioni alle disdette; se chi cita le docce non disdice più degli altri, l'impatto economico è basso. 5) Correlazione contro causa: rifai le docce in due o tre sedi pilota con una baseline (disdette, rinnovi, valutazioni) e confronta con sedi simili non toccate. 6) Investi sul resto solo se il pilota mostra un miglioramento misurato; misura il successo con rinnovi e disdette, non solo con il sentiment.</p></div></details></section>
+<section class="study" id="decidi"><h2>Decidi tu</h2>
+<p class="hint">Mettiti nei panni di chi decide. Scegli, leggi la conseguenza, poi prova anche le altre strade.</p><div class="scenario"><h3>Il cruscotto della reputazione</h3>
+<p class="situation">Sei in una banca. Il cruscotto di sentiment sulle notizie mostra in una settimana il triplo degli articoli negativi su di voi, quasi tutti legati a &#x27;commissioni&#x27;. Il marketing propone subito una campagna pubblicitaria da 1 milione di euro sulla trasparenza.</p><p class="role">Sei il responsabile analytics. Che cosa raccomandi?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Approvare la campagna: il segnale è forte e chiaro</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Un picco di tono negativo dice che c&#x27;è un tema, non quale sia la causa né quanto costi. Spendere subito su un&#x27;interpretazione non verificata può amplificare la notizia sbagliata.</p></div></li><li><button type="button" class="choice" data-good="1">Rileggere gli articoli originali, capire se parlano di un fatto nuovo o di un vecchio caso ripreso, stimare clienti coinvolti e reclami reali, poi preparare una risposta proporzionata</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> È il flusso della lezione: trovare il segnale, verificarlo sul testo, stimare impatto e popolazione, poi decidere. La risposta pubblica arriva dopo aver capito, non prima.</p></div></li><li><button type="button" class="choice" data-good="0">Ignorare il cruscotto: i giornalisti esagerano sempre</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Buttare via il segnale è l&#x27;errore opposto. Il rischio reputazionale è proprio una delle tre applicazioni d&#x27;impresa delle slide: va indagato, non negato.</p></div></li></ol>
+<p class="lesson-link" hidden>Il sentiment segnala dove guardare; la decisione richiede di rileggere i testi, stimare l&#x27;impatto e scegliere una risposta proporzionata.</p></div><div class="scenario"><h3>Il modello di emozioni sui call center</h3>
+<p class="situation">Un fornitore propone di applicare un modello di emozioni alle trascrizioni delle chiamate commerciali e di premiare i venditori che generano più &#x27;joy&#x27; nei clienti. Le trascrizioni sono raccolte con consenso.</p><p class="role">Sei il direttore vendite. Come usi lo strumento?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Premi chi ottiene i punteggi di gioia più alti</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> I punteggi misurano la sicurezza del modello sull&#x27;etichetta, non l&#x27;intensità della gioia né le vendite. I venditori imparerebbero a far dire frasi positive, non a vendere meglio.</p></div></li><li><button type="button" class="choice" data-good="1">Usi il modello per trovare obiezioni e momenti in cui il tono cambia, li fai rivedere da persone e li colleghi alle vendite chiuse per migliorare il coaching</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> È l&#x27;uso del coaching commerciale: il testo trova i momenti da studiare, gli esiti di vendita dicono se la formazione funziona, le persone validano.</p></div></li><li><button type="button" class="choice" data-good="0">Lo applichi anche alle chiamate senza consenso, per avere più dati</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Più dati non giustificano il trattamento senza consenso: è un problema legale e di fiducia. Le slide specificano trascrizioni con consenso.</p></div></li></ol>
+<p class="lesson-link" hidden>Un modello di emozioni è uno strumento di ricerca, non un metro di valutazione: va collegato a esiti reali e usato con consenso e revisione umana.</p></div></section>
+<section class="study" id="davedere"><h2>Da vedere</h2><p class="hint">Per la sera o il weekend: storie vere o ben documentate che rendono concreti i temi della lezione.</p><ul class="watch"><li class="watch-item"><span class="wk">Film · 2016</span>
+<strong><a href="https://en.wikipedia.org/wiki/Arrival_(film)">Arrival</a></strong>
+<p>Una linguista deve capire una lingua aliena: mostra quanto contano contesto, ambiguità e intenzione, cioè i livelli semantico, del discorso e pragmatico della lezione.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li><li class="watch-item"><span class="wk">Film · 2013</span>
+<strong><a href="https://en.wikipedia.org/wiki/Her_(film)">Her</a></strong>
+<p>Un uomo si lega a un sistema operativo che conversa e sembra capire le emozioni: utile per discutere la differenza tra riconoscere un&#x27;emozione nel testo e provarla.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li><li class="watch-item"><span class="wk">Documentario · 2020</span>
+<strong><a href="https://en.wikipedia.org/wiki/The_Social_Dilemma">The Social Dilemma</a></strong>
+<p>Racconta come le piattaforme usano i dati, anche testuali, per la pubblicità mirata: è una delle applicazioni dell&#x27;NLP citate nelle slide, vista dal lato dei rischi.</p><p class="where">Dove: Netflix</p></li></ul></section>
+<section class="study" id="flashcard"><h2>Flashcard</h2>
+<p class="hint">Tocca una carta per girarla. Le frecce ← → scorrono il mazzo.</p>
+<div class="deck"><ol class="cards"><li class="card" tabindex="0"><div class="front">Che cos&#x27;è l&#x27;NLP?</div><div class="back">Il ramo dell&#x27;AI che permette ai computer di leggere, capire e produrre lingua umana, scritta o parlata.</div></li><li class="card" tabindex="0"><div class="front">Perché la lingua naturale è difficile per un computer?</div><div class="back">È ambigua, ridondante e piena di metafore; i linguaggi formali sono progettati per essere univoci e letterali.</div></li><li class="card" tabindex="0"><div class="front">Quali sono le cinque fasi dell&#x27;NLP in ordine?</div><div class="back">Lessicale/morfologica, sintattica, semantica, integrazione del discorso, pragmatica.</div></li><li class="card" tabindex="0"><div class="front">Che cosa controlla l&#x27;analisi sintattica?</div><div class="back">Se la frase è ben formata: ordine delle parole e grammatica, non il significato.</div></li><li class="card" tabindex="0"><div class="front">Che cosa controlla l&#x27;analisi semantica?</div><div class="back">Se il significato letterale delle parole messe insieme ha senso (&#x27;idee verdi incolori&#x27; no).</div></li><li class="card" tabindex="0"><div class="front">Integrazione del discorso: a che cosa serve?</div><div class="back">A interpretare una frase alla luce di quelle vicine, per esempio a chi si riferisce &#x27;that&#x27; in &#x27;He wanted that&#x27;.</div></li><li class="card" tabindex="0"><div class="front">Differenza tra stemming e lemmatizzazione?</div><div class="back">Lo stemming taglia desinenze con regole (skipping → skip); la lemmatizzazione usa grammatica e dizionario (is, are, am → be).</div></li><li class="card" tabindex="0"><div class="front">Quando è pericoloso togliere le stop words?</div><div class="back">Quando servono al significato: senza &#x27;not&#x27; una frase negativa può sembrare positiva.</div></li><li class="card" tabindex="0"><div class="front">A che cosa serve il named entity recognition?</div><div class="back">A trovare persone, luoghi, organizzazioni, somme di denaro e quantità nel testo.</div></li><li class="card" tabindex="0"><div class="front">Sentiment ed emozione sono la stessa cosa?</div><div class="back">No: il sentiment è l&#x27;atteggiamento (positivo, negativo, neutro); l&#x27;emozione è uno stato specifico (gioia, paura, rabbia).</div></li><li class="card" tabindex="0"><div class="front">Tre approcci alla sentiment analysis?</div><div class="back">Lessici con regole, ML tradizionale (TF-IDF + classificatore), modelli contestuali (embedding + rete neurale).</div></li><li class="card" tabindex="0"><div class="front">Softmax o sigmoide per classi che si escludono?</div><div class="back">Softmax: le probabilità delle classi sommano a 1 e si sceglie la più alta.</div></li><li class="card" tabindex="0"><div class="front">Quante etichette ha GoEmotions?</div><div class="back">27 emozioni più &#x27;neutral&#x27;, cioè 28 punteggi indipendenti nel modello RoBERTa GoEmotions.</div></li><li class="card" tabindex="0"><div class="front">Le otto emozioni primarie di Plutchik?</div><div class="back">Gioia, fiducia, paura, sorpresa, tristezza, disgusto, rabbia, anticipazione.</div></li><li class="card" tabindex="0"><div class="front">Quattro trappole tra punteggio e decisione?</div><div class="back">Frequenza vs impatto, sentimento vs comportamento, campione vs realtà, correlazione vs causa.</div></li></ol>
+<div class="deck-nav"><button type="button" class="btn ghost prev" aria-label="Carta precedente">‹</button><span class="pos"></span><button type="button" class="btn ghost next" aria-label="Carta successiva">›</button></div></div></section>
+<section class="study" id="glossario"><h2>Glossario</h2>
+<label class="search"><span>Cerca un termine</span><input type="search" class="gl-filter" placeholder="es. soft power"></label>
+<dl class="glossary"><div class="term"><dt>Natural Language Processing (NLP) <span class=it>· elaborazione del linguaggio naturale</span></dt><dd>Ramo dell&#x27;intelligenza artificiale che permette ai computer di leggere, capire e produrre lingua umana scritta o parlata. Esempio: il filtro che smista le email dei clienti per argomento.</dd></div><div class="term"><dt>Unstructured data <span class=it>· dati non strutturati</span></dt><dd>Dati senza righe e colonne fisse: testi, audio, immagini. Esempio: 80 commenti scritti liberamente dai clienti.</dd></div><div class="term"><dt>Token <span class=it>· unità di testo</span></dt><dd>Il pezzo più piccolo in cui si divide il testo: di solito una parola o un segno di punteggiatura; nei modelli moderni anche un pezzo di parola (subword). &#x27;He goes to college.&#x27; dà 5 token.</dd></div><div class="term"><dt>Stop words <span class=it>· parole vuote</span></dt><dd>Parole frequenti che portano poco significato da sole (the, is, in, and). Si possono togliere per alleggerire l&#x27;analisi, ma con cautela: &#x27;not&#x27; cambia il senso.</dd></div><div class="term"><dt>Stemming <span class=it>· riduzione alla radice</span></dt><dd>Taglia le desinenze con regole meccaniche: &#x27;skipping&#x27;, &#x27;skipped&#x27;, &#x27;skips&#x27; diventano &#x27;skip&#x27;. Veloce ma può produrre radici che non sono parole vere.</dd></div><div class="term"><dt>Lemmatization <span class=it>· lemmatizzazione</span></dt><dd>Riporta ogni parola alla forma del dizionario usando la grammatica: &#x27;am&#x27;, &#x27;are&#x27;, &#x27;is&#x27; diventano &#x27;be&#x27;. Più precisa dello stemming, più lenta.</dd></div><div class="term"><dt>Part-of-speech tagging (POS) <span class=it>· etichettatura delle parti del discorso</span></dt><dd>Assegna a ogni parola il suo ruolo grammaticale: nome, verbo, aggettivo, preposizione. Serve a distinguere &#x27;book&#x27; (libro) da &#x27;book&#x27; (prenotare).</dd></div><div class="term"><dt>Named entity recognition (NER) <span class=it>· riconoscimento delle entità nominate</span></dt><dd>Trova nel testo nomi di persone, luoghi, aziende, cifre di denaro. Esempio: in &#x27;Apple ha pagato 3 miliardi a Londra&#x27; riconosce un&#x27;azienda, una somma e una città.</dd></div><div class="term"><dt>Sentiment analysis <span class=it>· analisi del sentimento</span></dt><dd>Compito di NLP che classifica l&#x27;atteggiamento di un testo in positivo, negativo o neutro. Esempio: &#x27;La trama è deludente&#x27; → negativo.</dd></div><div class="term"><dt>Aspect-based sentiment <span class=it>· sentiment per aspetto</span></dt><dd>Sentiment calcolato separatamente per ogni aspetto citato. &#x27;Scrittura bellissima, finale debole&#x27; → scrittura positiva, finale negativo.</dd></div><div class="term"><dt>Emotion analysis <span class=it>· analisi delle emozioni</span></dt><dd>Riconosce emozioni specifiche (gioia, paura, rabbia, disgusto) invece della sola polarità. Un testo può esprimere più emozioni insieme.</dd></div><div class="term"><dt>Softmax <span class=it>· funzione softmax</span></dt><dd>Trasforma i punteggi di più classi esclusive in probabilità che sommano a 1. Usata quando l&#x27;etichetta è una sola (positivo O neutro O negativo).</dd></div><div class="term"><dt>Sigmoid <span class=it>· funzione sigmoide</span></dt><dd>Trasforma un singolo punteggio in un numero tra 0 e 1, indipendente dagli altri. Usata nei modelli multi-etichetta, dove le emozioni non si escludono.</dd></div><div class="term"><dt>Fine-tuning <span class=it>· addestramento di rifinitura</span></dt><dd>Prendere un modello già addestrato sulla lingua in generale e specializzarlo su un compito con esempi etichettati. RoBERTa rifinito su GoEmotions diventa un classificatore di emozioni.</dd></div><div class="term"><dt>Domain shift <span class=it>· cambio di dominio</span></dt><dd>Il modello lavora su testi diversi da quelli su cui ha imparato e peggiora. Esempio: addestrato su commenti Reddit, usato su prosa letteraria o recensioni di biglietteria.</dd></div></dl><p class="empty" hidden>Nessun termine corrisponde. Prova con una parola più corta.</p></section>
+<section class="study" id="video"><h2>Video consigliati</h2><ul class="videos"><li class="video"><a href="https://www.youtube.com/watch?v=hFyi2sSsm4E" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/hFyi2sSsm4E/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=hFyi2sSsm4E"><strong>Dentro l&#x27;IA - 2. Come funziona l&#x27;elaborazione del linguaggio naturale (NLP)?</strong></a><p class="vmeta">Zanichelli editore · 12 min · IT</p><p>Introduzione in italiano all&#x27;NLP: dal testo ai numeri, utile dopo la prima sezione.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=oi0JXuL19TA" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/oi0JXuL19TA/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=oi0JXuL19TA"><strong>Natural Language Processing: Crash Course AI #7</strong></a><p class="vmeta">CrashCourse · 13 min · EN</p><p>Spiega perché la lingua è ambigua e come le macchine rappresentano le parole: accompagna le fasi e la preparazione del testo.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=5HQCNAsSO-s" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/5HQCNAsSO-s/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=5HQCNAsSO-s"><strong>What is Sentiment Analysis?</strong></a><p class="vmeta">IBM Technology · 10 min · EN</p><p>Sentiment per polarità, per aspetto ed emozioni, con approcci a regole e ML: corrisponde alle slide 33–34.</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=SZorAJ4I-sA" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/SZorAJ4I-sA/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=SZorAJ4I-sA"><strong>Transformers, explained: Understand the model behind GPT, BERT, and T5</strong></a><p class="vmeta">Google Cloud Tech · 9 min · EN</p><p>Spiega attenzione e contesto, la base di RoBERTa usato per leggere le emozioni (slide 38).</p></div></li><li class="video"><a href="https://www.youtube.com/watch?v=sUip50IZE3s" class="thumb"><img loading="lazy" src="https://i.ytimg.com/vi/sUip50IZE3s/mqdefault.jpg" alt=""></a>
+<div><a href="https://www.youtube.com/watch?v=sUip50IZE3s"><strong>Taylor Swift&#x27;s Ticketmaster disaster | Nightline</strong></a><p class="vmeta">ABC News · 10 min · EN</p><p>Il caso reale di una vendita di biglietti andata in crisi: code, crash e clienti furiosi, gli stessi temi del dataset della sfida.</p></div></li></ul></section>
+<section class="study sources" id="fonti"><h2>Fonti</h2><ol><li>Slide Canvas 136392 — Rizzi, BigDataBusinessRizzi2026Lesson8 (41 pagine, caricate l&#x27;11/11/2026) — Fonte d&#x27;aula: NLP pp. 3–31 (fasi pp. 7–13, implementazione p. 14, sette passi pp. 15–22, applicazioni pp. 23–27, futuro p. 28, lingua naturale vs formale p. 29, vantaggi e svantaggi pp. 30–31), sentiment pp. 33–34, applicazioni d&#x27;impresa p. 35, decisioni d&#x27;investimento p. 36, Plutchik p. 37, RoBERTa p. 38, sfida pp. 39–40.</li><li>File Canvas 136393 — customer_feedback.txt (80 commenti, CUST-001…CUST-080) — Dataset della sfida &#x27;The €50,000 Mystery&#x27;, letto per intero; temi ed esempi citati nella sezione finale.</li><li><a href="https://arxiv.org/abs/1907.11692">Liu et al. (2019), RoBERTa: A Robustly Optimized BERT Pretraining Approach</a></li><li><a href="https://arxiv.org/abs/2005.00547">Demszky et al. (2020), GoEmotions: A Dataset of Fine-Grained Emotions</a></li><li><a href="https://huggingface.co/SamLowe/roberta-base-go_emotions">SamLowe/roberta-base-go_emotions — model card Hugging Face (metriche e soglie)</a></li><li>Plutchik R., The Nature of Emotions, American Scientist 89(4), 2001 — Citato nella slide 37 come fonte della ruota delle emozioni.</li><li><a href="https://arxiv.org/abs/1010.3003">Bollen, Mao, Zeng (2011), Twitter mood predicts the stock market, Journal of Computational Science 2(1)</a></li><li><a href="https://www.nbcnews.com/pop-culture/pop-culture-news/ticketmaster-cancels-public-sale-taylor-swift-tour-citing-high-demand-rcna57758">NBC News (17/11/2022) — Ticketmaster cancels public sale of Taylor Swift tour</a></li><li><a href="https://techcrunch.com/2025/05/05/ftc-bans-hidden-fees-for-live-events-and-short-term-rentals-effective-may-12/">TechCrunch (5/5/2025) — FTC bans hidden fees for live events and short-term rentals, effective May 12</a></li><li><a href="https://en.wikipedia.org/wiki/Colorless_green_ideas_sleep_furiously">Colorless green ideas sleep furiously (Chomsky, 1957)</a></li></ol><details class="box verifica"><summary>Note di verifica</summary><div class="prose"><p>Lezione ricostruita dai materiali: nessuna registrazione, quindi non sappiamo che cosa abbiano detto in aula Rizzi e Campana, come si siano divisi le slide né che cosa abbiano prodotto i gruppi nella sfida. Il collegamento del pacchetto 136392 al 13/11 è dedotto: è stato caricato l'11/11 insieme al file dei commenti ed è il primo deck non ancora spiegato da altre lezioni; la copertina dice 'Lesson 7' ma il file si chiama Lesson8. Le credenziali di accesso allo strumento web della sfida, presenti nelle slide, non sono riportate perché il sito è pubblico. Correzioni rispetto alle slide: (1) p. 10 — 'Delhi goes to him' è grammaticalmente ben formata; è strana nel significato, quindi la scarta l'analisi semantica, non quella sintattica. (2) p. 11 — l'esempio classico è 'Colorless green ideas sleep furiously' di Chomsky (1957), nato proprio per mostrare una frase corretta nella sintassi e priva di senso. (3) p. 19 — in 'The stars are twinkling at night' 'are' è un verbo ausiliare e 'twinkling' è la forma in -ing del verbo, non un aggettivo. (4) p. 17 — lo stemming di 'skip + ing' dà la parola 'skipping' (con doppia p); la radice resta 'skip'. (5) p. 26 — i motori di ricerca usano l'NLP per capire domande e pagine; la traduzione automatica è un'applicazione separata. (6) p. 31 — 'i sistemi NLP non hanno interfaccia' e 'servono a un solo compito' descrivono sistemi più vecchi: gli assistenti conversazionali di oggi sono più generali, ma restano fragili con domande ambigue e domini nuovi. I numeri sul modello GoEmotions (accuratezza 0,474 e F1 0,450 con soglia 0,5) vengono dalla model card ufficiale. I numeri del caso Ticketmaster vengono dai comunicati riportati da NBC News. Il conteggio dei temi nel file della sfida è una lettura di questa lezione, non la soluzione del docente.</p></div></details></section>
+<nav class="prevnext" aria-label="Altre lezioni"><a class="pn prev" href="/study-lab/big-data-ai/2026-11-04/"><span>Lezione precedente</span>4 nov · Decidere dove pensa la macchina: IoT, edge, fog e cloud al servizio di un&#x27;azione che vale soldi</a></nav></main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js" defer></script>
+</body></html>
