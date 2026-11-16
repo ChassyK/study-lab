@@ -145,7 +145,7 @@
     const base = $(".brand").getAttribute("href");
     const results = $("#results");
     const none = $("#noresults");
-    const sems = $$(".sem");
+    const sems = $$(".sem[data-sem]");
     let index = null;
     let sem = "all";
     const segBtns = $$(".seg button");
@@ -177,4 +177,83 @@
     };
     q.addEventListener("input", run);
   }
+
+  /* case studies: filtro per corso */
+  $$(".cs-filter").forEach(grp => {
+    const rows = $$(".cs-list > li");
+    const btns = $$("button", grp);
+    btns.forEach(b => b.addEventListener("click", () => {
+      btns.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      const k = b.dataset.course;
+      rows.forEach(r => { r.hidden = k !== "all" && !(r.dataset.courses || "").split(" ").includes(k); });
+    }));
+  });
+
+  /* tutor: apre Claude con il contesto della pagina. Nel sito non c'è nessun dato personale: quello lo conosce Claude. */
+  (() => {
+    const home = $(".brand");
+    if (!home) return;
+    const base = home.getAttribute("href");
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.className = "tutor-btn"; btn.textContent = "Chiedi a Gideon";
+    btn.setAttribute("aria-expanded", "false");
+    const box = document.createElement("div");
+    box.className = "tutor"; box.hidden = true;
+    const modes = ["Spiegamelo con un film o un anime", "Fammi uno schema", "Mostrami un grafico o un video", "Interrogami", "Collega ai miei case studies"];
+    box.innerHTML = `<p class="tutor-h">Gideon · il tuo tutor, su Claude</p>
+<label for="tutor-q">Cosa vuoi capire di questa pagina?</label>
+<textarea id="tutor-q" rows="3" placeholder="es. non ho capito la smile curve"></textarea>
+<div class="tutor-chips">${modes.map(t => `<button type="button" class="chip" aria-pressed="false">${t}</button>`).join("")}</div>
+<a class="btn" target="_blank" rel="noopener" href="https://claude.ai/new">Apri in Claude</a>
+<p class="tutor-note">Si apre Claude con questa pagina già indicata. Se prima selezioni un pezzo di testo, viene incluso.</p>`;
+    document.body.append(btn, box);
+    const ta = $("textarea", box), go = $("a.btn", box), chips = $$(".chip", box);
+    let sel = "";
+    document.addEventListener("selectionchange", () => {
+      const s = getSelection();
+      const t = String(s).trim();
+      if (t && s.anchorNode && !box.contains(s.anchorNode)) sel = t.slice(0, 600);
+    });
+    const build = () => {
+      const site = location.origin + base;
+      const want = chips.filter(c => c.getAttribute("aria-pressed") === "true").map(c => c.textContent);
+      const p = [
+        "Sei Gideon, il mio tutor di studio: Gideon è anche il nome del mio sito di studio (secondo anno di International Business Studies).",
+        `Pagina che sto guardando: ${location.href.split("#")[0]} («${document.title}»).`,
+        sel ? `Passaggio che ho selezionato: «${sel}».` : "",
+        `Prima leggi questa pagina e la mappa del sito ${site}tutor.txt (lezioni, glossari, case studies).`,
+        "Usa quello che sai di me (memoria, progetti, quello che guardo e salvo su social, YouTube e streaming) per spiegare con esempi presi dai miei interessi.",
+        "Mostra, non solo spiegare: schemi, disegni, grafici, animazioni, video YouTube verificati, scene di film, serie, anime e manga, canzoni, citazioni, meme.",
+        "Italiano semplice, termini tecnici in inglese spiegati. Separa fatti e opinioni. Chiudi con una domanda per verificare che ho capito.",
+        want.length ? `Modo che preferisco adesso: ${want.join("; ")}.` : "",
+        ta.value.trim() ? `La mia richiesta: ${ta.value.trim()}` : "Parti chiedendomi cosa non mi è chiaro di questa pagina.",
+      ].filter(Boolean).join("\n");
+      go.href = "https://claude.ai/new?q=" + encodeURIComponent(p);
+      return p;
+    };
+    const toggle = open => { box.hidden = !open; btn.setAttribute("aria-expanded", String(open)); if (open) { build(); ta.focus(); } };
+    btn.addEventListener("click", () => toggle(box.hidden));
+    chips.forEach(c => c.addEventListener("click", () => { c.setAttribute("aria-pressed", String(c.getAttribute("aria-pressed") !== "true")); build(); }));
+    ta.addEventListener("input", build);
+    go.addEventListener("click", () => { const p = build(); try { navigator.clipboard?.writeText(p); } catch {} });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !box.hidden) { toggle(false); btn.focus(); } });
+  })();
+
+  /* tema chiaro / scuro: segue il sistema finché non scegli tu; la scelta resta salvata nel browser */
+  (() => {
+    const bar = $(".topbar");
+    if (!bar) return;
+    const root = document.documentElement;
+    const force = new URLSearchParams(location.search).get("theme");
+    if (force === "dark" || force === "light") root.dataset.theme = force;
+    const isDark = () => root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "theme-btn";
+    const sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+    const moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+    const paint = () => { const d = isDark(); b.innerHTML = d ? sun : moon; b.setAttribute("aria-label", d ? "Passa al tema chiaro" : "Passa al tema scuro"); b.title = d ? "Tema chiaro" : "Tema scuro"; };
+    b.addEventListener("click", () => { const t = isDark() ? "light" : "dark"; root.dataset.theme = t; store.set("theme", t); paint(); });
+    bar.append(b);
+    paint();
+  })();
 })();
