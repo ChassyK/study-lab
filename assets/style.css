@@ -635,3 +635,109 @@ body { background: var(--paper); color: var(--ink); }
 .video .yt-icon { width: 2.6rem; height: 2.6rem; }
 .video .yt-icon::after { left: 1.02rem; top: .8rem; border-width: .5rem 0 .5rem .8rem; }
 .video:has(iframe) { grid-template-columns: 1fr; }
+
+/* =====================================================================
+   Disposizione (17/11/2026): una sola griglia per tutte le pagine.
+   Stesso bordo sinistro e stessa larghezza per home, corsi, casi e lezioni;
+   colonna laterale di 15rem ovunque; menu tutto visibile su telefono.
+   ===================================================================== */
+:root { --pad: clamp(1rem, 4vw, 2.5rem); --side: 15rem; --gap: 3.5rem; --page: calc(var(--side) + var(--gap) + var(--measure)); }
+.hub, .course, .lesson, .foot { max-width: calc(var(--page) + 2 * var(--pad)); padding-left: var(--pad); padding-right: var(--pad); }
+.topbar { padding-left: max(var(--pad), calc((100vw - var(--page)) / 2)); padding-right: max(var(--pad), calc((100vw - var(--page)) / 2)); }
+.brand { font-family: var(--display); font-weight: 600; font-size: 1.3rem; letter-spacing: -.01em; gap: 0; }
+h1, h2, h3, .t, .latest-t, .timeline span, .lesson-link, .box-kind, .watch a, .toc a { hyphens: manual; -webkit-hyphens: manual; }
+
+/* home */
+.hub-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; padding-bottom: 1rem; }
+.hub-head h1 { font-size: clamp(2.3rem, 5vw, 3.7rem); max-width: 13ch; }
+.hub-head .sub { font-size: 1.15rem; margin: 1.1rem 0 2rem; max-width: 30rem; }
+.latest { margin-bottom: 2.2rem; }
+.filters { align-items: end; gap: .8rem 1rem; }
+.filters .wide { max-width: none; flex: 1 1 18rem; }
+.filters .seg { margin-bottom: 3px; }
+.results { max-width: none; }
+@media (min-width: 900px) {
+  .hub-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--gap); align-items: end; }
+  .hub-head h1 { grid-column: 1; grid-row: 1; }
+  .hub-head .sub { grid-column: 1; grid-row: 2; margin-bottom: 0; }
+  .hub-head .latest { grid-column: 2; grid-row: 1 / span 2; margin: 0; align-self: end; }
+  .hub-head .latest .latest-t { font-size: 1.3rem; }
+  .hub-head .latest .latest-s { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hub-head .filters, .hub-head .results, .hub-head .empty { grid-column: 1 / -1; }
+  .hub-head .filters { margin-top: 2.6rem; }
+}
+.sem { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem; padding-top: 3rem; }
+.sem > * { grid-column: 1 / -1; margin: 0; }
+.sem > h2 { margin-bottom: .2rem; }
+.course-row { grid-template-columns: var(--side) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: .35rem 2rem; margin-bottom: 0; }
+.course-row .meta { align-self: start; }
+.timeline { grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr)); }
+.course-row.empty { display: block; grid-column: span 2; padding: 1.3rem 1.4rem; }
+.course-row.empty h3 { font-size: 1.08rem; }
+.course-row.empty .meta, .course-row.empty p { font-size: .88rem; margin-top: .4rem; }
+@media (max-width: 900px) { .course-row.empty { grid-column: span 3; } }
+@media (max-width: 760px) {
+  .course-row { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .course-row .meta { margin-bottom: .6rem; }
+  .timeline { grid-column: 1; grid-row: auto; }
+}
+@media (max-width: 560px) { .course-row.empty { grid-column: 1 / -1; } }
+
+/* pagine elenco (corso, case studies, internships) */
+.course-head { padding-top: clamp(2rem, 6vw, 4rem); margin-bottom: 1rem; }
+.course-head h1 { max-width: 20ch; }
+.lessons .s { max-width: 46rem; }
+.course .study { margin-left: 0; max-width: none; }
+.course .study .glossary { max-width: none; }
+@media (min-width: 900px) { .course .study .glossary { grid-template-columns: 1fr 1fr; column-gap: var(--gap); } .course .study .search { max-width: 30rem; } }
+@media (max-width: 560px) {
+  .lessons a { grid-template-columns: 3.4rem minmax(0, 1fr); }
+  .lessons .chip { grid-column: 2; grid-row: auto; justify-self: start; margin-top: .3rem; }
+  .seg { display: flex; flex-wrap: wrap; }
+  .seg button { flex: 1 1 auto; }
+}
+
+/* lezione e dossier */
+.lesson-head { max-width: none; padding-bottom: 1.6rem; }
+.lesson-head h1 { max-width: 46rem; }
+.lesson-head .title-en { max-width: 44rem; }
+details.coverage { max-width: 44rem; padding: 0; background: none; font-size: .88rem; color: var(--muted); margin-top: .9rem; }
+details.coverage summary { cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .8rem; border-radius: 99px; background: var(--fill); list-style: none; font-weight: 500; }
+details.coverage summary::-webkit-details-marker { display: none; }
+details.coverage summary::after { content: "+"; font-weight: 600; }
+details.coverage[open] summary::after { content: "–"; }
+details.coverage p { margin: .7rem 0 0; padding: .8rem 1rem; background: var(--fill); border-radius: 14px; line-height: 1.5; }
+.question { max-width: 44rem; margin: 1rem 0 0; padding-left: 1rem; border-left: 3px solid var(--c); font: 500 1.15rem/1.45 var(--display); color: var(--ink-2); }
+.brief { max-width: none; margin-bottom: 3.2rem; }
+.brief .lede { font-size: 1.12rem; line-height: 1.6; }
+.brief .keys { font-size: .98rem; }
+@media (min-width: 960px) {
+  .brief:has(.keys) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--gap); align-items: start; }
+  .brief:has(.keys) h2 { grid-column: 1 / -1; }
+  .brief:has(.keys) .lede { margin: 0; }
+  .brief:not(:has(.keys)) .lede { max-width: 46rem; margin-bottom: .2rem; }
+  .lesson-grid { grid-template-columns: var(--side) minmax(0, var(--measure)); gap: var(--gap); }
+  .study, .prevnext { margin-left: calc(var(--side) + var(--gap)); max-width: var(--measure); }
+  .prose p { hyphens: manual; -webkit-hyphens: manual; }
+}
+@media (max-width: 960px) {
+  .toc { position: static; max-height: none; background: var(--surface); border-radius: 18px; padding: 1.1rem 1.1rem .9rem; margin-bottom: 2rem; }
+  .toc ol, .toc ul { margin-bottom: 1rem; }
+  .toc ul { display: flex; flex-wrap: wrap; gap: .1rem .2rem; }
+  .toc-actions { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .brief { padding: 1.3rem 1.2rem 1.1rem; border-radius: 18px; }
+  .brief .lede { font-size: 1.04rem; }
+  .date-mark .day { font-size: 3.6rem; }
+}
+
+/* telefono: menu tutto visibile (va a capo), barra non fissa, pulsante tutor più piccolo */
+@media (max-width: 720px) {
+  .topbar { position: static; padding-top: .7rem; padding-bottom: .5rem; }
+  .topnav { flex-wrap: wrap; overflow: visible; gap: .1rem .15rem; margin-left: -.55rem; }
+  .topnav a { font-size: .8rem; padding: .3rem .55rem; }
+  .tutor-btn { font-size: .82rem; padding: .7rem .9rem; }
+  .foot { padding-bottom: 5.5rem; }
+}
+@media print { details.coverage::details-content { content-visibility: visible; display: block; } }
