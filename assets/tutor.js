@@ -1,4 +1,4 @@
-/* Gideon — risposte tratte dai materiali pubblicati. */
+/* Gideon — ricerca nelle fonti pubblicate e prosecuzione facoltativa in ChatGPT. */
 (() => {
   const home = document.querySelector(".brand");
   const main = document.querySelector("main");
@@ -7,11 +7,40 @@
   const content = ".lesson-grid > article.prose, .brief, #glossario, .assessment-body";
   const tidy = value => value.replace(/\s+/g, " ").trim();
   const normalize = value => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  const ignored = new Set(("che chi cos cosa cosae significa significato frase passaggio paragrafo senso importante riferimento come quando dove quale quali perché perche per delle della dello degli nella nelle nello sono essere questo questa queste quello della delle una uno nei nel alla allo del dai dal sul con fra tra suo sua gli anche più piu fammi spiegami spiegare dimmi puoi vorrei devo capire vuol dire definizione what which when where how with from into does mean the and this that can tell about explain difference tra was for are you il la di da al ai le lo mi tu he she is it si on").split(" "));
-  const tokens = value => [...new Set((normalize(value).match(/[a-z0-9]{2,}/g) || []).filter(x => !ignored.has(x)))];
-  const stem = word => word.length >= 6 ? word.replace(/[aeio]$/, "") : word;
+  const ignored = new Set(("che chi cos cosa cosae significa significato frase passaggio paragrafo senso importante riferimento come quando dove quale quali perche per delle della dello degli nella nelle nello sono essere questo questa queste quello una uno nei nel alla allo del dai dal sul con fra tra suo sua gli anche piu fammi spiegami spiegare dimmi puoi vorrei devo capire vuol dire definizione fa fai posso possiamo possono potrei differenza differenze esempio esempi parole semplice semplici dettaglio effetti effettivamente altro facendo faccio approfondisci spiegazione what which when where how with from into does mean the and this that can tell about explain difference differences between was for are you please simple terms example examples impact could would should why give help il la di da al ai le lo mi tu he she is it si on of to a an un").split(" "));
+  const aliases = new Map([
+    ["tariff", "tariffs", "dazio", "dazi", "daziale", "daziali"],
+    ["sanction", "sanctions", "sanzione", "sanzioni"],
+    ["supply-chain", "filiera", "filiere"],
+    ["resilience", "resilienza"],
+    ["trade", "commercio", "commerciale", "commerciali"],
+    ["import", "imports", "importazione", "importazioni"],
+    ["export", "exports", "esportazione", "esportazioni"],
+    ["company", "companies", "firma", "firm", "firms", "impresa", "imprese", "azienda", "aziende"],
+    ["regulation", "regulations", "regolazione", "regolamento", "regolamenti"],
+    ["national-security", "sicurezza-nazionale"],
+    ["foreignness", "estraneita"],
+    ["geoeconomics", "geoeconomia"],
+    ["geopolitics", "geopolitica", "geopolitico", "geopolitici", "geopolitiche"],
+    ["corruption", "corruzione"],
+    ["bribery", "tangente", "tangenti"],
+    ["risk", "risks", "rischio", "rischi"],
+    ["evaluation", "valutazione", "valutare"],
+    ["model", "models", "modello", "modelli"],
+    ["dataset", "datasets"],
+    ["training", "addestramento"],
+  ].flatMap(group => group.map(word => [word, group[0]])));
+  const tokens = value => {
+    const normalized = normalize(value).replace(/\bsupply[\s-]+chains?\b/g, "supply-chain")
+      .replace(/\b(?:national security|sicurezza nazionale)\b/g, "national-security");
+    return [...new Set((normalized.match(/[a-z0-9]+(?:-[a-z0-9]+)*/g) || [])
+      .filter(word => word.length >= 2 && !ignored.has(word))
+      .map(word => aliases.get(word) || word))];
+  };
+  const stem = word => word.length >= 6 ? word.replace(/[aeios]$/, "") : word;
   const matches = (word, haystack) => haystack.has(word) || haystack.has(stem(word));
   const words = text => new Set(tokens(text).flatMap(word => [word, stem(word)]));
+  const pageLanguage = main.lang || document.documentElement.lang || "it";
   const title = main.querySelector("h1")?.textContent.trim() || document.title;
 
   function collect(root, address) {
@@ -33,7 +62,7 @@
         const url = new URL(address);
         url.hash = id || "";
         url.search = "";
-        passages.push({ text, term, heading, url: url.href, vocab: words(term + " " + text) });
+        passages.push(makePassage({ text, term, heading }, url, title, pageLanguage));
       }
     }
     return passages;
@@ -46,49 +75,100 @@
     return visible.at(-1)?.id || "";
   }
 
-  function findPassage(question, candidates, active) {
-    const wanted = tokens(question).slice(0, 14);
-    if (!wanted.length) return null;
-    return candidates.map(entry => {
-      const matched = wanted.filter(word => matches(word, entry.vocab));
-      if (!matched.length || matched.length * 2 < wanted.length) return null;
-      const name = tokens(entry.term).join(" ");
-      const defined = name && wanted.join(" ") === name;
-      const inHeading = words(entry.heading);
-      const sameSection = active && new URL(entry.url).hash === "#" + active;
-      const score = matched.length * 8 + (defined ? 9 : 0) +
-        matched.filter(word => matches(word, inHeading)).length * 2 + (sameSection ? 3 : 0);
-      return { ...entry, matched, score };
-    }).filter(Boolean).sort((a, b) => b.score - a.score)[0] || null;
+  function makePassage(entry, url, docTitle, lang, course = "") {
+    return { ...entry, docTitle, lang, course, url: url.href, path: url.pathname, vocab: words(entry.term + " " + entry.text),
+      topic: words(entry.term + " " + entry.heading + " " + docTitle) };
   }
 
-  let index;
-  const related = async question => {
-    if (!index) {
-      const response = await fetch(new URL("search.json", site));
-      if (!response.ok) return [];
-      index = await response.json();
+  let corpus;
+  function loadCorpus() {
+    if (!corpus) {
+      corpus = fetch(new URL("tutor-passages.json", site), { signal: AbortSignal.timeout(7000) })
+        .then(response => {
+          if (!response.ok) throw new Error("Indice del tutor non disponibile");
+          return response.json();
+        })
+        .then(data => {
+          if (data.version !== 1) throw new Error("Versione dell’indice sconosciuta");
+          return data.documents.flatMap(doc => {
+            const url = new URL(doc.url, site);
+            if (url.origin !== site.origin || !url.pathname.startsWith(site.pathname)) return [];
+            return doc.passages.map(entry => {
+              const source = new URL(url);
+              source.hash = entry.anchor;
+              return makePassage(entry, source, doc.title, doc.lang, doc.course);
+            });
+          });
+        })
+        .catch(error => {
+          corpus = null;
+          throw error;
+        });
     }
-    const wanted = tokens(question).slice(0, 14);
-    const matchesIndex = index.map(item => {
-      const vocabulary = words([item.t, item.s, ...(item.g || []), ...(item.h || [])].join(" "));
-      return { item, score: wanted.filter(word => matches(word, vocabulary)).length };
-    }).filter(({score}) => score && score * 2 >= wanted.length).sort((a, b) => b.score - a.score);
-    return matchesIndex.slice(0, 4).map(({item}) => {
-      const url = new URL(item.u, site);
-      return { title: item.t, url };
-    }).filter(({url}) => url.origin === site.origin && url.pathname.startsWith(site.pathname) &&
-      url.pathname !== location.pathname);
-  };
+    return corpus;
+  }
+
+  function definitionScore(entry, matched) {
+    if (entry.term) return matched.filter(word => matches(word, words(entry.term))).length;
+    const subjects = entry.text.split(/[.!?;]\s+/).flatMap(sentence => {
+      const definition = sentence.match(/^\s*(.{1,72}?)\s+(?:è|sono|significa|indica|is|are|means|refers to)\s+/iu);
+      return definition ? [...words(definition[1])] : [];
+    });
+    const vocabulary = new Set(subjects);
+    return matched.filter(word => matches(word, vocabulary)).length;
+  }
+
+  function rankPassages(query, candidates, active, language, define) {
+    const frequencies = new Map(query.map(word => [word, 0]));
+    for (const entry of candidates) {
+      for (const word of query) {
+        if (matches(word, entry.vocab)) frequencies.set(word, frequencies.get(word) + 1);
+      }
+    }
+    const total = Math.max(candidates.length, 1);
+    const weights = new Map(query.map(word => [word, 1 + Math.log((total + 1) / (1 + frequencies.get(word)))]));
+    const fullWeight = query.reduce((sum, word) => sum + weights.get(word), 0);
+    const pathname = location.pathname;
+    return candidates.flatMap(entry => {
+      const matched = query.filter(word => matches(word, entry.vocab));
+      if (!matched.length) return [];
+      const coverage = matched.reduce((sum, word) => sum + weights.get(word), 0) / fullWeight;
+      if (coverage < .50 || matched.length < Math.min(2, query.length)) return [];
+      const samePage = entry.path === pathname;
+      const sameSection = samePage && active && new URL(entry.url).hash.slice(1) === active;
+      const exactTerm = entry.term && tokens(entry.term).join(" ") === query.join(" ");
+      const topicHits = matched.filter(word => matches(word, entry.topic)).length;
+      const definitions = define ? definitionScore(entry, matched) * 3 : 0;
+      const overview = entry.url.endsWith("#inbreve") ? -3 : 0;
+      const score = coverage * 18 + definitions + overview + topicHits * 1.3 + (exactTerm ? 8 : 0) +
+        (samePage ? 2 : 0) + (sameSection ? 1 : 0) + (entry.lang === language ? 3 : 0);
+      return [{ ...entry, matched, coverage, score }];
+    }).sort((a, b) => b.score - a.score);
+  }
 
   function excerpt(entry) {
-    if (entry.term) return entry.text;
-    const sentences = entry.text.match(/[^.!?]+(?:[.!?]+|$)/g) || [entry.text];
-    const scored = sentences.map((text, index) => ({
-      index, score: entry.matched.filter(word => matches(word, words(text))).length
-    })).sort((a, b) => b.score - a.score);
-    const first = scored[0]?.index || 0;
-    return tidy(sentences.slice(first, first + (sentences[first].length < 215 ? 2 : 1)).join(" ")).slice(0, 650);
+    if (entry.term || entry.text.length <= 650) return entry.text;
+    const sentences = typeof Intl.Segmenter === "function" ?
+      Array.from(new Intl.Segmenter(entry.lang === "en" ? "en" : "it", { granularity: "sentence" })
+        .segment(entry.text), piece => piece.segment) :
+      (entry.text.match(/[^.!?]+(?:[.!?]+|$)/g) || [entry.text]);
+    // Include both sides of a comparison when they fall in neighbouring sentences.
+    const windows = sentences.map((_, i) => tidy(sentences.slice(i, i + 3).join(" ")));
+    const scored = windows.map(text => {
+      const available = words(text);
+      return { text, score: entry.matched.filter(word => matches(word, available)).length };
+    }).sort((a, b) => b.score - a.score || a.text.length - b.text.length);
+    const text = scored[0]?.text || entry.text;
+    return text.length <= 780 ? text : text.slice(0, 779).replace(/\s+\S*$/, "") + "…";
+  }
+
+  function lessonLinks(entries) {
+    const seen = new Set();
+    return entries.filter(entry => {
+      if (seen.has(entry.path)) return false;
+      seen.add(entry.path);
+      return true;
+    });
   }
 
   const btn = document.createElement("button");
@@ -108,7 +188,7 @@
 <div class="tutor-selection" hidden><span>Testo selezionato incluso</span><button type="button">Rimuovi</button></div>
 <form class="tutor-form">
 <label for="tutor-q">Cosa vuoi capire?</label>
-<textarea id="tutor-q" rows="2" maxlength="400" placeholder="Es. Che cos’è USMCA?"></textarea>
+<textarea id="tutor-q" rows="2" maxlength="800" placeholder="Es. Che differenza c’è tra dazio e sanzione?"></textarea>
 <div class="tutor-actions"><button type="submit" class="btn">Chiedi</button><button type="button" class="tutor-review chip" hidden>Fammi ripassare</button></div>
 </form><div class="tutor-output" aria-live="polite" aria-atomic="true"></div>`;
   document.body.append(btn, box);
@@ -154,7 +234,8 @@
     if (open) {
       section = activeSection();
       const heading = headings.find(item => item.id === section);
-      context.textContent = heading ? title + " · " + tidy(heading.textContent) : title;
+      context.textContent = heading ? title + " · " + tidy(heading.textContent) :
+        main.classList.contains("lesson") ? title : "Lezioni e altri materiali di Gideon";
       selectionLine.hidden = !selected;
       input.focus();
     } else btn.focus();
@@ -186,72 +267,108 @@
     root.append(element);
     return element;
   };
-  function showEntry(entry, question, label, selectedQuote) {
-    output.replaceChildren();
-    const quote = selectedQuote || excerpt(entry);
-    const expansions = [...quote.matchAll(/\b([A-Z][A-Z0-9]{2,})\s*\(([^()]{4,120})\)/g)];
-    const wanted = new Set(tokens(question));
-    const expansion = expansions.find(([_, term]) => wanted.has(normalize(term)));
-    append("strong", entry.term ? "Dal glossario" : label);
-    if (expansion) append("p", expansion[1] + " sta per " + expansion[2] + ".");
-    append("blockquote", quote);
-    const a = append("a", entry.heading ? "Fonte: " + entry.heading : "Apri la fonte");
+  function answerLanguage(question) {
+    if (/\b(?:in inglese|in english)\b/iu.test(question)
+      || /^(?:what|why|how|when|where|which|explain|compare|can you|give me)\b/iu.test(question)) return "en";
+    if (/\b(?:in italiano|in italian)\b/iu.test(question)) return "it";
+    return pageLanguage === "en" ? "en" : "it";
+  }
+
+  function addSource(entry, root) {
+    const label = entry.heading || entry.docTitle || "Apri la fonte";
+    const a = append("a", label, root);
     a.href = entry.url;
     if (new URL(a.href).pathname === location.pathname) a.addEventListener("click", () => toggle(false));
   }
+
+  function continueLink(question, language, entries, quote = "") {
+    const url = new URL("https://chatgpt.com/");
+    const instructions = language === "en"
+      ? "Answer in plain English. Connect the answer to the cited course topics only where relevant. Cite verifiable sources for facts and distinguish course material from outside knowledge. If the evidence is incomplete, say what is uncertain."
+      : "Rispondi in italiano chiaro, mantenendo i termini tecnici in inglese. Collega la risposta ai temi delle lezioni citate quando pertinente. Cita fonti verificabili per i fatti e distingui gli appunti dalle conoscenze esterne. Se manca evidenza, spiega cosa resta incerto.";
+    const sources = entries.slice(0, 2).map(entry =>
+      "- " + (entry.heading || entry.docTitle) + " · " + entry.url + "\n" + excerpt(entry).slice(0, 420));
+    const prompt = [question || (language === "en" ? "Explain this passage." : "Spiega questo passaggio."),
+      instructions, ...(quote ? ["Passaggio scelto: " + quote.slice(0, 450)] : []),
+      ...(sources.length ? ["Materiali pubblici di Gideon:\n" + sources.join("\n\n")] : [])].join("\n\n");
+    url.searchParams.set("q", prompt);
+    const a = append("a", language === "en" ? "Continue with ChatGPT" : "Continua con ChatGPT");
+    a.href = url.href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.className = "tutor-continue";
+  }
+
+  function showAnswer(best, related, question, language, selectedQuote = "") {
+    output.replaceChildren();
+    output.dataset.tutorResult = "answer";
+    append("strong", best.term ? (language === "en" ? "From the glossary" : "Dal glossario") :
+      (language === "en" ? "From the study materials" : "Dagli appunti"));
+    const explain = append("p", selectedQuote || excerpt(best));
+    explain.lang = best.lang;
+    addSource(best, append("p", ""));
+    if (related.length) {
+      append("strong", language === "en" ? "Related course topics" : "Temi collegati nelle lezioni");
+      const list = append("ul", "");
+      for (const entry of related) {
+        const li = append("li", "", list);
+        addSource(entry, li);
+        const quote = excerpt(entry);
+        const snippet = quote.length > 290 ? quote.slice(0, 290).replace(/\s+\S*$/, "") + "…" : quote;
+        append("p", snippet, li).lang = entry.lang;
+      }
+    }
+    continueLink(question, language, [best, ...related], selectedQuote);
+  }
+
   async function ask(question) {
     const current = ++request;
+    const language = answerLanguage(question);
+    delete output.dataset.tutorResult;
     output.removeAttribute("aria-busy");
     if (!question && !selected) {
-      output.textContent = "Scrivi una domanda o seleziona un passaggio della lezione.";
+      output.textContent = language === "en" ? "Enter a question or select a passage." :
+        "Scrivi una domanda o seleziona un passaggio.";
       input.focus();
       return;
     }
+    const wanted = tokens(question).slice(0, 18);
     const active = section || activeSection();
-    const wanted = tokens(question);
     const chosen = selected ? passages.find(entry => entry.text.includes(selected)) : null;
-    if (!wanted.length && chosen) {
-      return showEntry(chosen, question, "Dal passaggio selezionato", selected);
-    }
-    const local = findPassage(question, passages, chosen ? new URL(chosen.url).hash.slice(1) : active);
-    if (local) return showEntry(local, question, "Dalla pagina");
-    if (!wanted.length && selected) {
-      output.replaceChildren();
-      append("strong", "Passaggio selezionato");
-      append("blockquote", selected);
-      return append("p", "Indica il termine o il punto che vuoi chiarire.");
-    }
+    if (!wanted.length && chosen) return showAnswer(chosen, [], question, language, selected);
     output.setAttribute("aria-busy", "true");
-    output.textContent = "Cerco nei materiali di Gideon…";
-    let suggestions = [];
-    let failed = false;
-    try {
-      suggestions = await related(question);
-      let best;
-      for (const {url} of suggestions.slice(0, 2)) {
-        const response = await fetch(url, { signal: AbortSignal.timeout(6000) });
-        if (!response.ok) continue;
-        const doc = new DOMParser().parseFromString(await response.text(), "text/html");
-        const found = findPassage(question, collect(doc, url.href), "");
-        if (found && (!best || found.score > best.score)) best = found;
+    output.textContent = language === "en" ? "Looking through the study materials…" : "Cerco nei materiali di Gideon…";
+    let candidates = passages;
+    let indexAvailable = true;
+    if (wanted.length) {
+      try {
+        candidates = await loadCorpus();
+        candidates = [...passages, ...candidates];
+      } catch {
+        indexAvailable = false;
       }
-      if (current !== request) return;
-      output.removeAttribute("aria-busy");
-      if (best) return showEntry(best, question, "Da un altro materiale di Gideon");
-    } catch {
-      failed = true;
     }
     if (current !== request) return;
     output.removeAttribute("aria-busy");
-    output.replaceChildren();
-    append("p", failed ? "La ricerca nel sito non è disponibile ora. Riprova o seleziona un passaggio." :
-      "Non trovo un passaggio che risponda con sufficiente precisione. Prova con il termine della lezione o seleziona la frase.");
-    if (suggestions.length) {
-      const list = append("ul", "");
-      for (const {title, url} of suggestions.slice(0, 3)) {
-        append("a", title, append("li", "", list)).href = url.href;
-      }
+    const define = /\b(?:difference|compare|define|definitions?|what is|what are|differenza|confronta|definisci|significa)\b/iu.test(question);
+    const ranked = wanted.length ? rankPassages(wanted, candidates, active, language, define) : [];
+    const [best, ...others] = lessonLinks(ranked.filter(item => item.coverage >= .57));
+    if (best) {
+      const related = others.filter(item => item.coverage >= Math.max(.62, best.coverage - .16)).slice(0, 2);
+      return showAnswer(best, related, question, language);
     }
+    output.replaceChildren();
+    output.dataset.tutorResult = "fallback";
+    if (language === "en") {
+      append("p", indexAvailable ? "The study materials don’t provide a direct answer. Continue in ChatGPT for a broader explanation." :
+        "The study index is temporarily unavailable. You can continue in ChatGPT.");
+    } else {
+      append("p", indexAvailable ? "I materiali del corso non contengono una risposta diretta. Puoi continuare in ChatGPT con la tua domanda." :
+        "L’indice delle lezioni non è disponibile in questo momento. Puoi continuare in ChatGPT.");
+    }
+    const context = chosen ? [chosen] : [];
+    if (chosen) addSource(chosen, append("p", language === "en" ? "Selected passage: " : "Passaggio selezionato: "));
+    continueLink(question, language, context, chosen ? selected : "");
   }
   form.addEventListener("submit", event => { event.preventDefault(); void ask(input.value.trim()); });
   const cards = [...main.querySelectorAll("#flashcard .card")];
@@ -260,6 +377,7 @@
   review.addEventListener("click", () => {
     request++;
     output.removeAttribute("aria-busy");
+    delete output.dataset.tutorResult;
     const card = cards[cardIndex++ % cards.length];
     output.replaceChildren();
     append("strong", "Ripasso dalla lezione");
