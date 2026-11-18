@@ -1356,3 +1356,11 @@ details.criteria .keys { margin-top: .2rem; }
   .p-about .ab-marq-row ul { min-width: 0; max-width: 100%; }
   .p-about .ab-marq li { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
 }
+
+@media (pointer: coarse) {
+  .strip-ready .discovery-scroll { scroll-snap-type: x proximity; }
+  .strip-ready .discovery-scroll li { scroll-snap-align: start; }
+}
+@media (pointer: coarse) and (max-width: 590px) {
+  .strip-ready .discovery-scroll li { flex-basis: 100%; }
+}

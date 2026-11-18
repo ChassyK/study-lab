@@ -6,6 +6,7 @@
   const controls = section.querySelectorAll("[data-strip-action]");
   const toggle = section.querySelector('[data-strip-action="toggle"]');
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const touchPointer = matchMedia("(pointer: coarse)");
   const list = viewport.querySelector("ul");
   let firstCopy;
   let observing = false;
@@ -13,6 +14,7 @@
   let playing = !reduce.matches;
   let touchUntil = 0;
   let manualUntil = 0;
+  let nextAdvance = 0;
   let resizeFrame = 0;
   let frame = 0;
   let previousTime = 0;
@@ -67,7 +69,13 @@
       previousTime = 0;
       return;
     }
-    if (previousTime && time >= Math.max(touchUntil, manualUntil)) {
+    if (touchPointer.matches) {
+      if (!previousTime) nextAdvance = time + 5800;
+      if (time >= Math.max(touchUntil, manualUntil, nextAdvance)) {
+        step(false);
+        nextAdvance = time + 5800;
+      }
+    } else if (previousTime && time >= Math.max(touchUntil, manualUntil)) {
       // Keep fractional travel separately because scrollLeft can round to a CSS pixel.
       fractional += Math.min(time - previousTime, 34) * 0.028;
       const travel = Math.floor(fractional);
@@ -116,15 +124,8 @@
     originalFocused = false;
     schedule();
   });
-  section.addEventListener("click", event => {
-    const control = event.target.closest("[data-strip-action]");
-    if (!control) return;
-    if (control === toggle) {
-      setPlaying(!playing);
-      return;
-    }
+  function step(left) {
     if (!length) return;
-    const left = control.dataset.stripAction === "previous";
     const position = viewport.scrollLeft % length;
     let destination;
     if (left) {
@@ -139,6 +140,17 @@
     }
     manualUntil = performance.now() + 450;
     viewport.scrollTo({ left: destination, behavior: reduce.matches ? "auto" : "smooth" });
+  }
+
+  section.addEventListener("click", event => {
+    const control = event.target.closest("[data-strip-action]");
+    if (!control) return;
+    if (control === toggle) {
+      setPlaying(!playing);
+    } else {
+      step(control.dataset.stripAction === "previous");
+      nextAdvance = performance.now() + 5800;
+    }
   });
   reduce.addEventListener("change", () => setPlaying(!reduce.matches));
   document.addEventListener("visibilitychange", schedule);
