@@ -29,7 +29,7 @@
 .ab-line { display: block; overflow: hidden; padding: .06em 0 .16em; margin: -.06em 0 -.16em; }
 .ab-line > span { display: block; }
 .ab-lead { font-family: var(--display); font-size: clamp(1.3rem, 2.5vw, 1.72rem); line-height: 1.28; letter-spacing: -.012em; max-width: 27ch; margin-top: 1.7rem !important; text-wrap: balance; }
-.ab-intro { color: var(--ink-2); line-height: 1.6; max-width: 44ch; }
+.ab-intro { color: var(--ink-2); line-height: 1.6; max-width: 44ch; text-wrap: pretty; }
 .ab-cta { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem !important; }
 
 /* ---------- sezioni: titolo a sinistra (resta fermo mentre scorri), contenuto a destra */

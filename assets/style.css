@@ -875,6 +875,8 @@ html.scrolled .topbar, html:not(.js) .topbar { border-bottom-color: var(--rule-2
   /* comparsa allo scorrimento: solo blocchi (righe, figure, schede), mai i paragrafi */
   html.motion [data-rv] { opacity: 0; transform: translateY(14px); transition: opacity var(--d-3) var(--ease-out), transform var(--d-3) var(--ease-out); transition-delay: calc(var(--i, 0) * 60ms); }
   html.motion [data-rv].rv-in { opacity: 1; transform: none; }
+  /* rete di sicurezza: se lo script non arriva entro 3 secondi i blocchi marcati nell'HTML compaiono lo stesso */
+  html.motion:not(.rv-ready) [data-rv] { animation: gd-safe .01s 3s both; }
 
   /* pannelli che si aprono: Mostra/Nascondi, perché, esiti, risultati, tutor */
   @supports (interpolate-size: allow-keywords) {
@@ -916,6 +918,7 @@ html.scrolled .topbar, html:not(.js) .topbar { border-bottom-color: var(--rule-2
 }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 @keyframes gd-appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes gd-safe { from { opacity: 0; } to { opacity: 1; transform: none; } }
 @keyframes gd-rise { from { transform: translateY(108%); } }
 @keyframes gd-up { from { opacity: 0; transform: translateY(12px); } }
 @keyframes gd-out { to { opacity: 0; } }
@@ -928,3 +931,23 @@ html.scrolled .topbar, html:not(.js) .topbar { border-bottom-color: var(--rule-2
   details::details-content { block-size: auto !important; content-visibility: visible !important; }
   .field kbd { display: none; }
 }
+
+/* testi lunghi a richiesta (18/11/2026): tirocini compatti, criteri richiudibili, punti chiave ridotti su telefono */
+.hub-head .latest .latest-s, .latest .latest-s { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.watch { align-items: start; }
+.watch-item strong a { color: var(--ink); }
+.watch-item strong a:hover { color: var(--c); text-decoration: none; }
+details.more { margin-top: .7rem; }
+details.more > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: .4rem; font: 500 .85rem/1 var(--sans); color: var(--ink-2); padding: .45rem .8rem; border-radius: 99px; background: var(--fill); transition: background-color var(--d-1) ease; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::after { content: "+"; font-weight: 600; }
+details.more[open] > summary::after { content: "–"; }
+details.more > summary:hover { background: var(--rule-2); }
+details.more > p:first-of-type { margin-top: .8rem; }
+details.criteria { max-width: none; margin: 0 0 2rem; }
+details.criteria .keys { margin-top: .2rem; }
+@media (min-width: 960px) { details.criteria .keys { grid-template-columns: 1fr 1fr; column-gap: var(--gap); } }
+.keys-more { margin-top: .9rem; }
+.keys.clamped > li:nth-child(n+4) { display: none; }
+@media screen { html.motion .keys > li { transition: opacity var(--d-3) var(--ease-out), transform var(--d-3) var(--ease-out); } @starting-style { html.motion .keys > li { opacity: 0; transform: translateY(-6px); } } }
+@media print { .keys.clamped > li { display: list-item !important; } .keys-more { display: none; } }

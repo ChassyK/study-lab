@@ -276,6 +276,7 @@
   (() => {
     const root = document.documentElement;
     const motion = root.classList.contains("motion") && !document.body.classList.contains("print");
+    root.classList.add("rv-ready");
     const escH = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
     /* menu: resta accesa la sezione in cui sei; il filo sotto la barra compare solo scorrendo */
@@ -318,6 +319,17 @@
       t.style.viewTransitionName = "page-title";
     }, true);
     addEventListener("pageshow", e => { if (e.persisted) $$("[style*='view-transition-name']").forEach(el => { el.style.viewTransitionName = ""; }); });
+
+    /* telefono: dei punti chiave restano i primi tre, gli altri si aprono con un tocco */
+    if (matchMedia("(max-width: 720px)").matches && !document.body.classList.contains("print")) $$(".brief .keys").forEach(ul => {
+      const n = ul.children.length;
+      if (n < 5) return;
+      ul.classList.add("clamped");
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "btn ghost keys-more"; b.textContent = `Mostra tutti i ${n} punti`;
+      b.addEventListener("click", () => { ul.classList.toggle("clamped", false); b.hidden = true; });
+      ul.after(b);
+    });
 
     if (!motion) return;
 
