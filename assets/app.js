@@ -235,7 +235,29 @@
     const escH = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
     /* menu: resta accesa la sezione in cui sei; il filo sotto la barra compare solo scorrendo */
-    $$(".topnav a").forEach(a => { try { if (location.pathname.startsWith(new URL(a.href).pathname)) a.setAttribute("aria-current", "page"); } catch {} });
+    const nav = $(".gideon-nav");
+    if (nav) {
+      const path = location.pathname;
+      const legacyMidterm = /\/midterm(?:-2)?\/$/.test(path);
+      for (const link of nav.querySelectorAll("a")) {
+        const destination = new URL(link.href).pathname;
+        const current = legacyMidterm ? destination.endsWith("/midterms/") :
+          path.startsWith(destination) && destination !== new URL($(".brand").href).pathname;
+        if (!current) continue;
+        link.setAttribute("aria-current", path === destination ? "page" : "location");
+        link.closest(".nav-group")?.setAttribute("data-section-current", "");
+      }
+      document.addEventListener("click", event => {
+        if (!nav.contains(event.target)) nav.querySelectorAll(".nav-group[open]").forEach(item => { item.open = false; });
+      });
+      nav.addEventListener("keydown", event => {
+        const menu = event.target.closest(".nav-group[open]");
+        if (event.key === "Escape" && menu) {
+          menu.open = false;
+          menu.querySelector("summary").focus();
+        }
+      });
+    }
     const onTop = () => root.classList.toggle("scrolled", scrollY > 8);
     addEventListener("scroll", onTop, { passive: true });
     onTop();

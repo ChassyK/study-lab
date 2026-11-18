@@ -4,7 +4,7 @@
   const main = document.querySelector("main");
   if (!home || !main) return;
   const site = new URL(home.href);
-  const content = ".lesson-grid > article.prose, .brief, #glossario";
+  const content = ".lesson-grid > article.prose, .brief, #glossario, .assessment-body";
   const tidy = value => value.replace(/\s+/g, " ").trim();
   const normalize = value => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const ignored = new Set(("che chi cos cosa cosae significa significato frase passaggio paragrafo senso importante riferimento come quando dove quale quali perché perche per delle della dello degli nella nelle nello sono essere questo questa queste quello della delle una uno nei nel alla allo del dai dal sul con fra tra suo sua gli anche più piu fammi spiegami spiegare dimmi puoi vorrei devo capire vuol dire definizione what which when where how with from into does mean the and this that can tell about explain difference tra was for are you il la di da al ai le lo mi tu he she is it si on").split(" "));
