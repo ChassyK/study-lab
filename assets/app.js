@@ -235,6 +235,42 @@
     });
     bar.append(b);
     paint();
+
+    const ambient = document.createElement("details");
+    ambient.className = "ambient-control";
+    ambient.innerHTML = '<summary>Sfondo</summary><label><span>Sfondo</span>' +
+      '<input type="range" min="0" max="100" value="0" aria-label="Ombra dello sfondo"></label>';
+    const trigger = ambient.querySelector("summary");
+    const range = ambient.querySelector("input");
+    const wide = matchMedia("(min-width: 1120px) and (min-height: 420px)");
+    const saved = store.get("ambient");
+    if (Number.isFinite(saved)) range.value = saved;
+    const apply = () => {
+      const value = range.valueAsNumber;
+      root.style.setProperty("--ambient-opacity", String(value * 0.008));
+      root.toggleAttribute("data-ambient", value > 0);
+      range.setAttribute("aria-valuetext", value + "%");
+    };
+    range.addEventListener("input", apply);
+    range.addEventListener("change", () => store.set("ambient", range.valueAsNumber));
+    const place = () => {
+      if (wide.matches) bar.after(ambient);
+      else bar.insertBefore(ambient, b);
+      ambient.open = wide.matches;
+      range.setAttribute("aria-orientation", wide.matches ? "vertical" : "horizontal");
+    };
+    wide.addEventListener("change", place);
+    document.addEventListener("pointerdown", event => {
+      if (!wide.matches && ambient.open && !ambient.contains(event.target)) ambient.open = false;
+    });
+    ambient.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !wide.matches && ambient.open) {
+        ambient.open = false;
+        trigger.focus();
+      }
+    });
+    place();
+    apply();
   })();
 
   /* movimento (18/11/2026). Tutto facoltativo: senza la classe "motion" (riduci movimento) o in stampa il sito resta fermo e completo. */
