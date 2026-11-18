@@ -971,86 +971,91 @@ details.criteria .keys { margin-top: .2rem; }
 }
 
 /* Home: letture brevi che portano al punto esatto della lezione */
-.study-discoveries {
-  --discovery-accent: #60467f;
-  margin-top: .65rem;
+.study-discoveries { margin-top: .9rem; }
+.study-discoveries > header, .discovery-actions {
+  display: flex; align-items: center; gap: .3rem 1rem; flex-wrap: wrap;
 }
-:root[data-theme="dark"] .study-discoveries { --discovery-accent: #c1adee; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .study-discoveries { --discovery-accent: #c1adee; }
-}
-.study-discoveries > header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .5rem 1rem;
-  margin-bottom: .55rem;
-}
+.study-discoveries > header { justify-content: space-between; margin-bottom: .38rem; }
 .study-discoveries h2 {
-  margin: 0;
-  font: 500 clamp(1.45rem, 3vw, 1.9rem)/1.05 var(--display);
+  margin: 0; font: 500 clamp(1.45rem, 3vw, 1.9rem)/1.05 var(--display);
   letter-spacing: -.025em;
 }
-.study-discoveries > header a {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  min-height: 44px;
-  color: var(--ink-2);
-  font-size: .88rem;
+.discovery-actions a, .discovery-actions button {
+  align-items: center; gap: .35rem; min-height: 44px; padding: 0;
+  color: var(--ink-2); font: 500 .83rem/1.2 var(--sans);
 }
-.study-discoveries > ul {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-block: 1px solid var(--rule);
+.discovery-actions a { display: inline-flex; }
+.discovery-actions button, .discovery-strip button {
+  border: 0; background: transparent; cursor: pointer;
 }
-.study-discoveries li + li { border-inline-start: 1px solid var(--rule); }
+.discovery-actions button:hover { color: var(--prep-accent); text-decoration: underline; }
+.discovery-strip { border-block: 1px solid var(--rule); }
+.discovery-scroll { position: relative; min-width: 0; }
+.discovery-scroll ul {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none; margin: 0; padding: 0;
+}
+.discovery-scroll li {
+  min-width: 0; border-inline-end: 1px solid var(--rule);
+  box-shadow: inset 0 2px var(--c);
+}
+.discovery-scroll li:nth-child(n+4) { border-block-start: 1px solid var(--rule); }
 .discovery-link {
-  display: grid;
-  gap: .45rem;
-  height: 100%;
-  grid-template-rows: auto auto 1fr auto;
-  padding: 1rem clamp(.85rem, 2vw, 1.4rem);
-  color: var(--ink);
-  text-decoration: none;
+  display: grid; grid-template-rows: auto auto 1fr auto;
+  gap: .45rem; height: 100%; padding: .95rem clamp(.75rem, 2vw, 1.2rem);
+  color: var(--ink); text-decoration: none;
 }
-.study-discoveries li:first-child .discovery-link { padding-inline-start: 0; }
-.discovery-theme {
-  color: var(--discovery-accent);
-  font-size: .74rem;
-  font-weight: 650;
-  letter-spacing: .04em;
-}
+.discovery-theme, .discovery-concept { color: var(--c); font-weight: 650; }
+.discovery-theme { font-size: .74rem; }
 .discovery-link strong {
-  color: var(--ink);
-  font: 500 clamp(1.16rem, 2.3vw, 1.65rem)/1.09 var(--display);
-  letter-spacing: -.02em;
+  color: var(--ink); font: 500 clamp(1.14rem, 2.15vw, 1.62rem)/1.08 var(--display);
+  letter-spacing: -.018em;
 }
-.discovery-note { color: var(--ink-2); font-size: .87rem; line-height: 1.4; }
-.discovery-concept { color: var(--discovery-accent); font-size: .83rem; font-weight: 650; }
-.discovery-concept span { display: inline-block; margin-inline-start: .23rem; }
+.discovery-note { color: var(--ink-2); font-size: .86rem; line-height: 1.44; }
+.discovery-concept { font-size: .8rem; margin-top: .2rem; }
+.discovery-concept span { display: inline-block; margin-inline-start: .2rem; }
 .discovery-link:focus-visible strong, .discovery-link:hover strong { text-decoration: underline; }
+.discovery-link:focus-visible { outline-offset: -3px; }
+.strip-ready .discovery-strip {
+  display: grid; grid-template-columns: 44px minmax(0,1fr) 44px; align-items: stretch;
+}
+.strip-ready .discovery-scroll {
+  grid-area: 1 / 2; overflow-x: auto; scrollbar-width: none;
+  overscroll-behavior-x: contain; scroll-behavior: auto;
+}
+.strip-ready .discovery-scroll::-webkit-scrollbar { display: none; }
+.strip-ready .discovery-scroll ul { display: flex; }
+.strip-ready .discovery-scroll li {
+  flex: 0 0 calc(100% / 3); border-block-start: 0;
+}
+.discovery-strip button {
+  align-self: center; min-height: 44px; padding: 0;
+  font: 500 1.15rem/1 var(--sans); color: var(--ink-2);
+}
+.discovery-strip button:hover { color: var(--prep-accent); background: var(--fill); }
+.discovery-strip [data-strip-action="previous"] { grid-area: 1 / 1; }
+.discovery-strip [data-strip-action="next"] { grid-area: 1 / 3; }
+.discovery-strip button:focus-visible { outline-offset: -2px; }
 @media (hover: hover) {
   html.motion .discovery-concept span { transition: transform var(--d-2) var(--ease-out); }
   html.motion .discovery-link:hover .discovery-concept span { transform: translateX(3px); }
 }
-@media (max-width: 700px) {
-  .study-discoveries > ul { grid-template-columns: minmax(0, 1fr); }
-  .study-discoveries li + li { border-inline-start: 0; border-block-start: 1px solid var(--rule); }
-  .discovery-link {
-    grid-template: auto auto auto / minmax(0, 1fr) auto;
-    gap: .3rem .75rem;
-    padding: .65rem 0 .7rem;
-  }
-  .discovery-theme { grid-area: 1 / 1; }
-  .discovery-link strong, .discovery-note { grid-column: 1 / -1; }
-  .discovery-link strong { grid-row: 2; }
-  .discovery-note { grid-row: 3; }
-  .discovery-concept { grid-area: 1 / 2; max-width: 12rem; }
+@media (max-width: 840px) {
+  .discovery-scroll ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip-ready .discovery-scroll li { flex-basis: 50%; }
+}
+@media (max-width: 590px) {
+  .study-discoveries > header, .discovery-actions { column-gap: .7rem; }
+  .discovery-actions { margin-inline-start: auto; }
+  .discovery-scroll ul { grid-template-columns: 1fr; }
+  .strip-ready .discovery-scroll li { flex-basis: 92%; }
+  .strip-ready .discovery-strip { grid-template-columns: 34px minmax(0,1fr) 34px; }
+  .discovery-link { padding-block: .75rem; }
+}
+@media print {
+  .discovery-actions button, .discovery-strip button { display: none; }
+  .strip-ready .discovery-strip, .strip-ready .discovery-scroll ul { display: block; }
+  .discovery-scroll li[aria-hidden="true"] { display: none; }
 }
 
 /* Gideon: risposte e ripasso nello stesso pannello */
@@ -1225,4 +1230,129 @@ details.criteria .keys { margin-top: .2rem; }
 @media (max-width: 720px) {
   .prep-layout, .prep-programme li { grid-template-columns: minmax(0,1fr); }
   .prep-programme li { gap: .45rem; }
+}
+
+/* Esempi visivi nello stesso ritmo degli appunti. */
+.lesson-grid > .prose { line-height: 1.74; }
+.lesson-grid > .prose > h2 {
+  padding-block-start: .74rem; border-block-start: 1px solid var(--rule);
+}
+.lesson-grid > .prose > h2:first-child { margin-block-start: 0; }
+.lesson-grid > .prose > h3 { text-wrap: pretty; }
+.prose .study-flow {
+  margin: .85rem 0 1.75rem; padding: .9rem clamp(.9rem, 3vw, 1.35rem);
+  background: var(--c-soft); border: 1px solid var(--rule);
+  border-inline-start: .24rem solid var(--c);
+}
+.study-flow figcaption {
+  color: var(--ink); margin: 0 0 .8rem; font: 500 1.26rem/1.18 var(--display);
+}
+.study-flow ol {
+  display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .85rem;
+  padding: 0; margin: 0; list-style: none;
+}
+.study-flow li {
+  position: relative; display: grid; align-content: start; gap: .21rem;
+  padding: .62rem .55rem .58rem .65rem; margin: 0;
+  background: var(--surface); border: 1px solid var(--rule);
+}
+.study-flow li + li::before {
+  content: "→" / ""; position: absolute; inset: .54rem auto auto -.84rem;
+  color: var(--c); font: 600 .83rem var(--sans);
+}
+.study-flow li strong { font: 650 .91rem/1.24 var(--sans); color: var(--ink); }
+.study-flow li span { font: 400 .81rem/1.42 var(--sans); color: var(--ink-2); }
+.study-flow p { margin: .8rem 0 0; color: var(--ink-2); font: 400 .83rem/1.5 var(--sans); }
+.study-flow a { font-weight: 600; }
+@media (max-width: 570px) {
+  .study-flow ol { grid-template-columns: 1fr; padding-inline-start: .6rem; gap: .5rem; }
+  .study-flow li + li::before { content: "↓" / ""; inset: .66rem auto auto -.83rem; }
+}
+@media print { .prose .study-flow { break-inside: avoid; } }
+
+/* Titoli, indici e liste seguono lo stesso ritmo in tutti i percorsi. */
+:is(.course-head, .lesson-head, .p-about .ab-hero) {
+  padding-bottom: clamp(.9rem, 2vw, 1.5rem);
+  border-block-end: 1px solid var(--rule);
+  margin-bottom: clamp(1rem, 3vw, 2rem);
+}
+.p-about .ab-hero { border-block-end-width: 0; }
+.lesson-head h1, .course-head h1, .prep-head h1, .ab-hero h1 { text-wrap: balance; }
+.lesson > .brief {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-inline-start: .24rem solid var(--c); border-radius: 4px; box-shadow: none;
+  margin-bottom: clamp(1rem, 3vw, 2.15rem);
+}
+.lesson > .brief h2 { color: var(--c); font-size: .92rem; }
+.lesson-grid .toc { margin-top: 0; }
+.reading-index > summary { display: none; }
+:is(.study, .prep-reading, .ab-sec) > h2 { text-wrap: balance; }
+.lesson .study > h2 { padding-block-start: .82rem; border-block-start: 1px solid var(--rule); }
+.prose .case-timeline { padding: 0; margin: .65rem 0 1.7rem; list-style: none; }
+.case-timeline li {
+  display: grid; grid-template-columns: minmax(5.5rem, .28fr) minmax(0, 1fr);
+  align-items: baseline; gap: .8rem; padding: .68rem .12rem;
+  border-block-end: 1px solid var(--rule);
+}
+.timeline-date {
+  color: var(--c); font: 650 .84rem/1.4 var(--sans); font-variant-numeric: tabular-nums;
+}
+.p-internships .course .watch {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem;
+}
+.p-internships .watch-item { border-block-start: 1px solid var(--rule); }
+@media (max-width: 960px) {
+  .lesson-grid .toc {
+    padding: .12rem .85rem; margin: 0 0 .95rem; background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 4px;
+  }
+  .reading-index > summary {
+    display: list-item; padding-block: .66rem; min-height: 44px;
+    cursor: pointer; color: var(--ink); font: 600 .88rem/1.5 var(--sans);
+  }
+  .reading-index[open] > summary { margin-bottom: .65rem; border-block-end: 1px solid var(--rule); }
+  .reading-index .toc-actions { margin-bottom: .8rem; }
+}
+@media (max-width: 620px) {
+  .p-internships .course .watch { grid-template-columns: minmax(0,1fr); }
+  .case-timeline li { grid-template-columns: minmax(0,1fr); gap: .15rem; }
+}
+
+.sources ol { grid-template-columns: minmax(0, 1fr); overflow-wrap: anywhere; }
+.brief-reading > summary, .brief-teaser { display: none; }
+@media (max-width: 960px) {
+  .brief-overview:not(:has(details[open])) > .brief-teaser {
+    display: block; color: var(--ink-2); margin-block: 0 .5rem;
+  }
+  .brief-reading > summary {
+    display: list-item; min-height: 44px; padding-block: .64rem;
+    color: var(--c); cursor: pointer; font: 600 .86rem/1.5 var(--sans);
+  }
+  .brief-reading > .lede { margin-block: .2rem .7rem; }
+}
+@media print {
+  .brief-reading::details-content { content-visibility: visible; display: block; }
+  .brief-reading > summary, .brief-overview > .brief-teaser { display: none; }
+}
+
+.course .course-practice {
+  border: 1px solid var(--rule); border-inline-start: .24rem solid var(--c);
+  border-radius: 4px; box-shadow: none; padding: clamp(1rem, 3vw, 1.5rem);
+}
+.course-practice h3 {
+  grid-column: 1 / -1; margin: 0 0 .7rem;
+  font: 500 clamp(1.25rem, 3vw, 1.65rem)/1.1 var(--display);
+}
+.course-practice h4 { margin: 0 0 .55rem; color: var(--c); font: 650 .86rem/1.35 var(--sans); }
+.course-practice .practice-note { margin: .5rem 0 0; color: var(--ink-2); }
+.course-practice .keys { margin: 0; }
+@media (max-width: 959px) { .course-practice .practice-plan { margin-top: .85rem; } }
+.p-internships .course .watch { gap: .75rem 1.5rem; }
+.p-internships .watch-item { border: 1px solid var(--rule); border-radius: 4px; box-shadow: none; }
+
+.prose details.domanda > summary { display: block; overflow-wrap: anywhere; }
+.prose details.domanda > summary::after { display: inline-block; margin-inline-start: .65em; }
+@media (max-width: 440px) {
+  .p-about .ab-marq-row ul { min-width: 0; max-width: 100%; }
+  .p-about .ab-marq li { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
 }

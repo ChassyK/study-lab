@@ -22,6 +22,15 @@
     addEventListener("resize", onScroll);
     onScroll();
   }
+  // Let the reader open the chapter index on compact screens.
+  const readingPanels = $$(".reading-index, .brief-reading");
+  if (readingPanels.length) {
+    const compact = matchMedia("(max-width: 960px)");
+    const fitIndex = () => readingPanels.forEach(panel => { panel.open = !compact.matches; });
+    compact.addEventListener("change", fitIndex);
+    fitIndex();
+  }
+
   const tocLinks = $$(".toc a[href^='#']");
   if (tocLinks.length && "IntersectionObserver" in window) {
     const map = new Map(tocLinks.map(a => [decodeURIComponent(a.hash.slice(1)), a]));
@@ -238,7 +247,7 @@
     const nav = $(".gideon-nav");
     if (nav) {
       const path = location.pathname;
-      const legacyMidterm = /\/midterm(?:-2)?\/$/.test(path);
+      const legacyMidterm = /\/midterm(?:-2)?(?:-it)?\/$/.test(path);
       for (const link of nav.querySelectorAll("a")) {
         const destination = new URL(link.href).pathname;
         const current = legacyMidterm ? destination.endsWith("/midterms/") :
