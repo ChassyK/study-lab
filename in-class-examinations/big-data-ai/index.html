@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ripasso in aula · Big Data &amp; AI — Gideon</title>
+<meta name="description" content="Ripasso dalle lezioni.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css?v=20261118-10">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script>try{var t=JSON.parse(localStorage.getItem("sl:theme"));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>(function(d){d.classList.add("js");if(matchMedia("(prefers-reduced-motion: no-preference)").matches)d.classList.add("motion")})(document.documentElement)</script>
+<script src="/study-lab/assets/assessment.js?v=20261118-3" defer></script></head>
+<body class="p-assessment" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/">Gideon</a>
+<nav class="topnav gideon-nav" aria-label="Navigazione principale"><details class="nav-group" name="gideon-nav"><summary>Corsi</summary><div class="nav-panel"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></div></details><a href="/study-lab/midterms/">Midterm</a><a href="/study-lab/reports/">Report</a><a href="/study-lab/in-class-examinations/">In-class exams</a><details class="nav-group" name="gideon-nav"><summary>Esplora</summary><div class="nav-panel"><a href="/study-lab/case-studies/" data-c="cs">Case studies</a><a href="/study-lab/internships/" data-c="in">Internships</a><a href="/study-lab/about/" data-c="ab">About</a></div></details></nav></header>
+<main id="main" class="hub prep-work">
+<header class="prep-head">
+<div class="prep-head-copy"><p class="prep-stamp">In-class exams</p>
+<h1>Big Data &amp; AI</h1><p class="prep-lede">Ripasso dalle lezioni per la seconda prova in classe.</p></div></header>
+<nav class="prep-jumps" aria-label="In questa pagina"><a href="/study-lab/in-class-examinations/">In-class examinations</a>
+<a href="#prep-topics">Argomenti spiegati</a> <a href="#prep-practice">Allenamento</a></nav>
+<div class="prep-layout">
+<div class="assessment-body">
+<section id="prep-scope" class="prep-reading" aria-label="Informazioni sulla prova">
+<p>Programma, data e formato della prova da confermare su Canvas. Le schede riprendono i temi trattati a lezione.</p>
+<p class="prep-source"><a href="https://h-farmcollege.instructure.com/courses/1256/assignments">Consegne su Canvas</a></p>
+</section>
+<section class="prep-reading" aria-labelledby="prep-topics">
+<h2 id="prep-topics">Argomenti spiegati</h2>
+<article class="exam-exercise">
+<h3 id="prep-topic-1">Collegare il sentiment al problema</h3>
+<p>Lo stesso commento può dare giudizi opposti su più aspetti. Separarli aiuta a capire dove intervenire.</p>
+<details class="prep-details"><summary>Termini, esempio e applicazione</summary>
+<dl><dt lang="en"><strong>Natural language processing (NLP)</strong></dt><dd>Tecniche con cui un computer analizza o produce linguaggio umano.</dd><dt lang="en"><strong>Sentiment analysis</strong></dt><dd>Classificazione del giudizio espresso nel testo, per esempio positivo, negativo o neutro.</dd><dt lang="en"><strong>Aspect-based sentiment</strong></dt><dd>Valutazione del giudizio su uno specifico aspetto del prodotto.</dd></dl>
+<p class="prep-example"><strong>Esempio ipotetico.</strong> Nel commento «Il boss è spettacolare, ma il matchmaking è lento», il giudizio è positivo sul boss e negativo sul matchmaking.</p>
+<p class="prep-application"><strong>Per esercitarti.</strong> Etichetta separatamente i due aspetti. Per decidere se intervenire sul matchmaking, confronta i commenti con i tempi di attesa effettivi.</p>
+<p class="prep-source"><a href="/study-lab/big-data-ai/2026-11-13/#positivo-negativo-neutro-come-una-macchina-giudica-il-tono">Lezione · Sentiment per aspetto e limiti del contesto</a></p>
+</details></article><article class="exam-exercise">
+<h3 id="prep-topic-2">Precision, recall e costo dell’errore</h3>
+<p>La metrica dipende dall’errore più costoso per il team. Perdere casi gravi e ricevere troppi falsi allarmi hanno conseguenze diverse.</p>
+<details class="prep-details"><summary>Termini, esempio e applicazione</summary>
+<dl><dt lang="en"><strong>Precision</strong></dt><dd>Tra tutti i casi che il modello segnala come positivi, quota di quelli che lo sono davvero.</dd><dt lang="en"><strong>Recall</strong></dt><dd>Tra tutti i casi davvero positivi, quota di quelli che il modello riesce a trovare.</dd></dl>
+<p class="prep-example"><strong>Esempio ipotetico.</strong> Per lo studio, la classe positiva è «ticket con errore che impedisce di giocare». Su 8 ticket bloccanti il modello ne trova 6 e segnala anche 4 ticket normali. La precision è 6/10, cioè 60%. La recall è 6/8, cioè 75%.</p>
+<p class="prep-application"><strong>Per esercitarti.</strong> Indica quale errore vuoi ridurre e giustifica la metrica con il suo costo per giocatori e squadra qualità.</p>
+<p class="prep-source"><a href="/study-lab/big-data-ai/2026-11-03/#l-accuracy-puo-mentire-precision-recall-e-f1">Lezione · Dalla matrice di confusione alle metriche</a></p>
+</details></article><article class="exam-exercise">
+<h3 id="prep-topic-3">Testare il modello su dati nuovi</h3>
+<p>Per capire se il modello generalizza, valuta casi esclusi dall’addestramento e dalla scelta delle impostazioni.</p>
+<details class="prep-details"><summary>Termini, esempio e applicazione</summary>
+<dl><dt lang="en"><strong>Overfitting</strong></dt><dd>Il modello si adatta anche al rumore dei dati di addestramento e fatica a generalizzare su casi nuovi.</dd><dt lang="en"><strong>Test set</strong></dt><dd>Insieme di dati riservato alla misura finale delle prestazioni.</dd></dl>
+<p class="prep-example"><strong>Esempio ipotetico.</strong> Uno studio addestra il classificatore sui ticket delle patch passate e tiene da parte quelli della patch successiva per il test. I duplicati non devono finire sia nell’addestramento sia nel test.</p>
+<p class="prep-application"><strong>Per esercitarti.</strong> Descrivi come separeresti i dati e spiega cosa potrebbe cambiare nella patch successiva.</p>
+<p class="prep-source"><a href="/study-lab/big-data-ai/2026-11-03/#imparare-a-memoria-non-e-imparare-overfitting-e-test-onesti">Lezione · Overfitting e test su casi mai visti</a></p>
+</details></article><article class="exam-exercise">
+<h3 id="prep-topic-4">Leggere un decision tree</h3>
+<p>L’albero divide i casi con domande sui dati. Ogni risposta conduce a un altro test o alla previsione.</p>
+<details class="prep-details"><summary>Termini, esempio e applicazione</summary>
+<dl><dt lang="en"><strong>Decision tree</strong></dt><dd>Modello che arriva a una previsione seguendo una sequenza di test sulle variabili.</dd><dt lang="en"><strong>Leaf</strong></dt><dd>Nodo finale dell’albero che contiene la previsione, per esempio una classe o una probabilità.</dd></dl>
+<p class="prep-example"><strong>Esempio ipotetico.</strong> L’albero chiede se il blocco si ripete e se impedisce di avviare una partita. Un percorso porta alla classe «priorità alta».</p>
+<p class="prep-application"><strong>Per esercitarti.</strong> Mostra un percorso e indica quali ticket etichettati useresti per verificare le regole.</p>
+<p class="prep-source"><a href="/study-lab/big-data-ai/2026-10-20/#un-albero-decisionale-e-una-serie-di-domande-ben-scelte">Lezione · Nodi, rami e previsioni dell’albero</a></p>
+</details></article><article class="exam-exercise">
+<h3 id="prep-topic-5">Esplorare segmenti con il clustering</h3>
+<p>Il clustering propone gruppi simili. Le variabili scelte determinano come interpretarli.</p>
+<details class="prep-details"><summary>Termini, esempio e applicazione</summary>
+<dl><dt lang="en"><strong>Clustering</strong></dt><dd>Raggruppamento di osservazioni simili secondo le variabili usate.</dd><dt lang="en"><strong>Unsupervised learning</strong></dt><dd>Apprendimento da dati privi di etichette che dicano quale risposta aspettarsi.</dd></dl>
+<p class="prep-example"><strong>Esempio ipotetico.</strong> Lo studio esplora gli stili di gioco raggruppando i giocatori per durata delle sessioni e quota di partite cooperative. Poi verifica su altre settimane se i gruppi si ripresentano.</p>
+<p class="prep-application"><strong>Per esercitarti.</strong> Motiva le variabili, spiega come confronti minuti e percentuali e indica una scelta informata dai gruppi.</p>
+<p class="prep-source"><a href="/study-lab/big-data-ai/2026-10-20/#il-clustering-trova-gruppi-quando-nessuno-ti-da-la-risposta">Lezione · Raggruppare senza etichette</a></p>
+</details></article></section>
+</div>
+<section class="prep-workbench" id="prep-practice" aria-labelledby="work-title">
+<h2 id="work-title">Continua il ripasso</h2>
+<ul class="prep-resource-links"><li><a href="/study-lab/midterms/big-data-ai/">Allenamento di Big Data &amp; AI</a></li><li><a href="/study-lab/big-data-ai/2026-11-03/#quiz">Quiz · Valutazione di un modello</a></li><li><a href="/study-lab/big-data-ai/2026-11-03/#flashcard">Flashcard · Valutazione di un modello</a></li><li><a href="/study-lab/big-data-ai/2026-11-13/#quiz">Quiz · NLP e sentiment analysis</a></li></ul>
+</section></div></main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js?v=20261118-10" defer></script>
+<script src="/study-lab/assets/tutor.js?v=20261118-5" defer></script>
+</body></html>
