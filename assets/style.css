@@ -962,3 +962,10 @@ details.criteria .keys { margin-top: .2rem; }
   .concept-map th, .concept-map td { border: 0; padding: .2rem .9rem; }
   .concept-map td::before { content: attr(data-label); display: block; font-size: .75rem; opacity: .7; margin-top: .3rem; }
 }
+
+@media (max-width: 720px) {
+  .tutor-btn.away { transform: translateY(180%); opacity: 0; pointer-events: none; }
+}
+@media screen {
+  html.motion .tutor-btn { transition: transform var(--d-2) var(--ease-out), opacity var(--d-2) var(--ease-out), background-color var(--d-1) ease, color var(--d-1) ease, box-shadow var(--d-1) ease, filter var(--d-1) ease; }
+}

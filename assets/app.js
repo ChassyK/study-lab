@@ -213,6 +213,20 @@
 <p class="tutor-note">Si apre Claude con questa pagina già indicata. Se prima selezioni un pezzo di testo, viene incluso.</p>`;
     document.body.append(btn, box);
     const ta = $("textarea", box), go = $("a.btn", box), chips = $$(".chip", box);
+    /* Su telefono il pulsante lascia spazio al contenuto durante la discesa. */
+    const narrow = matchMedia("(max-width: 720px)");
+    let lastY = scrollY, turnY = scrollY, direction = 0;
+    addEventListener("scroll", () => {
+      if (!narrow.matches) return;
+      const y = scrollY, nextDirection = y > lastY ? 1 : y < lastY ? -1 : direction;
+      if (nextDirection !== direction) { direction = nextDirection; turnY = lastY; }
+      if (y < 80 || !box.hidden) btn.classList.remove("away");
+      else if (direction > 0 && y - turnY >= 24) btn.classList.add("away");
+      else if (direction < 0 && turnY - y >= 8) btn.classList.remove("away");
+      lastY = y;
+    }, { passive: true });
+    btn.addEventListener("focus", () => btn.classList.remove("away"));
+    narrow.addEventListener("change", e => { if (!e.matches) btn.classList.remove("away"); lastY = turnY = scrollY; direction = 0; });
     let sel = "";
     document.addEventListener("selectionchange", () => {
       const s = getSelection();
