@@ -951,3 +951,14 @@ details.criteria .keys { margin-top: .2rem; }
 .keys.clamped > li:nth-child(n+4) { display: none; }
 @media screen { html.motion .keys > li { transition: opacity var(--d-3) var(--ease-out), transform var(--d-3) var(--ease-out); } @starting-style { html.motion .keys > li { opacity: 0; transform: translateY(-6px); } } }
 @media print { .keys.clamped > li { display: list-item !important; } .keys-more { display: none; } }
+
+/* Mappa dei concetti del midterm (18/11/2026): su telefono ogni concetto diventa una scheda */
+.concept-map th[scope="row"] { font-weight: 600; }
+.concept-map td, .concept-map th { vertical-align: top; }
+@media (max-width: 640px) {
+  .concept-map thead { display: none; }
+  .concept-map, .concept-map tbody, .concept-map tr, .concept-map th, .concept-map td { display: block; width: 100%; }
+  .concept-map tr { padding: .8rem 0; border-bottom: 1px solid var(--rule-2); }
+  .concept-map th, .concept-map td { border: 0; padding: .2rem .9rem; }
+  .concept-map td::before { content: attr(data-label); display: block; font-size: .75rem; opacity: .7; margin-top: .3rem; }
+}
