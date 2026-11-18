@@ -1150,7 +1150,7 @@ details.criteria .keys { margin-top: .2rem; }
 .hub-head .latest .latest-s { color: var(--ink-2); }
 .latest-link { font-size: .81rem; font-weight: 600; color: var(--prep-accent); }
 .latest-link span { display: inline-block; margin-inline-start: .19rem; }
-.hub-head h1 { max-width: 15ch; }
+.hub-head h1 { max-width: 15ch; font-size: clamp(2.8rem, 6vw, 4.25rem); }
 .hub-head .sub { margin-block: .9rem 1rem; }
 @media (min-width: 900px) {
   .hub-head .latest { margin: 0; }
