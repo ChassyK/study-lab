@@ -70,6 +70,12 @@
     const render = () => {
       const done = Object.keys(first).length;
       const ok = qs.filter((q, i) => i in first && first[i] === +q.dataset.answer).length;
+      if (sec.closest("[lang]")?.lang === "en") {
+        score.textContent = !done ? "" : done < qs.length
+          ? `First attempt: ${ok} correct out of ${done} answered (${qs.length - done} left)`
+          : `Result: ${ok} out of ${qs.length}.`;
+        return;
+      }
       score.textContent = !done ? "" : done < qs.length
         ? `Primo tentativo: ${ok} giuste su ${done} risposte (${qs.length - done} da fare)`
         : `Risultato: ${ok} su ${qs.length}${ok === qs.length ? " — perfetto." : ". Rileggi i perché delle sbagliate."}`;
@@ -175,7 +181,7 @@
       results.innerHTML = hits.map(x => {
         const term = (x.g || []).find(g => norm(g).includes(t));
         const head = (x.h || []).find(h => norm(h).includes(t));
-        return `<li data-course="${x.k}"><a href="${base}${x.u}${term ? "#glossario" : ""}"><strong>${mark(x.t, t)}</strong><small>${esc(x.c)} · ${x.d}</small>${term ? `<span>Termine: ${mark(term, t)}</span>` : head ? `<span>Sezione: ${mark(head, t)}</span>` : ""}</a></li>`;
+        return `<li data-course="${x.k}"><a href="${base}${x.u}${term ? "#glossario" : ""}"><strong>${mark(x.t, t)}</strong><small>${esc(x.c)}${x.d ? ` · ${esc(x.d)}` : ""}</small>${term ? `<span>Termine: ${mark(term, t)}</span>` : head ? `<span>Sezione: ${mark(head, t)}</span>` : ""}</a></li>`;
       }).join("");
       results.hidden = !hits.length;
       none.hidden = !!hits.length;
