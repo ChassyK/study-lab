@@ -29,7 +29,11 @@
       es.forEach(e => {
         if (e.isIntersecting) {
           tocLinks.forEach(a => a.classList.remove("on"));
-          map.get(e.target.id)?.classList.add("on");
+          const cur = map.get(e.target.id);
+          cur?.classList.add("on");
+          const ol = cur?.closest("ol");
+          $$(".toc ol").forEach(o => { if (o !== ol) o.style.setProperty("--h", "0px"); });
+          if (ol) { ol.style.setProperty("--y", cur.offsetTop + "px"); ol.style.setProperty("--h", cur.offsetHeight + "px"); }
         }
       });
     }, { rootMargin: "-20% 0px -70% 0px" });
@@ -73,6 +77,7 @@
     qs.forEach((q, i) => {
       $$(".opt", q).forEach((b, j) => b.addEventListener("click", () => {
         if (!(i in first)) { first[i] = j; store.set(key, first); }
+        q.classList.add("live");
         reveal(q, j);
         render();
       }));
@@ -252,8 +257,112 @@
     const sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
     const moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
     const paint = () => { const d = isDark(); b.innerHTML = d ? sun : moon; b.setAttribute("aria-label", d ? "Passa al tema chiaro" : "Passa al tema scuro"); b.title = d ? "Tema chiaro" : "Tema scuro"; };
-    b.addEventListener("click", () => { const t = isDark() ? "light" : "dark"; root.dataset.theme = t; store.set("theme", t); paint(); });
+    const flip = () => { const t = isDark() ? "light" : "dark"; root.dataset.theme = t; store.set("theme", t); paint(); };
+    b.addEventListener("click", () => {
+      if (!document.startViewTransition || !root.classList.contains("motion")) return flip();
+      const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+      const R = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      root.classList.add("theme-vt");
+      const vt = document.startViewTransition(flip);
+      vt.ready.then(() => root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${R}px at ${x}px ${y}px)`] },
+        { duration: 420, easing: "cubic-bezier(.65,0,.35,1)", pseudoElement: "::view-transition-new(root)" })).catch(() => {});
+      vt.finished.finally(() => root.classList.remove("theme-vt"));
+    });
     bar.append(b);
     paint();
+  })();
+
+  /* movimento (18/11/2026). Tutto facoltativo: senza la classe "motion" (riduci movimento) o in stampa il sito resta fermo e completo. */
+  (() => {
+    const root = document.documentElement;
+    const motion = root.classList.contains("motion") && !document.body.classList.contains("print");
+    const escH = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+    /* menu: resta accesa la sezione in cui sei; il filo sotto la barra compare solo scorrendo */
+    $$(".topnav a").forEach(a => { try { if (location.pathname.startsWith(new URL(a.href).pathname)) a.setAttribute("aria-current", "page"); } catch {} });
+    const onTop = () => root.classList.toggle("scrolled", scrollY > 8);
+    addEventListener("scroll", onTop, { passive: true });
+    onTop();
+
+    /* "/" porta alla ricerca della home */
+    const sq = $("#q");
+    if (sq) document.addEventListener("keydown", e => {
+      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "")) return;
+      e.preventDefault(); sq.focus();
+    });
+
+    /* selettori a segmenti: il fondo scorre sotto la voce scelta */
+    $$(".seg").forEach(seg => {
+      const place = () => {
+        const b = $('button[aria-pressed="true"]', seg);
+        if (!b) return;
+        seg.style.setProperty("--tx", b.offsetLeft + "px"); seg.style.setProperty("--ty", b.offsetTop + "px");
+        seg.style.setProperty("--tw", b.offsetWidth + "px"); seg.style.setProperty("--th", b.offsetHeight + "px");
+      };
+      place();
+      seg.classList.add("has-thumb");
+      if (motion) requestAnimationFrame(() => requestAnimationFrame(() => seg.classList.add("ready")));
+      seg.addEventListener("click", () => requestAnimationFrame(place));
+      addEventListener("resize", place);
+      document.fonts?.ready.then(place);
+    });
+
+    /* passaggio di pagina: il titolo su cui clicchi diventa il titolo della pagina che si apre */
+    document.addEventListener("click", e => {
+      const a = e.target.closest?.("a[href]");
+      if (!a || a.target || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+      const t = a.matches(".lessons a") ? $(".t", a) : a.matches(".latest") ? $(".latest-t", a) : a.matches(".timeline a") ? $("span", a)
+        : a.matches(".results a") ? $("strong", a) : a.matches(".course-row h3 a") ? a : null;
+      if (!t) return;
+      $$("h1").forEach(h => { h.style.viewTransitionName = "none"; });
+      t.style.viewTransitionName = "page-title";
+    }, true);
+    addEventListener("pageshow", e => { if (e.persisted) $$("[style*='view-transition-name']").forEach(el => { el.style.viewTransitionName = ""; }); });
+
+    if (!motion) return;
+
+    /* titolo d'apertura: sale parola per parola */
+    $$("[data-split]").forEach(h => {
+      const txt = h.textContent.trim();
+      h.setAttribute("aria-label", txt);
+      h.innerHTML = txt.split(/\s+/).map((w, i) => `<span class="w" aria-hidden="true"><span style="--i:${Math.min(i, 6)}">${escH(w)}</span></span>`).join(" ");
+      h.classList.add("split");
+    });
+
+    if (!("IntersectionObserver" in window)) return;
+
+    /* comparsa allo scorrimento: solo i blocchi che all'apertura stanno sotto il bordo dello schermo
+       (quelli già visibili non vengono mai nascosti: niente lampeggi) */
+    const sel = ".sem > h2, .course-row, .lessons > li, .watch-item, .midterm-lessons > li, .course > section > h2, "
+      + ".prose .box, .prose .diagram, .prose .table-wrap, .prose .yt, .prose .lab, .prose .dati, "
+      + ".study > h2, .q, .scenario, .deck, .video, .prevnext .pn";
+    const io = new IntersectionObserver(es => {
+      let k = 0;
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        io.unobserve(el);
+        if (!el.style.getPropertyValue("--i")) el.style.setProperty("--i", Math.min(k++, 5));
+        el.classList.add("rv-in");
+        setTimeout(() => { el.toggleAttribute("data-rv", false); el.classList.toggle("rv-in", false); el.style.setProperty("--i", ""); }, 1100);
+      });
+    }, { rootMargin: "0px 0px -6% 0px" });
+    $$(sel).forEach(el => { if (!el.hasAttribute("data-rv") && el.getBoundingClientRect().top > innerHeight) el.setAttribute("data-rv", ""); });
+    $$("[data-rv]").forEach(el => io.observe(el));
+
+    /* numeri che contano fino al valore vero quando entrano nello schermo */
+    $$("[data-count]").forEach(el => {
+      const n = parseInt(el.dataset.count, 10);
+      if (!n) return;
+      el.style.fontVariantNumeric = "tabular-nums";
+      const io2 = new IntersectionObserver(es => {
+        if (!es[0].isIntersecting) return;
+        io2.disconnect();
+        const t0 = performance.now(), D = 900;
+        const step = t => { const p = Math.min(1, (t - t0) / D); el.textContent = Math.round(n * (1 - Math.pow(1 - p, 4))); if (p < 1) requestAnimationFrame(step); };
+        requestAnimationFrame(step);
+      });
+      io2.observe(el);
+    });
   })();
 })();

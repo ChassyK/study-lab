@@ -747,3 +747,184 @@ details.coverage p { margin: .7rem 0 0; padding: .8rem 1rem; background: var(--f
   .brief:has(.keys):not(:has(.lede)) .keys { grid-template-columns: 1fr 1fr; column-gap: var(--gap); }
 }
 .topnav a[data-c="ab"]::before { content: ""; display: inline-block; width: .5rem; height: .5rem; border-radius: 50%; margin-right: .4rem; vertical-align: .05em; background: var(--ink-2); }
+
+/* =====================================================================
+   Strato "Movimento" — 18/11/2026: titoli in Newsreader, superfici piatte
+   (un filo al posto dell'ombra), righe al posto delle schede, e animazioni
+   che rispondono a un'azione. Il movimento vive tutto sotto html.motion
+   (la classe manca con «riduci movimento» o senza JavaScript) e solo a schermo.
+   Riferimenti guardati: rauno.me, emilkowal.ski, paco.me, linear.app/now,
+   maggieappleton.com. Numeri presi da Emil Kowalski, Rauno Freiberg, Vercel e Stripe Press:
+   140ms tocco, 220ms interfaccia (sempre sotto 300), 400ms comparse, scaletta 60ms per al massimo 5 elementi.
+   ===================================================================== */
+:root {
+  --display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --ease-out: cubic-bezier(.22, 1, .36, 1); --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --d-1: 140ms; --d-2: 220ms; --d-3: 400ms; --d-4: 700ms;
+  --shadow: 0 0 0 1px var(--rule-2);
+  --lift: 0 0 0 1px var(--rule), 0 14px 32px -14px rgba(20, 20, 19, .22);
+  interpolate-size: allow-keywords;
+}
+:root[data-theme="dark"] { --shadow: 0 0 0 1px var(--rule-2); --lift: 0 0 0 1px var(--rule), 0 14px 32px -14px rgba(0, 0, 0, .6); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --shadow: 0 0 0 1px var(--rule-2); --lift: 0 0 0 1px var(--rule), 0 14px 32px -14px rgba(0, 0, 0, .6); } }
+::selection { background: color-mix(in srgb, var(--c) 24%, transparent); }
+
+/* caratteri */
+h1, h2, h3, .latest-t, .t { text-wrap: balance; }
+.prose p, .lede, .sub, .lessons .s, .keys li { text-wrap: pretty; }
+.brand { font-weight: 500; font-size: 1.42rem; letter-spacing: -.025em; }
+.hub-head h1, .course-head h1, .lesson-head h1 { font-weight: 400; letter-spacing: -.03em; }
+.hub-head h1 { font-size: clamp(2.8rem, 6.4vw, 4.7rem); line-height: .98; max-width: 11ch; }
+.course-head h1 { font-size: clamp(2.4rem, 5.6vw, 3.9rem); line-height: 1; }
+.lesson-head h1 { font-size: clamp(2rem, 4.4vw, 3.2rem); line-height: 1.05; }
+.prose h2, .study > h2, .sem > h2, .course h2 { font-weight: 500; letter-spacing: -.022em; }
+.sem > h2, .course h2 { font-size: 1.75rem; }
+.hub-head .sub, .course-head .sub { font-size: 1.12rem; line-height: 1.5; color: var(--muted); max-width: 31rem; }
+.question { font: italic 400 1.3rem/1.4 var(--display); border-left: 0; padding-left: 0; color: var(--ink-2); }
+.latest .latest-t { font-family: var(--display); font-weight: 500; font-size: 1.55rem; line-height: 1.18; letter-spacing: -.02em; }
+@media (min-width: 900px) { .hub-head .latest .latest-t { font-size: 1.45rem; } }
+
+/* barra: il filo compare solo quando la pagina scorre; la voce della sezione aperta resta accesa */
+.topbar { border-bottom-color: transparent; transition: border-color var(--d-2) ease; }
+html.scrolled .topbar, html:not(.js) .topbar { border-bottom-color: var(--rule-2); }
+.topnav a { transition: background-color var(--d-1) ease, color var(--d-1) ease; }
+.topnav a[aria-current="page"] { background: var(--fill); color: var(--ink); }
+.theme-btn { transition: background-color var(--d-1) ease, color var(--d-1) ease, transform var(--d-1) var(--ease-out); }
+.theme-btn:active { transform: scale(.9); }
+
+/* pulsanti: rispondono al tocco */
+.btn, .toc a.btn, .opt, .choice, .tutor-btn, .seg button, .chip { transition: transform var(--d-1) var(--ease-out), background-color var(--d-1) ease, color var(--d-1) ease, box-shadow var(--d-1) ease, filter var(--d-1) ease; }
+.btn:active, .tutor-btn:active, .opt:active:not(:disabled), .choice:active { transform: scale(.975); }
+
+/* home */
+.latest { border-radius: 20px; padding: 1.5rem 1.6rem 1.6rem; transition: transform var(--d-2) var(--ease-out), box-shadow var(--d-2) var(--ease-out); }
+.latest:hover { box-shadow: var(--lift); transform: translateY(-2px); }
+.field { position: relative; display: block; }
+.field kbd { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%); font: 500 .74rem/1 var(--sans); color: var(--muted); border: 1px solid var(--rule); border-radius: 6px; padding: .22rem .42rem; pointer-events: none; transition: opacity var(--d-1) ease; }
+.field input:focus + kbd, .field input:not(:placeholder-shown) + kbd { opacity: 0; }
+@media (hover: none) { .field kbd { display: none; } }
+.search input { transition: border-color var(--d-1) ease, outline-color var(--d-1) ease; }
+.search input:focus { border-color: var(--ink-2); outline: 4px solid color-mix(in srgb, var(--ink) 10%, transparent); }
+.seg { position: relative; isolation: isolate; }
+.seg.has-thumb::before { content: ""; position: absolute; z-index: -1; left: 0; top: 0; width: var(--tw, 0); height: var(--th, 0); transform: translate(var(--tx, 0), var(--ty, 0));
+  border-radius: 8px; background: var(--surface); box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 1px rgba(0, 0, 0, .04); }
+.seg.has-thumb.ready::before { transition: transform var(--d-2) var(--ease-out), width var(--d-2) var(--ease-out), height var(--d-2) var(--ease-out); }
+.seg.has-thumb button[aria-pressed="true"] { background: none; box-shadow: none; }
+.seg button { color: var(--ink-2); }
+.seg button[aria-pressed="true"] { color: var(--ink); }
+.sem { gap: 0 1rem; padding-top: 3.4rem; }
+.sem > h2 { margin-bottom: 1rem; }
+.course-row { background: none; box-shadow: none; border-radius: 0; padding: 1.6rem 0 1.9rem; border-top: 1px solid var(--rule-2); }
+.course-row h3 { font-family: var(--display); font-weight: 500; font-size: 1.5rem; line-height: 1.12; letter-spacing: -.02em; }
+.course-row h3::before { margin-bottom: .8rem; }
+.timeline { gap: .6rem; }
+.timeline a { background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; padding: .85rem .95rem .95rem; transition: transform var(--d-2) var(--ease-out), box-shadow var(--d-2) var(--ease-out); }
+.timeline time { font-weight: 600; }
+.timeline span { color: var(--ink); }
+.course-row.empty { margin-top: .2rem; border: 0; box-shadow: var(--shadow); border-radius: 14px; }
+@media (hover: hover) { .timeline a:hover { background: var(--surface); box-shadow: var(--lift); transform: translateY(-2px); } }
+
+/* elenchi a righe (lezioni, casi): il fondo arriva sotto il dito, il riassunto sta in due righe */
+.lessons a { position: relative; z-index: 0; padding: 1.2rem 0; }
+.lessons a::before { content: ""; position: absolute; z-index: -1; inset: 0 -1rem; border-radius: 16px; background: var(--fill); opacity: 0; transform: scale(.985); transition: opacity var(--d-1) ease, transform var(--d-2) var(--ease-out); }
+@media (hover: hover) { .lessons a:hover::before { opacity: 1; transform: none; } }
+.lessons a:focus-visible::before { opacity: 1; transform: none; }
+.lessons .t { font-size: 1.12rem; transition: color var(--d-1) ease; }
+.lessons time { font-weight: 600; }
+.lessons .s { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--muted); font-size: .95rem; }
+.cs-list a { grid-template-columns: 4rem minmax(0, 1fr) auto; }
+.cs-list time { grid-column: 1; grid-row: 1 / span 3; font: 400 1.9rem/1 var(--display); letter-spacing: -.02em; color: var(--muted); transition: color var(--d-1) ease; }
+.cs-list a:hover time { color: var(--c); }
+.cs-list .t { grid-column: 2; grid-row: 1; }
+.cs-list .s { grid-column: 2; grid-row: 2; }
+.cs-list .k { grid-column: 2; grid-row: 3; font: 500 .8rem/1.4 var(--sans); color: var(--c); margin-top: .15rem; }
+.cs-list .chip { grid-column: 3; grid-row: 1; }
+@media (max-width: 560px) {
+  .cs-list a { grid-template-columns: 2.9rem minmax(0, 1fr); }
+  .cs-list time { font-size: 1.5rem; }
+  .cs-list .chip { grid-column: 2; grid-row: 4; }
+  .lessons a::before { inset: 0 -.5rem; }
+}
+
+/* lezione */
+.brief { border-radius: 20px; }
+.pn { transition: transform var(--d-2) var(--ease-out), box-shadow var(--d-2) var(--ease-out); }
+@media (hover: hover) { .pn:hover { box-shadow: var(--lift); transform: translateY(-2px); } }
+.toc a { transition: background-color var(--d-2) ease, color var(--d-2) ease; }
+@media (min-width: 961px) {
+  .toc ol { position: relative; padding-left: .6rem; }
+  .toc ol::before { content: ""; position: absolute; left: 0; top: 0; width: 2px; height: var(--h, 0); transform: translateY(var(--y, 0)); background: var(--c); border-radius: 2px; transition: transform var(--d-3) var(--ease-out), height var(--d-3) var(--ease-out); }
+}
+.yt-icon { transition: transform var(--d-2) var(--ease-out); }
+.yt-play:hover .yt-icon { transform: scale(1.07); }
+.yt-play img { transition: opacity var(--d-2) ease; }
+.rail-fill { transition: width 90ms linear; }
+.tutor-btn { box-shadow: 0 6px 20px -6px rgba(0, 0, 0, .35); }
+.tutor { transform-origin: 100% 100%; }
+
+@media screen {
+  /* apertura pagina: il titolo sale parola per parola, il resto lo segue (una volta sola, in testa) */
+  html.motion [data-split]:not(.split) { animation: gd-appear .01s 1.2s both; }
+  html.motion [data-split] .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .14em; margin-bottom: -.14em; }
+  html.motion [data-split] .w > span { display: inline-block; animation: gd-rise var(--d-4) var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 70ms); }
+  html.motion .hub-head > :not(h1), html.motion .course-head > :not(h1) { animation: gd-up var(--d-3) var(--ease-out) backwards; animation-delay: .22s; }
+  html.motion .hub-head > .latest { animation-delay: .32s; }
+  html.motion .hub-head > .filters { animation-delay: .4s; }
+  html.motion .p-hub .hub-head + .sem, html.motion .p-course .course-head ~ * { animation: gd-up var(--d-3) var(--ease-out) backwards; animation-delay: .36s; }
+
+  /* comparsa allo scorrimento: solo blocchi (righe, figure, schede), mai i paragrafi */
+  html.motion [data-rv] { opacity: 0; transform: translateY(14px); transition: opacity var(--d-3) var(--ease-out), transform var(--d-3) var(--ease-out); transition-delay: calc(var(--i, 0) * 60ms); }
+  html.motion [data-rv].rv-in { opacity: 1; transform: none; }
+
+  /* pannelli che si aprono: Mostra/Nascondi, perché, esiti, risultati, tutor */
+  @supports (interpolate-size: allow-keywords) {
+    html.motion details::details-content { block-size: 0; overflow: clip; transition: block-size var(--d-3) var(--ease-out), content-visibility var(--d-3) allow-discrete; }
+    html.motion details[open]::details-content { block-size: auto; }
+  }
+  html.motion .why, html.motion .outcome, html.motion .lesson-link, html.motion .results > li { transition: opacity var(--d-3) var(--ease-out), transform var(--d-3) var(--ease-out); }
+  @starting-style { html.motion .why, html.motion .outcome, html.motion .lesson-link, html.motion .results > li { opacity: 0; transform: translateY(-6px); } }
+  html.motion .tutor { transition: opacity var(--d-2) var(--ease-out), transform var(--d-2) var(--ease-out), display var(--d-2) allow-discrete; }
+  html.motion .tutor[hidden] { opacity: 0; transform: translateY(8px) scale(.96); }
+  @starting-style { html.motion .tutor:not([hidden]) { opacity: 0; transform: translateY(8px) scale(.96); } }
+
+  /* quiz: la risposta giusta si conferma, quella sbagliata scuote appena (solo dopo un tuo clic) */
+  html.motion .q.live .opt.right { animation: gd-pop var(--d-3) var(--ease-out); }
+  html.motion .q.live .opt.wrong { animation: gd-nudge .36s var(--ease-in-out); }
+
+  /* flashcard: la carta si gira davvero */
+  html.motion .cards { perspective: 1400px; }
+  html.motion .card { place-items: stretch; padding: 0; background: none; transform-style: preserve-3d; transition: transform .42s var(--ease-in-out); }
+  html.motion .card .front, html.motion .card .back { grid-area: 1 / 1; display: grid; place-items: center; min-height: 12rem; padding: 1.5rem; border-radius: 18px; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  html.motion .card .front { background: var(--c-soft); }
+  html.motion .card .back { background: var(--fill); transform: rotateY(180deg); }
+  html.motion .card.flip { transform: rotateY(180deg); background: none; }
+  html.motion .card.flip .front { display: grid; }
+  html.motion .card.cur { animation: gd-card var(--d-2) var(--ease-out); }
+
+  /* da una pagina all'altra: dissolvenza breve, il titolo cliccato diventa il titolo della pagina */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: gd-out .15s ease-in both; }
+  ::view-transition-new(root) { animation: gd-in .34s var(--ease-out) both; }
+  ::view-transition-group(page-title) { animation-duration: .46s; animation-timing-function: var(--ease-out); }
+  .topbar { view-transition-name: gd-topbar; }
+  .tutor-btn { view-transition-name: gd-tutor; }
+  .lesson-head h1, .course-head h1 { view-transition-name: page-title; }
+  /* cambio tema: il nuovo colore si allarga a cerchio dal pulsante (lo guida app.js) */
+  html.theme-vt body, html.theme-vt body * { view-transition-name: none !important; }
+  html.theme-vt::view-transition-old(root), html.theme-vt::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  html.theme-vt::view-transition-new(root) { z-index: 1; }
+}
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+@keyframes gd-appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes gd-rise { from { transform: translateY(108%); } }
+@keyframes gd-up { from { opacity: 0; transform: translateY(12px); } }
+@keyframes gd-out { to { opacity: 0; } }
+@keyframes gd-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes gd-pop { 40% { transform: scale(1.018); } }
+@keyframes gd-nudge { 25% { transform: translateX(-4px); } 60% { transform: translateX(3px); } 85% { transform: translateX(-1px); } }
+@keyframes gd-card { from { opacity: 0; } }
+@media print {
+  [data-rv] { opacity: 1 !important; transform: none !important; }
+  details::details-content { block-size: auto !important; content-visibility: visible !important; }
+  .field kbd { display: none; }
+}
