@@ -741,3 +741,9 @@ details.coverage p { margin: .7rem 0 0; padding: .8rem 1rem; background: var(--f
   .foot { padding-bottom: 5.5rem; }
 }
 @media print { details.coverage::details-content { content-visibility: visible; display: block; } }
+/* riquadro con solo l'elenco (es. Internships «Come vengono scelti»): elenco su due colonne, niente metà vuota */
+@media (min-width: 960px) {
+  .brief:has(.keys):not(:has(.lede)) { display: block; }
+  .brief:has(.keys):not(:has(.lede)) .keys { grid-template-columns: 1fr 1fr; column-gap: var(--gap); }
+}
+.topnav a[data-c="ab"]::before { content: ""; display: inline-block; width: .5rem; height: .5rem; border-radius: 50%; margin-right: .4rem; vertical-align: .05em; background: var(--ink-2); }
