@@ -24,7 +24,18 @@
     });
   });
 
-  if (!motion || !hasIO) return;
+  if (!motion) return;
+
+  /* interessi: il nastro si ferma fuori vista e ha il suo pulsante Pause/Play */
+  const marq = $(".ab-marq");
+  if (marq) {
+    const b = smallBtn("ab-marq-btn", "Pause");
+    b.addEventListener("click", () => { b.textContent = marq.classList.toggle("is-paused") ? "Play" : "Pause"; });
+    marq.after(b);
+    if (hasIO) new IntersectionObserver(([e]) => marq.classList.toggle("is-off", !e.isIntersecting)).observe(marq);
+  }
+
+  if (!hasIO) return;
 
   /* schema «da una lezione a una pagina»: due giri quando entra in vista, poi resta acceso; «Replay» lo fa ripartire */
   const fig = $(".ab-flowfig");
@@ -93,12 +104,4 @@
     paint();
   }
 
-  /* interessi: il nastro si ferma fuori vista e ha il suo pulsante Pause/Play */
-  const marq = $(".ab-marq");
-  if (marq) {
-    const b = smallBtn("ab-marq-btn", "Pause");
-    b.addEventListener("click", () => { b.textContent = marq.classList.toggle("is-paused") ? "Play" : "Pause"; });
-    marq.after(b);
-    new IntersectionObserver(([e]) => marq.classList.toggle("is-off", !e.isIntersecting)).observe(marq);
-  }
 })();
