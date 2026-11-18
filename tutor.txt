@@ -133,3 +133,4 @@ CASE STUDIES (cose viste o salvate, collegate alle lezioni)
 
 GUIDE D'ESAME
 - Geopolitics · Midterm 2 Study Guide · geopolitics/midterm-2/
+- Geopolitics · Midterm 2 · Guida allo studio · geopolitics/midterm-2-it/
