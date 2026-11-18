@@ -1052,3 +1052,22 @@ details.criteria .keys { margin-top: .2rem; }
   .discovery-note { grid-row: 3; }
   .discovery-concept { grid-area: 1 / 2; max-width: 12rem; }
 }
+
+/* Gideon: risposte e ripasso nello stesso pannello */
+.tutor { max-height: min(36rem, calc(100dvh - 6rem)); overscroll-behavior: contain; }
+.tutor-header { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.tutor-close { display: grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0; border: 0;
+  border-radius: 999px; background: var(--fill); color: var(--ink); font: 500 1.35rem/1 var(--sans); cursor: pointer; }
+.tutor-context { margin: 0; padding-bottom: .65rem; border-bottom: 1px solid var(--rule-2); font-size: .81rem; color: var(--ink-2); }
+.tutor-form { display: grid; gap: .55rem; }
+.tutor-form textarea { font-size: 1rem; }
+.tutor-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
+.tutor-actions button { min-height: 44px; cursor: pointer; }
+.tutor-selection:not([hidden]) { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; font-size: .8rem; }
+.tutor-selection button { min-height: 36px; border: 0; color: var(--c); background: transparent; cursor: pointer; text-decoration: underline; }
+.tutor-output:not(:empty) { border-top: 1px solid var(--rule); padding-top: .65rem; font-size: .91rem; line-height: 1.5; overflow-wrap: anywhere; }
+.tutor-output p, .tutor-output blockquote, .tutor-output ul { margin: .35rem 0 .65rem; }
+.tutor-output blockquote { border-inline-start: 2px solid var(--rule); padding-inline-start: .68rem; }
+.tutor-output a { display: inline-block; font-size: .84rem; }
+.tutor-output details { margin: .3rem 0 .5rem; }
+.tutor-output summary { cursor: pointer; }
