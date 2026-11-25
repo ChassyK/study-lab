@@ -1356,3 +1356,6 @@ details.criteria .keys { margin-top: .2rem; }
   .p-about .ab-marq-row ul { min-width: 0; max-width: 100%; }
   .p-about .ab-marq li { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
 }
+
+/* 25/11/2026 · contrasto etichetta del riquadro «L'idea in una frase» (era 4,3:1 sul fondo --c-soft, ora ≥ 4,5:1; vedi DESIGN.md) */
+.box.idea .box-kind { color: color-mix(in srgb, var(--c) 72%, var(--ink)); }
