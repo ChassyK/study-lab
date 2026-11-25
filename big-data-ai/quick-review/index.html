@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Midterm 2 · 10-minute review — Big Data &amp; AI — Gideon</title>
+<meta name="description" content="All Midterm 2 topics of Big Data &amp; AI in a 10-minute read: key terms, cases with numbers and answer lines.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css?v=20261118-11">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script>try{var t=JSON.parse(localStorage.getItem("sl:theme"));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>(function(d){d.classList.add("js");if(matchMedia("(prefers-reduced-motion: no-preference)").matches)d.classList.add("motion")})(document.documentElement)</script>
+</head>
+<body class="p-lesson p-exam-guide" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/">Gideon</a>
+<nav class="topnav gideon-nav" aria-label="Navigazione principale"><details class="nav-group" name="gideon-nav"><summary>Corsi</summary><div class="nav-panel"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></div></details><a href="/study-lab/midterms/">Midterm</a><a href="/study-lab/reports/">Report</a><a href="/study-lab/in-class-examinations/">In-class exams</a><details class="nav-group" name="gideon-nav"><summary>Esplora</summary><div class="nav-panel"><a href="/study-lab/case-studies/" data-c="cs">Case studies</a><a href="/study-lab/internships/" data-c="in">Internships</a><a href="/study-lab/about/" data-c="ab">About</a></div></details></nav></header>
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
+<main id="main" class="lesson" lang="en">
+<header class="lesson-head">
+  <p class="crumbs"><a href="/study-lab/">Courses</a> / <a href="/study-lab/big-data-ai/#midterm">Big Data &amp; AI</a></p>
+  <h1 data-split>Midterm 2 · 10-minute review</h1>
+  <p class="meta">10 minutes · Quick read</p>
+  <nav class="actions" aria-label="Guide language"><a class="btn" href="/study-lab/big-data-ai/quick-review/" lang="en" hreflang="en" aria-current="page">English</a><a class="btn ghost" href="/study-lab/big-data-ai/ripasso-10-min/" lang="it" hreflang="it">Italiano</a></nav>
+</header>
+<div class="lesson-grid">
+  <nav class="toc" aria-label="Contents">
+<details class="reading-index" open><summary>Contents</summary>
+<p class="toc-h">Study guide</p><ol><li><a href="#how-to-use-this-review">How to use this review</a></li><li><a href="#1-the-pipeline-the-model-is-only-one-link">1. The pipeline: the model is only one link</a></li><li><a href="#2-evaluating-a-model-accuracy-can-lie">2. Evaluating a model: accuracy can lie</a></li><li><a href="#3-from-model-to-team-what-counts-is-the-changed-decision">3. From model to team: what counts is the changed decision</a></li><li><a href="#4-iot-where-should-the-machine-think">4. IoT: where should the machine think?</a></li><li><a href="#5-text-becomes-data-the-nlp-pipeline">5. Text becomes data: the NLP pipeline</a></li><li><a href="#6-from-sentiment-to-a-decision">6. From sentiment to a decision</a></li><li><a href="#7-ai-in-processes-automate-a-process-not-a-step">7. AI in processes: automate a process, not a step</a></li><li><a href="#before-you-walk-in">Before you walk in</a></li></ol>
+</details></nav>
+  <article class="prose"><h2 id="how-to-use-this-review">How to use this review</h2>
+<p><strong>10 minutes, one read.</strong> Seven blocks, one per Midterm 2 topic. Each gives you the idea, the key terms, a case with numbers and a sentence to use in your answer. For full explanations, quizzes and flashcards open the <a href="../midterm-2/">complete guide</a>.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">The idea in one line</span></p>
+<p>Every answer: <strong>claim</strong> in two lines → <strong>concept</strong> in your own words → <strong>real case</strong> with facts → <strong>limit and recommendation</strong> for the firm.</p>
+</aside>
+<h2 id="1-the-pipeline-the-model-is-only-one-link">1. The pipeline: the model is only one link</h2>
+<ul>
+<li><strong>Pipeline</strong>: collection → preparation → training → evaluation → <em>deployment</em> with monitoring. It is not a straight line: if evaluation disappoints, you go back to the data.</li>
+<li><strong>CRISP-DM</strong>: six phases (business, data, preparation, modelling, evaluation, deployment).</li>
+<li><strong>Features</strong> = input clues. <strong>Label</strong> = the known answer. <strong>Feature engineering</strong> = turning raw data into a useful clue (from "booking date" and "dinner date" to "days in advance").</li>
+<li><strong>Data leakage</strong>: using information you would not have at prediction time, such as the cancellation date to predict a cancellation. The score looks great and is false.</li>
+<li><strong>Baseline</strong>: the simple rule to beat. Honest <strong>split</strong>: train on the past, test on the period after.</li>
+</ul>
+<p><strong>In your answer:</strong> "I start from the decision to change, not from the technology."</p>
+<h2 id="2-evaluating-a-model-accuracy-can-lie">2. Evaluating a model: accuracy can lie</h2>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span></p>
+<p><strong>Precision</strong> = TP / (TP + FP): how many alarms are real. <strong>Recall</strong> = TP / (TP + FN): how many real cases you find. <strong>F1</strong> = 2·P·R / (P + R).</p>
+</aside>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Worked example</span> · Restaurant cancellations (course example)</p>
+<p>100 bookings: TP 15, FP 10, FN 5, TN 70. Accuracy 85%, precision 15/25 = <strong>60%</strong>, recall 15/20 = <strong>75%</strong>, F1 ≈ <strong>66.7%</strong>. The lazy model "nobody cancels" scores 80% accuracy and 0% recall.</p>
+</aside>
+<ul>
+<li>Choose the metric by the <strong>cost of the error</strong>: missing a case is expensive (fraud, churn) → <strong>recall</strong>; every alarm triggers a costly action (technician, discount) → <strong>precision</strong>.</li>
+<li><strong>Overfitting</strong>: 2% error on training, 25% on validation. The test set is opened <strong>once</strong>, at the end.</li>
+<li><strong>Model drift</strong>: the world changes and the model gets worse.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Real case</span> · Zillow Offers, 2021</p>
+<p>The pricing algorithm used to buy homes overvalued many of them in an unstable market. On 2 November 2021 the business was shut down: a <strong>$304m</strong> inventory write-down in the quarter and about 25% of staff cut.</p>
+</aside>
+<p><strong>20 Oct review:</strong> a <strong>decision tree</strong> is readable but unstable; <strong>k-means</strong> groups data without labels and must be re-run from several starting points on scaled data.</p>
+<h2 id="3-from-model-to-team-what-counts-is-the-changed-decision">3. From model to team: what counts is the changed decision</h2>
+<ul>
+<li>The CEO with "dashboards everywhere" understands nothing: every analysis needs <strong>a question, an owner, an action</strong>.</li>
+<li><strong>Hub-and-spoke</strong>: a central hub (platform, shared definitions, quality) and analysts inside the business units. It keeps both consistency and closeness.</li>
+<li><strong>RACI</strong>: for each decision, who is <em>Responsible</em>, <em>Accountable</em>, <em>Consulted</em>, <em>Informed</em>.</li>
+<li>Pick the first project with a score: value 40%, feasibility 25%, data readiness 20%, adoption 15%. In the course case (a fictional firm) the profitability dashboard (4.40) beats churn (3.35).</li>
+<li>Deliver small and <strong>measure value</strong> against a control group.</li>
+</ul>
+<p><strong>In your answer:</strong> "An analytics team is judged by the decisions it changes, not by the reports it produces."</p>
+<h2 id="4-iot-where-should-the-machine-think">4. IoT: where should the machine think?</h2>
+<ul>
+<li>Chain: <strong>sensor → data → decision → actuator</strong>. Data is worth something only if it triggers an action.</li>
+<li><strong>Edge</strong> = on the device (instant response). <strong>Fog</strong> = site level (aggregates, coordinates, buffers). <strong>Cloud</strong> = history and model training.</li>
+<li>Compute goes where the <strong>deadline</strong> needs it. Rejecting a bottle in 40 ms when a cloud round trip takes 120 ms → edge.</li>
+<li><strong>Store-and-forward</strong>: if the network drops, the local node keeps the events and sends them later.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Real case</span> · Mirai, 2016</p>
+<p>Cameras and video recorders with factory passwords became a botnet. On 21 October 2016 the attack on Dyn (DNS) took many major sites offline for hours. Every device needs an identity, protected access and signed updates with rollback.</p>
+</aside>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Payback</p>
+<p><strong>Payback = investment / net annual benefit.</strong> Turbines (hypothetical): €300k / €180k ≈ <strong>1.7 years</strong>. If avoided losses halve → <strong>5 years</strong>.</p>
+</aside>
+<p><strong>In your answer:</strong> "A pilot deserves investment if it links a timely local action to a result measured against a baseline."</p>
+<h2 id="5-text-becomes-data-the-nlp-pipeline">5. Text becomes data: the NLP pipeline</h2>
+<ul>
+<li>Text is the richest and messiest data a firm owns (<em>unstructured data</em>).</li>
+<li>Seven steps: segmentation, <strong>tokenisation</strong>, <strong>stop words</strong>, <strong>stemming</strong>, <strong>lemmatisation</strong>, <strong>POS tagging</strong>, <strong>NER</strong>.</li>
+<li>"He goes to college." = 5 tokens. <strong>Stemming</strong> cuts endings ("studies" → "studi"); <strong>lemmatisation</strong> uses the dictionary (am, are, is → be).</li>
+<li><strong>NER</strong> recognises entities: "Ticketmaster" → organisation, "£65" → money.</li>
+</ul>
+<aside class="box attenzione">
+<p class="box-title"><span class="box-kind">Watch out</span></p>
+<p>A standard stop-word list also removes "not": "The show was <strong>not</strong> good" becomes "show good". For sentiment, keep it.</p>
+</aside>
+<p><strong>In your answer:</strong> "Every cleaning step is a choice: I state it and explain why."</p>
+<h2 id="6-from-sentiment-to-a-decision">6. From sentiment to a decision</h2>
+<ul>
+<li><strong>Sentiment analysis</strong>: positive, negative, neutral. <strong>Aspect-based</strong>: the tone on each aspect ("great boss fight, slow matchmaking").</li>
+<li><strong>Emotions</strong> (Plutchik's wheel, 8 primary): <strong>softmax</strong> when classes exclude each other (probabilities sum to 1); <strong>sigmoid</strong> when you need several labels at once.</li>
+<li>RoBERTa on GoEmotions: average F1 0.45, "gratitude" above 0.9. <strong>Domain shift</strong>: on different texts the model gets worse.</li>
+<li>Four traps: <strong>frequency ≠ impact</strong>, <strong>sentiment ≠ behaviour</strong>, <strong>sample ≠ reality</strong>, <strong>correlation ≠ cause</strong>.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Real case</span> · Twitter mood, 2011</p>
+<p>The "calm" mood of almost 10 million tweets predicted the direction of the Dow Jones with 87.6% accuracy. But the test covered about 20 trading days: a correlation, not a cause.</p>
+</aside>
+<p><strong>In your answer:</strong> "A score is a signal. Before spending, I ask which evidence would change the decision."</p>
+<h2 id="7-ai-in-processes-automate-a-process-not-a-step">7. AI in processes: automate a process, not a step</h2>
+<ul>
+<li><strong>Hyperautomation</strong>: automating whole processes, not a single step. Four levels: <strong>see</strong> (process mining) → <strong>predict</strong> → <strong>prescribe</strong> → <strong>adapt</strong>.</li>
+<li><strong>Process mining</strong>: from the <strong>event log</strong> (case ID, activity, timestamp) it rebuilds the real process. Siemens found <strong>923,000 variants</strong> of one process (vendor-reported).</li>
+<li><strong>Uplift</strong>: predicting who is at risk is not enough; you need to know whether the intervention changes anything. <strong>Sleeping dogs</strong> = customers the intervention harms.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Real case</span> · UWV, the Netherlands, 2017</p>
+<p>The model found risky cases well, but the emails sent to them did not help: 3.8% errors with the system versus 4.0% without, not a significant difference.</p>
+</aside>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Value of an intervention</p>
+<p><strong>V = p × u × C − k.</strong> With p 0.4, u 0.25, C €2,000, k €50 → <strong>V = €150</strong>. If u = 0, V = −€50.</p>
+</aside>
+<ul>
+<li><strong>Framed autonomy</strong>: an AI agent acts inside a frame set by people (e.g. refunds up to €100; above that, a human decides).</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Real case</span> · Air Canada, 2024</p>
+<p>The chatbot gave a wrong bereavement-fare rule. The tribunal ordered the airline to pay C$812.02: the agent acts, the company answers for it.</p>
+</aside>
+<h2 id="before-you-walk-in">Before you walk in</h2>
+<ul>
+<li>Every answer has a <strong>case with numbers</strong> and a <strong>limit</strong>.</li>
+<li>Name the <strong>metric</strong> and the <strong>why</strong> (which error costs more).</li>
+<li><strong>Prediction ≠ cause</strong>, <strong>score ≠ decision</strong>, <strong>step ≠ process</strong>.</li>
+<li>Always close with a <strong>concrete recommendation</strong> and how to <strong>measure</strong> it.</li>
+</ul></article>
+</div>
+
+
+</main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js?v=20261118-10" defer></script>
+<script src="/study-lab/assets/tutor.js?v=20261118-5" defer></script>
+</body></html>

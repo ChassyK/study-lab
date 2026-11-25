@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Midterm 2 · Ripasso in 10 minuti — Big Data &amp; AI — Gideon</title>
+<meta name="description" content="Tutti gli argomenti del Midterm 2 di Big Data &amp; AI in 10 minuti: termini, casi con i numeri e frasi da usare.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css?v=20261118-11">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script>try{var t=JSON.parse(localStorage.getItem("sl:theme"));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>(function(d){d.classList.add("js");if(matchMedia("(prefers-reduced-motion: no-preference)").matches)d.classList.add("motion")})(document.documentElement)</script>
+</head>
+<body class="p-lesson p-exam-guide" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/">Gideon</a>
+<nav class="topnav gideon-nav" aria-label="Navigazione principale"><details class="nav-group" name="gideon-nav"><summary>Corsi</summary><div class="nav-panel"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></div></details><a href="/study-lab/midterms/">Midterm</a><a href="/study-lab/reports/">Report</a><a href="/study-lab/in-class-examinations/">In-class exams</a><details class="nav-group" name="gideon-nav"><summary>Esplora</summary><div class="nav-panel"><a href="/study-lab/case-studies/" data-c="cs">Case studies</a><a href="/study-lab/internships/" data-c="in">Internships</a><a href="/study-lab/about/" data-c="ab">About</a></div></details></nav></header>
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
+<main id="main" class="lesson" lang="it">
+<header class="lesson-head">
+  <p class="crumbs"><a href="/study-lab/">Corsi</a> / <a href="/study-lab/big-data-ai/#midterm">Big Data &amp; AI</a></p>
+  <h1 data-split>Midterm 2 · Ripasso in 10 minuti</h1>
+  <p class="meta">10 minuti · Lettura veloce</p>
+  <nav class="actions" aria-label="Lingua della guida"><a class="btn ghost" href="/study-lab/big-data-ai/quick-review/" lang="en" hreflang="en">English</a><a class="btn" href="/study-lab/big-data-ai/ripasso-10-min/" lang="it" hreflang="it" aria-current="page">Italiano</a></nav>
+</header>
+<div class="lesson-grid">
+  <nav class="toc" aria-label="Indice">
+<details class="reading-index" open><summary>Indice</summary>
+<p class="toc-h">Guida di studio</p><ol><li><a href="#come-usare-questo-ripasso">Come usare questo ripasso</a></li><li><a href="#1-la-pipeline-il-modello-e-solo-un-anello">1. La pipeline: il modello è solo un anello</a></li><li><a href="#2-valutare-un-modello-l-accuracy-puo-mentire">2. Valutare un modello: l'accuracy può mentire</a></li><li><a href="#3-dal-modello-al-reparto-conta-la-decisione-cambiata">3. Dal modello al reparto: conta la decisione cambiata</a></li><li><a href="#4-iot-dove-deve-pensare-la-macchina">4. IoT: dove deve pensare la macchina</a></li><li><a href="#5-il-testo-diventa-dato-la-pipeline-dell-nlp">5. Il testo diventa dato: la pipeline dell'NLP</a></li><li><a href="#6-dal-sentiment-alla-decisione">6. Dal sentiment alla decisione</a></li><li><a href="#7-ai-nei-processi-automatizzare-un-processo-non-un-passo">7. AI nei processi: automatizzare un processo, non un passo</a></li><li><a href="#prima-di-entrare">Prima di entrare</a></li></ol>
+</details></nav>
+  <article class="prose"><h2 id="come-usare-questo-ripasso">Come usare questo ripasso</h2>
+<p><strong>10 minuti, una lettura.</strong> Sette blocchi, uno per tema del Midterm 2: per ognuno l'idea, i termini da usare in inglese, un caso con i numeri e la frase da portare in risposta. Per spiegazioni, quiz e flashcard apri la <a href="../midterm-2-it/">guida completa</a>.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Ogni risposta: <strong>tesi</strong> in due righe → <strong>concetto</strong> con parole tue → <strong>caso reale</strong> con fatti → <strong>limite e raccomandazione</strong> per l'impresa.</p>
+</aside>
+<h2 id="1-la-pipeline-il-modello-e-solo-un-anello">1. La pipeline: il modello è solo un anello</h2>
+<ul>
+<li><strong>Pipeline</strong>: raccolta → preparazione → addestramento → valutazione → <em>deployment</em> con monitoraggio. Non è una linea retta: se la valutazione delude si torna ai dati.</li>
+<li><strong>CRISP-DM</strong>: sei fasi (business, dati, preparazione, modello, valutazione, deployment).</li>
+<li><strong>Feature</strong> = indizi in ingresso. <strong>Label</strong> = risposta già nota. <strong>Feature engineering</strong> = trasformare il dato grezzo in un indizio utile (da «data prenotazione» e «data cena» a «giorni di anticipo»).</li>
+<li><strong>Data leakage</strong>: usare un'informazione che al momento della previsione non avresti. Esempio: la data di disdetta per prevedere la disdetta. Il punteggio sembra ottimo ed è falso.</li>
+<li><strong>Baseline</strong>: la regola semplice da battere. <strong>Split</strong> onesto: alleni sul passato, testi sul periodo dopo.</li>
+</ul>
+<p><strong>In risposta:</strong> «Parto dalla decisione da cambiare, non dalla tecnologia.»</p>
+<h2 id="2-valutare-un-modello-l-accuracy-puo-mentire">2. Valutare un modello: l'accuracy può mentire</h2>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span></p>
+<p><strong>Precision</strong> = TP / (TP + FP): quanti allarmi sono veri. <strong>Recall</strong> = TP / (TP + FN): quanti casi veri trovi. <strong>F1</strong> = 2·P·R / (P + R).</p>
+</aside>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Disdette di un ristorante (esempio del corso)</p>
+<p>100 prenotazioni: TP 15, FP 10, FN 5, TN 70. Accuracy 85%, precision 15/25 = <strong>60%</strong>, recall 15/20 = <strong>75%</strong>, F1 ≈ <strong>66,7%</strong>. Il modello pigro «nessuno disdice» fa 80% di accuracy e 0% di recall.</p>
+</aside>
+<ul>
+<li>Scegli la metrica dal <strong>costo dell'errore</strong>: perdere un caso costa tanto (frodi, abbandoni) → conta il <strong>recall</strong>; ogni allarme costa un'azione (tecnico, sconto) → conta la <strong>precision</strong>.</li>
+<li><strong>Overfitting</strong>: errore 2% sul training e 25% sulla validazione. Il test set si apre <strong>una volta sola</strong>, alla fine.</li>
+<li><strong>Model drift</strong>: il mondo cambia, il modello peggiora.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Zillow Offers, 2021</p>
+<p>L'algoritmo che stimava i prezzi per comprare case ne sopravvaluta molte in un mercato instabile. Il 2 novembre 2021 l'attività chiude: svalutazione di <strong>304 milioni $</strong> nel trimestre e circa il 25% del personale tagliato.</p>
+</aside>
+<p><strong>Ripasso del 20/10:</strong> l'<strong>albero decisionale</strong> è leggibile ma instabile; il <strong>k-means</strong> raggruppa senza etichette, va rilanciato con più partenze e su dati in scala.</p>
+<h2 id="3-dal-modello-al-reparto-conta-la-decisione-cambiata">3. Dal modello al reparto: conta la decisione cambiata</h2>
+<ul>
+<li>Il CEO con «dashboard ovunque» non capisce niente: ogni analisi deve avere <strong>una domanda, un responsabile, un'azione</strong>.</li>
+<li><strong>Hub-and-spoke</strong>: un centro (piattaforma, definizioni comuni, qualità) e analisti dentro le aree di business. Tiene insieme coerenza e vicinanza.</li>
+<li><strong>RACI</strong>: per ogni decisione chi è <em>Responsible</em>, <em>Accountable</em>, <em>Consulted</em>, <em>Informed</em>.</li>
+<li>Scegli il primo progetto con un punteggio: valore 40%, fattibilità 25%, dati pronti 20%, adozione 15%. Nel caso del corso (impresa immaginaria) vince la dashboard di redditività (4,40) sul churn (3,35).</li>
+<li>Consegna in piccolo e <strong>misura il valore</strong> con un gruppo di controllo.</li>
+</ul>
+<p><strong>In risposta:</strong> «Un reparto analytics si giudica dalle decisioni che cambia, non dai report che produce.»</p>
+<h2 id="4-iot-dove-deve-pensare-la-macchina">4. IoT: dove deve pensare la macchina</h2>
+<ul>
+<li>Catena: <strong>sensore → dato → decisione → attuatore</strong>. Il dato vale solo se fa partire un'azione.</li>
+<li><strong>Edge</strong> = sul dispositivo (risposta immediata). <strong>Fog</strong> = livello di sito (aggrega, coordina, fa da buffer). <strong>Cloud</strong> = storico e addestramento dei modelli.</li>
+<li>La posizione del calcolo segue la <strong>scadenza</strong> della decisione. Scartare una bottiglia in 40 ms con un viaggio verso il cloud di 120 ms → edge.</li>
+<li><strong>Store-and-forward</strong>: se la rete cade il nodo locale conserva gli eventi e li inoltra dopo.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Mirai, 2016</p>
+<p>Telecamere e videoregistratori con password di fabbrica diventano una botnet. Il 21 ottobre 2016 l'attacco a Dyn (DNS) rende irraggiungibili per ore molti grandi siti. Ogni dispositivo ha bisogno di identità, accessi protetti e aggiornamenti firmati con rollback.</p>
+</aside>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Payback</p>
+<p><strong>Payback = investimento / beneficio netto annuo.</strong> Turbine (ipotetico): 300 k€ / 180 k€ ≈ <strong>1,7 anni</strong>. Se le perdite evitate si dimezzano → <strong>5 anni</strong>.</p>
+</aside>
+<p><strong>In risposta:</strong> «Un pilota merita l'investimento se collega un'azione locale tempestiva a un risultato misurato contro una baseline.»</p>
+<h2 id="5-il-testo-diventa-dato-la-pipeline-dell-nlp">5. Il testo diventa dato: la pipeline dell'NLP</h2>
+<ul>
+<li>Il testo è il dato più ricco e più disordinato (<em>unstructured data</em>).</li>
+<li>Sette passi: segmentazione, <strong>tokenizzazione</strong>, <strong>stop words</strong>, <strong>stemming</strong>, <strong>lemmatizzazione</strong>, <strong>POS tagging</strong>, <strong>NER</strong>.</li>
+<li>«He goes to college.» = 5 token. <strong>Stemming</strong> taglia le desinenze («studies» → «studi»); <strong>lemmatizzazione</strong> usa il dizionario (am, are, is → be).</li>
+<li><strong>NER</strong> riconosce entità: «Ticketmaster» → organizzazione, «£65» → denaro.</li>
+</ul>
+<aside class="box attenzione">
+<p class="box-title"><span class="box-kind">Attenzione</span></p>
+<p>Una lista standard di stop words toglie anche «not»: «The show was <strong>not</strong> good» diventa «show good». Per il sentiment non va tolta.</p>
+</aside>
+<p><strong>In risposta:</strong> «Ogni passo di pulizia è una scelta: la dichiaro e spiego perché.»</p>
+<h2 id="6-dal-sentiment-alla-decisione">6. Dal sentiment alla decisione</h2>
+<ul>
+<li><strong>Sentiment analysis</strong>: positivo, negativo, neutro. <strong>Aspect-based</strong>: il tono su ogni aspetto («bello il boss, lento il matchmaking»).</li>
+<li><strong>Emozioni</strong> (ruota di Plutchik, 8 primarie): <strong>softmax</strong> quando le classi si escludono (le probabilità sommano a 1); <strong>sigmoide</strong> quando servono più etichette insieme.</li>
+<li>RoBERTa su GoEmotions: F1 0,45 in media, «gratitude» oltre 0,9. <strong>Domain shift</strong>: su testi diversi il modello peggiora.</li>
+<li>Quattro trappole: <strong>frequenza ≠ impatto</strong>, <strong>sentimento ≠ comportamento</strong>, <strong>campione ≠ realtà</strong>, <strong>correlazione ≠ causa</strong>.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Twitter mood, 2011</p>
+<p>L'umore «calmo» di quasi 10 milioni di tweet prevede la direzione del Dow Jones con l'87,6% di accuratezza. Ma il test copre circa 20 giorni di Borsa: è una correlazione, non una causa.</p>
+</aside>
+<p><strong>In risposta:</strong> «Un punteggio è un segnale. Prima di spendere chiedo quale prova cambierebbe la decisione.»</p>
+<h2 id="7-ai-nei-processi-automatizzare-un-processo-non-un-passo">7. AI nei processi: automatizzare un processo, non un passo</h2>
+<ul>
+<li><strong>Hyperautomation</strong>: automatizzare processi interi, non un singolo passo. Quattro gradini: <strong>vedere</strong> (process mining) → <strong>prevedere</strong> → <strong>prescrivere</strong> → <strong>adattarsi</strong>.</li>
+<li><strong>Process mining</strong>: dall'<strong>event log</strong> (case ID, attività, timestamp) ricostruisce il processo vero. Siemens trova <strong>923.000 varianti</strong> di un solo processo (dato del fornitore).</li>
+<li><strong>Uplift</strong>: prevedere chi è a rischio non basta, serve sapere se l'intervento cambia qualcosa. <strong>Sleeping dogs</strong> = clienti a cui l'intervento fa danno.</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · UWV, Paesi Bassi, 2017</p>
+<p>Il modello trova bene i casi a rischio, ma le email mandate a quei casi non servono: errori al 3,8% con il sistema contro il 4,0% senza, una differenza non significativa.</p>
+</aside>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Valore di un intervento</p>
+<p><strong>V = p × u × C − k.</strong> Con p 0,4, u 0,25, C 2.000 €, k 50 € → <strong>V = 150 €</strong>. Se u = 0, V = −50 €.</p>
+</aside>
+<ul>
+<li><strong>Framed autonomy</strong>: l'agente AI agisce dentro una cornice decisa dalle persone (es. rimborsi fino a 100 €, sopra decide un umano).</li>
+</ul>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Air Canada, 2024</p>
+<p>Il chatbot dà una regola sbagliata sul rimborso per lutto. Il tribunale condanna la compagnia a 812,02 dollari canadesi: l'agente esegue, l'azienda risponde.</p>
+</aside>
+<h2 id="prima-di-entrare">Prima di entrare</h2>
+<ul>
+<li>Ogni risposta ha un <strong>caso con numeri</strong> e un <strong>limite</strong>.</li>
+<li>Scrivi la <strong>metrica</strong> e il <strong>perché</strong> (quale errore costa di più).</li>
+<li><strong>Previsione ≠ causa</strong>, <strong>punteggio ≠ decisione</strong>, <strong>passo ≠ processo</strong>.</li>
+<li>Chiudi sempre con una <strong>raccomandazione concreta</strong> e il modo per <strong>misurarla</strong>.</li>
+</ul></article>
+</div>
+
+
+</main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js?v=20261118-10" defer></script>
+<script src="/study-lab/assets/tutor.js?v=20261118-5" defer></script>
+</body></html>

@@ -174,3 +174,5 @@ GUIDE D'ESAME
 - Geopolitics · Midterm 2 · Guida allo studio · geopolitics/midterm-2-it/
 - Big Data & AI · Midterm 2 Study Guide · big-data-ai/midterm-2/
 - Big Data & AI · Midterm 2 · Guida allo studio · big-data-ai/midterm-2-it/
+- Big Data & AI · Midterm 2 · 10-minute review · big-data-ai/quick-review/
+- Big Data & AI · Midterm 2 · Ripasso in 10 minuti · big-data-ai/ripasso-10-min/
