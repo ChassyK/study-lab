@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vedere, prevedere, agire: come l&#x27;AI cambia la gestione dei processi aziendali — Big Data &amp; AI</title>
+<meta name="description" content="Molti processi aziendali sono ancora in gran parte manuali, e automatizzare un singolo passo non basta: l&#x27;iperautomazione collega AI, dati e strumenti per…">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css?v=20261118-11">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script>try{var t=JSON.parse(localStorage.getItem("sl:theme"));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>(function(d){d.classList.add("js");if(matchMedia("(prefers-reduced-motion: no-preference)").matches)d.classList.add("motion")})(document.documentElement)</script>
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",themeVariables:{fontFamily:"-apple-system, BlinkMacSystemFont, Inter, sans-serif",primaryColor:"#ffffff",primaryBorderColor:"#d2d2d7",lineColor:"#86868b",primaryTextColor:"#1d1d1f",fontSize:"17px"},flowchart:{useMaxWidth:true,htmlLabels:true}});</script></head>
+<body class="p-lesson" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/">Gideon</a>
+<nav class="topnav gideon-nav" aria-label="Navigazione principale"><details class="nav-group" name="gideon-nav"><summary>Corsi</summary><div class="nav-panel"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></div></details><a href="/study-lab/midterms/">Midterm</a><a href="/study-lab/reports/">Report</a><a href="/study-lab/in-class-examinations/">In-class exams</a><details class="nav-group" name="gideon-nav"><summary>Esplora</summary><div class="nav-panel"><a href="/study-lab/case-studies/" data-c="cs">Case studies</a><a href="/study-lab/internships/" data-c="in">Internships</a><a href="/study-lab/about/" data-c="ab">About</a></div></details></nav></header>
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
+<main id="main" class="lesson">
+<header class="lesson-head">
+  <p class="crumbs"><a href="/study-lab/">Corsi</a> / <a href="/study-lab/big-data-ai/">Big Data &amp; AI</a></p>
+  <div class="date-mark"><span class="day">20</span><span class="month">novembre<br>2026</span></div>
+  <h1>Vedere, prevedere, agire: come l&#x27;AI cambia la gestione dei processi aziendali</h1>
+  <p class="title-en" lang="en">AI-Augmented Business Process Management — Hyperautomation, Process Mining, Predictive and Prescriptive Process Intelligence, ABPMS and the Investment Automation Challenge</p>
+  <p class="meta">Venerdì · Rizzi, Campana · <span class="chip s-completa">Completa</span></p>
+  <details class="coverage"><summary>Come è costruita questa lezione</summary><p>Lezione ricostruita dai materiali. Nessuna registrazione PLAUD per questa giornata (slot Rizzi 14:30–16:00 e Campana 16:30–18:00; elenco PLAUD controllato alle 21:20 del 20/11: nessuna registrazione). Fonte d&#x27;aula: slide Canvas 136891 &#x27;BigDataBSNSRizzi2026Lesson9&#x27; (34 pagine, caricate il 19/11; in copertina &#x27;Lesson 8&#x27;), spiegate tutte: dati sull&#x27;automazione e definizione di hyperautomation (pp. 3–5), i quattro livelli dell&#x27;AI-augmented BPM (pp. 6–19: process mining, monitoraggio predittivo e simulazione, caso UWV, esecuzione prescrittiva, miglioramento assistito da AI e GenAI, ottimizzazione proattiva, decisioni operative e tattiche), ABPMS con funzioni, ciclo di vita e architettura (pp. 20–24), domande sui processi autonomi, esecuzione e orchestrazione, triangolo dell&#x27;esecuzione e percorsi di autonomizzazione (pp. 25–31), Investment Automation Challenge (pp. 32–33). Le slide 3–5, 12, 27, 30–31 e 33 sono immagini e sono state lette come tali. Usato anche il file Canvas 136892 &#x27;angrybirds_pool_50_investor_samples.zip&#x27; (50 moduli PDF compilabili, letti tutti tramite i campi del modulo). Integrazioni dichiarate: esempi svolti, due laboratori numerici, casi reali (UWV, Air Canada, Klarna, Siemens con Celonis) e collegamenti con le lezioni del 4/11 e del 13/11.</p></details>
+</header>
+<section class="brief" aria-labelledby="inbreve"><h2 id="inbreve">In breve</h2>
+<div class="brief-overview">
+<p class="brief-teaser">Molti processi aziendali sono ancora in gran parte manuali, e automatizzare un singolo passo non basta: l&#x27;iperautomazione collega AI, dati e strumenti per automatizzare processi…</p>
+<details class="brief-reading" open><summary>Riepilogo completo</summary><p class="lede">Molti processi aziendali sono ancora in gran parte manuali, e automatizzare un singolo passo non basta: l&#x27;iperautomazione collega AI, dati e strumenti per automatizzare processi interi, lasciando alle persone giudizio e approvazioni. La lezione sale quattro gradini: il process mining mostra come va davvero il processo, l&#x27;intelligenza predittiva stima che cosa succederà, quella prescrittiva decide quando intervenire, gli ABPMS adattano il processo da soli dentro una cornice di regole. Il caso UWV ricorda che prevedere bene non garantisce un intervento utile, e la sfida sui 50 moduli d&#x27;investimento mette tutto in pratica.</p></details></div><ul class="keys"><li>Iperautomazione: AI, dati e più strumenti per automatizzare processi interi, con le persone dove serve giudizio o approvazione; il valore si misura in tempo, errori, costo per caso e tocchi manuali.</li><li>I quattro gradini dell&#x27;AI nei processi: process mining (com&#x27;è andato), predittivo (cosa succederà), prescrittivo (quando intervenire), augmented BPM (adattarsi da soli).</li><li>Il process mining ricostruisce il processo reale da un event log con caso, attività e orario: scoperta, prestazioni, conformità e confronto.</li><li>Monitoraggio predittivo per i casi in corso, simulazione per il disegno del processo: con le code, l&#x27;attesa cresce in modo non lineare quando le risorse sono quasi sempre occupate.</li><li>Previsioni accurate non garantiscono interventi utili (caso UWV): serve misurare l&#x27;effetto con un gruppo di controllo; persuadables, sure things, lost causes e sleeping dogs.</li><li>L&#x27;esecuzione prescrittiva raccomanda azioni e impara dagli esiti attraverso uno storico di costi e benefici.</li><li>Un ABPMS ragiona e agisce entro una cornice di obiettivi, regole e sicurezza (frame, enact, perceive, reason, respond) e usa strumenti collegati, per esempio tramite MCP.</li><li>I processi si muovono nel triangolo umano–automatico–autonomo; esecuzione e orchestrazione sono cose diverse e la responsabilità resta alle persone.</li></ul></section>
+<div class="lesson-grid"><nav class="toc" aria-label="Indice della lezione">
+<details class="reading-index" open><summary>Indice della lezione</summary>
+<p class="toc-h">Spiegazione</p><ol><li><a href="#automatizzare-un-passo-non-vuol-dire-automatizzare-un-proces">Automatizzare un passo non vuol dire automatizzare un processo</a></li><li><a href="#quattro-gradini-vedere-prevedere-prescrivere-adattarsi">Quattro gradini: vedere, prevedere, prescrivere, adattarsi</a></li><li><a href="#il-process-mining-ricostruisce-il-processo-vero-dalle-tracce">Il process mining ricostruisce il processo vero dalle tracce digitali</a></li><li><a href="#prevedere-monitoraggio-predittivo-e-simulazione">Prevedere: monitoraggio predittivo e simulazione</a></li><li><a href="#una-previsione-giusta-puo-portare-a-un-azione-inutile">Una previsione giusta può portare a un'azione inutile</a></li><li><a href="#prescrivere-quando-intervenire-e-come-cambiare-il-processo">Prescrivere: quando intervenire e come cambiare il processo</a></li><li><a href="#il-processo-che-si-adatta-da-solo-gli-augmented-bpm-systems">Il processo che si adatta da solo: gli Augmented BPM Systems</a></li><li><a href="#umano-automatico-autonomo-chi-esegue-chi-coordina-chi-rispon">Umano, automatico, autonomo: chi esegue, chi coordina, chi risponde</a></li><li><a href="#la-sfida-dai-pdf-degli-investitori-a-risultati-affidabili">La sfida: dai PDF degli investitori a risultati affidabili</a></li></ol><p class="toc-h">Mettiti alla prova</p><ul><li><a href="#richiamo">Richiamo</a></li><li><a href="#quiz">Quiz</a></li><li><a href="#trasferimento">Applica</a></li><li><a href="#decidi">Decidi tu</a></li><li><a href="#davedere">Da vedere</a></li><li><a href="#flashcard">Flashcard</a></li><li><a href="#glossario">Glossario</a></li><li><a href="#video">Video</a></li><li><a href="#approfondimenti-video">Approfondimenti video</a></li></ul><div class="toc-actions"><a class="btn" href="2026-11-20__lezione.pdf" download>Scarica PDF</a><a class="btn ghost" href="https://notebook.google.com/notebook/075a6b17-6b0d-4565-a05f-d532d2bfa1b0">Apri NotebookLM</a></div>
+</details></nav><article class="prose"><h2 id="automatizzare-un-passo-non-vuol-dire-automatizzare-un-proces">Automatizzare un passo non vuol dire automatizzare un processo</h2>
+<p>La lezione parte da un dato che smonta un luogo comune: anche nel 2025 molti processi aziendali si fanno ancora a mano. In un sondaggio di Peerless Research Group su 139 professionisti della logistica di magazzino, il 52% dice che l'evasione degli ordini (<em>order fulfilment</em>) è "per lo più o del tutto manuale", il 42% che è un misto di persone e automazione, solo il 4% che è altamente automatizzata. Un anno prima i "per lo più manuali" erano il 43% e gli altamente automatizzati il 10%: il campione 2025 è andato addirittura indietro. Sommando le prime due voci, il 94% lavora ancora con molte mani in mezzo. Nelle assunzioni ad alto volume (commessi, magazzinieri, stagionali) il quadro è simile: in un'analisi di Phenom su 101 aziende, il 68% si affida soprattutto a processi manuali, l'82% non permette ai candidati di candidarsi via chatbot o SMS e, tra le aziende manifatturiere, il 95% non offre un colloquio da fissare subito.</p>
+<p>Questi numeri vanno letti con attenzione. Sono risposte dichiarate dagli intervistati (<em>self-reported</em>), su campioni piccoli; lo studio Phenom è prodotto da un'azienda che vende software per le assunzioni. Misurano la maturità delle aziende, non la percentuale di compiti svolti a mano. Il messaggio però regge: lo spazio per automatizzare è ancora enorme, e non si riempie comprando un software per un singolo passo.</p>
+<p>Qui entra la <em>hyperautomation</em> (iperautomazione): combinare AI, elaborazione dei dati e più strumenti di automazione per automatizzare <strong>processi interi</strong>, lasciando le persone dove servono giudizio o approvazione. Il termine l'ha reso popolare Gartner, che lo descrive come un approccio guidato dal business per individuare, valutare e automatizzare rapidamente il maggior numero possibile di processi, usando insieme più tecnologie: AI, machine learning, RPA (<em>robotic process automation</em>, bot che ripetono azioni a schermo), motori di processo e strumenti <em>low-code</em>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Automazione semplice</th>
+<th>Iperautomazione</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ambito</td>
+<td>un compito o un passo</td>
+<td>un processo collegato da inizio a fine</td>
+</tr>
+<tr>
+<td>Strumenti</td>
+<td>uno script, una regola, un tool dedicato</td>
+<td>AI, dati e più strumenti insieme</td>
+</tr>
+<tr>
+<td>Coordinamento</td>
+<td>limitato a quel compito</td>
+<td>gestisce passaggi di mano ed eccezioni</td>
+</tr>
+<tr>
+<td>Esempio</td>
+<td>copiare i dati di un modulo in una tabella</td>
+<td>collegare raccolta, controllo, approvazione e risposta</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pensa alle iscrizioni a un evento studentesco. Automazione semplice: il modulo online riempie da solo un foglio di calcolo. Iperautomazione: il modulo arriva, un controllo verifica che il pagamento corrisponda, i casi strani (pagamento doppio, nome diverso dal titolare della carta) vanno a una persona, gli altri ricevono subito conferma e promemoria, e il giorno dell'evento la lista all'ingresso è già pronta. Il valore non sta nel singolo passo più veloce ma nei passaggi di mano che spariscono. Si misura con quattro numeri: tempo per caso, errori, costo per caso e numero di "tocchi" manuali. La stessa logica vale per un brand streetwear che gestisce un <em>drop</em>: ordini, controllo antifrode, magazzino e resi sono un unico processo, e il collo di bottiglia di solito è dove un'email aspetta una persona.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>L'iperautomazione non automatizza compiti: automatizza i passaggi tra un compito e l'altro, e tiene le persone nei punti dove serve giudizio.</p>
+</aside>
+<figure class="yt" data-id="4-KTd0uRNq8" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Hyperautomation Explained (IBM Technology, 10 min)"><img loading="lazy" src="https://i.ytimg.com/vi/4-KTd0uRNq8/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Hyperautomation Explained (IBM Technology, 10 min) · <a href="https://www.youtube.com/watch?v=4-KTd0uRNq8">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;agenzia di eventi installa un tool che legge le email di prenotazione e le copia nel gestionale. Dopo tre mesi il tempo medio di conferma non è cambiato. Che cosa è probabile che sia successo?</summary>
+<div class="answer">
+<p>Ha automatizzato un passo, non il processo. Il tempo si perde nei passaggi successivi: qualcuno deve controllare la disponibilità, approvare, rispondere. Se quei passaggi restano manuali e in coda, copiare più in fretta non accorcia il ciclo. Prima bisogna vedere dove si accumula l'attesa, ed è proprio il compito del process mining.</p>
+</div>
+</details>
+<h2 id="quattro-gradini-vedere-prevedere-prescrivere-adattarsi">Quattro gradini: vedere, prevedere, prescrivere, adattarsi</h2>
+<p>Usare l'AI nella gestione dei processi (<em>Business Process Management</em>, BPM) non è un salto unico. Si sale per quattro gradini, e ognuno risponde a una domanda diversa.</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  A[Process mining: com'è andato?] --&gt; B[Predittiva: cosa succederà?]
+  B --&gt; C[Prescrittiva: quando intervenire?]
+  C --&gt; D[Augmented BPM: adattarsi da solo]
+</pre></figure>
+<ol>
+<li><strong>Process mining</strong> (intelligenza descrittiva): come si svolge davvero il processo? Dove sono colli di bottiglia, sprechi, violazioni delle regole, deviazioni buone o cattive?</li>
+<li><strong>Predictive process intelligence</strong>: che cosa succede se il processo resta com'è, o se lo cambio? Che impatto avrebbe automatizzare un passo?</li>
+<li><strong>Prescriptive process intelligence</strong>: quando conviene intervenire per migliorare i KPI? Come si migliora il processo?</li>
+<li><strong>Augmented process management</strong>: quando e come il processo deve adattarsi da solo a cambiamenti imprevisti?</li>
+</ol>
+<p>Ogni gradino poggia sul precedente: non si prevede bene un processo che non si è mai visto, e non si lascia decidere una macchina su un processo che non si sa prevedere. Per questo il process mining è "l'inizio del viaggio", non l'arrivo.</p>
+<p>C'è una seconda distinzione utile: ogni gradino lavora su due orizzonti. Le <strong>decisioni operative</strong> riguardano il caso di oggi (questo ordine, questa pratica); le <strong>decisioni tattiche</strong> riguardano il disegno del processo (quante persone, quali passi automatizzare).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Gradino</th>
+<th>Decisioni operative (il caso singolo)</th>
+<th>Decisioni tattiche (il disegno del processo)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Augmented BPM</td>
+<td>esecuzione autonoma</td>
+<td>ottimizzazione proattiva</td>
+</tr>
+<tr>
+<td>Prescrittivo</td>
+<td>esecuzione prescrittiva</td>
+<td>miglioramento assistito</td>
+</tr>
+<tr>
+<td>Predittivo</td>
+<td>monitoraggio predittivo</td>
+<td>simulazione basata sui dati</td>
+</tr>
+<tr>
+<td>Process mining</td>
+<td>cruscotti storici e in tempo reale</td>
+<td>scoperta, conformità e prestazioni</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span></p>
+<p>È la stessa scala dell'analytics che attraversa tutto il corso (descrittiva → predittiva → prescrittiva), applicata a un oggetto preciso: il processo. Nella lezione del 4/11 su IoT ed edge il dato valeva solo se faceva scattare un'azione; qui il ragionamento è lo stesso, ma l'azione è sul flusso di lavoro.</p>
+</aside>
+<h2 id="il-process-mining-ricostruisce-il-processo-vero-dalle-tracce">Il process mining ricostruisce il processo vero dalle tracce digitali</h2>
+<p>Ogni volta che qualcuno registra un ordine nell'ERP, approva una pratica o un sensore segnala un evento, il sistema lascia una traccia con l'ora. Il <em>process mining</em> raccoglie queste tracce in un <strong>event log</strong> (registro degli eventi) e da lì ricostruisce il processo com'è davvero, non come è disegnato nel manuale. Per funzionare servono tre campi minimi per ogni riga: l'identificativo del caso (<em>case ID</em>: quale ordine, quale cliente), l'attività (che cosa è successo) e il <em>timestamp</em> (quando). Spesso si aggiunge la risorsa (chi l'ha fatto). Le fonti sono i sistemi aziendali (ERP, CRM) e i dispositivi IoT, sia come storico sia come flusso in tempo reale (<em>event stream</em>).</p>
+<p>Dall'event log escono quattro analisi:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analisi</th>
+<th>Domanda a cui risponde</th>
+<th>Che cosa produce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scoperta automatica (<em>discovery</em>)</td>
+<td>quali strade prende davvero il processo?</td>
+<td>mappe e modelli di processo</td>
+</tr>
+<tr>
+<td>Prestazioni (<em>performance</em>)</td>
+<td>dove si perde tempo?</td>
+<td>modelli arricchiti, cruscotti, KPI</td>
+</tr>
+<tr>
+<td>Conformità (<em>conformance</em>)</td>
+<td>dove si violano le regole previste?</td>
+<td>grafici di conformità, deviazioni</td>
+</tr>
+<tr>
+<td>Confronto (<em>comparative</em>)</td>
+<td>perché un ramo va meglio di un altro?</td>
+<td>report diagnostici e cause</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Tre pratiche di investimento, un collo di bottiglia (dati ipotetici)</p>
+<ol>
+<li>L'event log contiene tre casi. Caso A: <em>modulo ricevuto</em> lunedì 9:00, <em>dati estratti</em> 9:05, <em>controllo</em> martedì 15:00, <em>conferma inviata</em> martedì 15:10.</li>
+<li>Caso B: <em>ricevuto</em> lunedì 10:00, <em>estratti</em> 10:04, <em>controllo</em> martedì 16:00, <em>chiarimento chiesto</em> martedì 16:05, <em>risposta cliente</em> giovedì 11:00, <em>controllo</em> giovedì 17:00, <em>conferma</em> giovedì 17:05.</li>
+<li>Caso C: <em>ricevuto</em> lunedì 11:00, <em>estratti</em> 11:03, <em>conferma inviata</em> lunedì 11:20, <em>controllo</em> martedì 17:00.</li>
+<li>Scoperta: esistono tre varianti. A è il percorso "felice"; B ha un ciclo di rilavorazione (chiarimento → nuovo controllo); C ha l'ordine invertito.</li>
+<li>Prestazioni: l'estrazione dura minuti, ma tra <em>estratti</em> e <em>controllo</em> passano circa 30 ore. Il collo di bottiglia è la coda prima del controllo umano, non l'estrazione.</li>
+<li>Conformità: il caso C viola una regola (conferma prima del controllo). Va segnalato anche se è finito bene.</li>
+<li>Decisione: accelerare l'estrazione con un'AI più potente non serve. Serve capire perché i controlli si accumulano e ridurre le pratiche che richiedono chiarimenti.</li>
+</ol>
+</aside>
+<p>Il fascino del process mining è che toglie le opinioni dal tavolo. In una riunione tutti "sanno" dove sta il problema; l'event log mostra dove sta davvero. Per chi lavora in strategia o consulenza è uno strumento di <em>due diligence</em> operativa: prima di comprare o ristrutturare un'azienda, guardare i suoi flussi reali dice più di cento interviste.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Siemens e le 923.000 varianti di un solo processo</p>
+<p>Siemens gestisce circa 30 milioni di righe d'ordine l'anno, con fino a 60 passaggi dall'ordine all'incasso (<em>order-to-cash</em>). Analizzando con Celonis 300 milioni di attività registrate, ha scoperto che lo stesso processo veniva eseguito in 923.000 varianti diverse: molto lontano dal disegno "ufficiale". Lavorando sulle cause, l'azienda riporta un tasso di automazione salito del 24%, rilavorazioni scese dell'11% e circa 10 milioni di interventi manuali in meno l'anno. Limite delle prove: i numeri vengono dalla storia di successo pubblicata dal fornitore, Celonis, e non sono stati verificati in modo indipendente; non è chiaro se le percentuali siano punti o variazioni relative.</p>
+</aside>
+<figure class="yt" data-id="uP1stpUAv3c" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: How process mining improves the things you do not see (Wil van der Aalst, TEDx, 19 min)"><img loading="lazy" src="https://i.ytimg.com/vi/uP1stpUAv3c/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>How process mining improves the things you do not see (Wil van der Aalst, TEDx, 19 min) · <a href="https://www.youtube.com/watch?v=uP1stpUAv3c">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> In un e-commerce di sneaker il 30% dei resi impiega più di 20 giorni per il rimborso. Il responsabile dice: &quot;È colpa del corriere&quot;. Quale analisi di process mining usi per verificarlo, e che dati ti servono?</summary>
+<div class="answer">
+<p>Un'analisi delle prestazioni sull'event log dei resi: per ogni caso (ID del reso) servono le attività con l'ora, dalla richiesta al ritiro, alla consegna in magazzino, al controllo e al rimborso. Così vedi in quale tratto si accumula il tempo. Se l'attesa sta tra "arrivato in magazzino" e "controllato", il corriere non c'entra. Un'analisi comparativa tra corrieri dice poi se uno è davvero più lento degli altri.</p>
+</div>
+</details>
+<h2 id="prevedere-monitoraggio-predittivo-e-simulazione">Prevedere: monitoraggio predittivo e simulazione</h2>
+<p>Il secondo gradino guarda avanti, in due modi.</p>
+<p>Il <strong>monitoraggio predittivo</strong> (<em>predictive process monitoring</em>) lavora sui casi in corso. Modelli addestrati sullo storico leggono il flusso degli eventi e stimano, per ogni caso aperto, come finirà: se rispetterà la scadenza, quanto tempo manca, quale sarà la prossima attività, se finirà con un reclamo. Il risultato sono cruscotti predittivi: non "quanti ordini sono stati in ritardo il mese scorso" ma "questi 40 ordini rischiano di arrivare in ritardo".</p>
+<p>La <strong>simulazione basata sui dati</strong> lavora sul disegno del processo. Prende tre ingressi: i dati dei sistemi aziendali (da cui scopre automaticamente un modello del processo), i vincoli del processo e una specifica di cambiamento ("e se automatizzassimo il controllo?", "e se togliessimo una persona?"). Ne esce un profilo di prestazioni previsto: tempi, costi, code. È il modo per rispondere a "che impatto avrebbe automatizzare?" prima di spendere.</p>
+<p>Perché simulare invece di fare un conto a mente? Perché i processi con le code non sono lineari. Quando una risorsa lavora vicino al 100% del tempo, anche un piccolo aumento di richieste fa esplodere l'attesa; aggiungere una persona al punto giusto può dimezzarla.</p>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Utilizzo di una risorsa</p>
+<p>ρ = λ × s / (60 × c)</p>
+<ul>
+<li>λ = casi che arrivano in un'ora</li>
+<li>s = minuti di lavoro per caso</li>
+<li>c = numero di persone (o macchine) in parallelo</li>
+<li>ρ = quota del tempo in cui le risorse sono occupate (da 0 a 1)</li>
+</ul>
+<p>Esempio: 20 casi l'ora, 5 minuti ciascuno, 2 persone → ρ = 20 × 5 / 120 = 0,83. Se ρ arriva a 1, la coda cresce senza fine.</p>
+</aside>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Quando la coda esplode (numeri illustrativi)</p><div class="lab-body"><div class="row"><label>Casi in arrivo all'ora <input type="range" id="q-l" min="2" max="60" step="1" value="20"></label> <output id="q-lo">20</output></div>
+<div class="row"><label>Minuti di lavoro per caso <input type="range" id="q-s" min="1" max="30" step="1" value="5"></label> <output id="q-so">5</output></div>
+<div class="row"><label>Persone in parallelo <input type="range" id="q-c" min="1" max="10" step="1" value="2"></label> <output id="q-co">2</output></div>
+<p class="out" id="q-out"></p>
+<p class="note">Attesa stimata con l'approssimazione di Sakasegawa per code con arrivi casuali: numeri illustrativi, non la previsione di un processo reale. Prova a passare da 2 a 3 persone con i valori di partenza: l'attesa scende da circa 11 minuti a poco più di 1.</p>
+<script>
+(function(){
+  const l=document.getElementById('q-l'), s=document.getElementById('q-s'), c=document.getElementById('q-c');
+  function upd(){
+    const L=+l.value, S=+s.value, C=+c.value;
+    document.getElementById('q-lo').textContent=L; document.getElementById('q-so').textContent=S; document.getElementById('q-co').textContent=C;
+    const rho=L*S/(60*C); let txt='Utilizzo delle risorse: '+(rho*100).toFixed(0)+'%. ';
+    if(rho>=1){ txt+='Il sistema non regge: arrivano più casi di quanti se ne possano lavorare e la coda cresce senza fine.'; }
+    else { const wq=S*Math.pow(rho,Math.sqrt(2*(C+1))-1)/(C*(1-rho)); txt+='Attesa media in coda: circa '+wq.toFixed(1)+' minuti, più '+S+' di lavoro.'; if(rho>0.85) txt+=' Sopra l\'85% basta un piccolo aumento di richieste per far esplodere l\'attesa.'; }
+    document.getElementById('q-out').textContent=txt;
+  }
+  [l,s,c].forEach(e=>e.addEventListener('input',upd)); upd();
+})();
+</script></div></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;agenzia di viaggi vuole automatizzare la preparazione dei preventivi (oggi 12 minuti ciascuno) con un&#x27;AI che li prepara in 2 minuti, ma ogni preventivo deve comunque essere approvato da una persona (4 minuti). Come usi la simulazione prima di comprare il software?</summary>
+<div class="answer">
+<p>Specifichi il cambiamento (preparazione da 12 a 2 minuti, approvazione invariata) e lo fai girare sul modello scoperto dai dati reali. La simulazione mostra se il tempo totale scende davvero o se la coda si sposta sull'approvazione. Se gli approvatori sono già pieni, il beneficio si riduce molto: forse conviene aggiungere un approvatore o approvare solo i preventivi sopra una certa cifra.</p>
+</div>
+</details>
+<h2 id="una-previsione-giusta-puo-portare-a-un-azione-inutile">Una previsione giusta può portare a un'azione inutile</h2>
+<p>Prevedere bene non basta. La differenza tra sapere <em>chi</em> avrà un problema e sapere <em>che cosa fare</em> è il cuore della lezione, ed è raccontata da un caso reale.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · UWV, Paesi Bassi (2017): previsioni buone, email inutili</p>
+<p>L'UWV è l'istituto olandese che paga i sussidi di disoccupazione: in media circa 300.000 beneficiari. Ogni mese circa il 4% deve restituire parte dei soldi, quasi sempre perché ha dichiarato male il proprio reddito nel modulo mensile, spesso senza volerlo. Un gruppo di ricerca (Dees, de Leoni, van der Aalst, Reijers) ha costruito un modello addestrato su 73.153 casi che prevedeva chi avrebbe sbagliato, e funzionava: il 10% dei beneficiari giudicati più a rischio conteneva il 19% di tutti gli errori. L'intervento però fu scelto in tre sessioni di brainstorming da 15 dipendenti e 2 manager, cioè per opinione: un'email ai casi con probabilità di errore sopra 0,8, che spiegava come compilare bene il modulo. Fu provato con un vero esperimento tra agosto e ottobre 2017, su 86.850 casi con gruppo di controllo. Risultato: errori al 3,8% con il sistema contro il 4,0% senza, differenza non significativa. Peggio: tra chi aveva cliccato i link dell'email gli errori erano al 10,9%, tra chi l'aveva ricevuta senza cliccare al 6,2%. L'email non preveniva nulla e forse confondeva, e nessuna analisi spiegò il perché. Il titolo del lavoro dice tutto: <em>Accurate Predictions, Invalid Recommendations</em>.</p>
+</aside>
+<p>Il motivo si capisce con quattro gruppi che il marketing conosce da anni, nel cosiddetto <em>uplift modeling</em> (modellare l'effetto dell'intervento, non il comportamento). Incrociano due domande: il cliente fa la cosa giusta se lo contatto? E se non lo contatto?</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Non agisce se NON contattato</th>
+<th>Agisce comunque se NON contattato</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agisce se contattato</strong></td>
+<td><em>Persuadables</em>: l'intervento funziona</td>
+<td><em>Sure things</em>: l'intervento è uno spreco</td>
+</tr>
+<tr>
+<td><strong>Non agisce se contattato</strong></td>
+<td><em>Lost causes</em>: niente funziona</td>
+<td><em>Sleeping dogs</em>: l'intervento fa danni</td>
+</tr>
+</tbody>
+</table></div>
+<p>Un modello predittivo classico trova chi è "a rischio", ma tra i clienti a rischio ci sono anche i <em>lost causes</em> (non cambieranno comunque) e chi è solo distratto. A te interessano solo i <em>persuadables</em>. E attenzione ai <em>sleeping dogs</em>, i "cani che dormono": ricordare a un abbonato distratto che paga un abbonamento può spingerlo a disdire. Per una piattaforma di streaming o un brand con un programma di membership, mandare la stessa email a tutti i "clienti a rischio" può peggiorare i numeri.</p>
+<p>Il modo per misurare l'effetto è l'esperimento: un gruppo riceve l'intervento, un gruppo simile no (<em>gruppo di controllo</em>), e si confronta l'esito. Senza questo confronto non si sa se l'intervento ha funzionato.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Il modello predittivo dice chi rischia; solo un esperimento dice se il tuo intervento cambia qualcosa.</p>
+</aside>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span></p>
+<p>Nella lezione del 13/11 sul sentiment il flusso dai commenti all'investimento si chiudeva con "correlazione contro causa: prima si testa, poi si investe". Qui è lo stesso principio applicato all'intervento sui processi.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Una banca prevede con buona accuratezza quali clienti chiuderanno il conto entro sei mesi e propone di offrire a tutti un bonus da 50 euro. Che cosa le chiedi prima di approvare?</summary>
+<div class="answer">
+<p>Di provare l'offerta su un campione con gruppo di controllo. Il modello indica chi se ne andrà, non chi resterebbe grazie al bonus. Se molti clienti a rischio se ne vanno per ragioni che 50 euro non toccano (lost causes), o sarebbero rimasti comunque (sure things), il bonus è un costo senza effetto. Si offre solo ai segmenti dove l'esperimento mostra un aumento reale di chi resta.</p>
+</div>
+</details>
+<h2 id="prescrivere-quando-intervenire-e-come-cambiare-il-processo">Prescrivere: quando intervenire e come cambiare il processo</h2>
+<p>"Prevedere è utile, prevenire è meglio": il terzo gradino passa dalla previsione alla raccomandazione.</p>
+<p>L'<strong>esecuzione prescrittiva</strong> (<em>prescriptive process execution</em>) lavora caso per caso. Il caso in corso passa nei modelli predittivi, la previsione entra in un sistema prescrittivo che raccomanda un'azione (chiamare il cliente, assegnare la pratica a un esperto, non fare niente). Il punto chiave è il <strong>ciclo di ritorno</strong>: le raccomandazioni e i loro esiti finiscono in uno storico di costi e benefici (<em>cost-reward history</em>), e il sistema impara quali interventi rendono davvero. È la risposta al problema del caso UWV: non basta prevedere, bisogna misurare l'effetto di ogni azione e aggiornarsi.</p>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Conviene intervenire?</p>
+<p>V = p × u × C − k</p>
+<ul>
+<li>p = probabilità prevista che il caso vada male (per esempio un ritardo)</li>
+<li>u = riduzione di quella probabilità grazie all'intervento (l'uplift, misurato con un esperimento)</li>
+<li>C = costo dell'esito negativo, in euro</li>
+<li>k = costo dell'intervento</li>
+</ul>
+<p>Esempio: p = 0,4; u = 0,25; C = 2.000 €; k = 50 € → V = 0,4 × 0,25 × 2.000 − 50 = 150 €: conviene. Se l'intervento non ha effetto (u = 0), V = −50 € a ogni caso, anche con una previsione perfetta.</p>
+</aside>
+<p>Il <strong>miglioramento assistito dall'AI</strong> (<em>AI-assisted process improvement</em>) lavora sul disegno. Un ottimizzatore usa la simulazione e la conoscenza del dominio per proporre opzioni concrete: automatizzare i passi X e Y, aggiungere cinque persone al passo A, toglierne due dal passo B. Non c'è quasi mai una soluzione migliore in tutto: un'opzione riduce i tempi ma costa di più, un'altra fa risparmiare ma allunga le code. Chi decide sceglie tra compromessi.</p>
+<p>Con la <strong>GenAI</strong> il miglioramento diventa una conversazione. Il process mining alimenta un <strong>gemello digitale del processo</strong> (<em>digital process twin</em>), una copia simulabile del processo reale. Gli esperti mettono la conoscenza del dominio, l'ottimizzatore genera le opzioni di cambiamento, e la GenAI fa da interfaccia: un manager chiede in linguaggio naturale "che cosa succede ai tempi di consegna se chiudiamo il magazzino di Verona il sabato?" e riceve opzioni con l'effetto sui KPI. È la stessa logica con cui chi fa <em>market intelligence</em> usa un modello: non cerca una risposta unica, esplora scenari.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un ottimizzatore propone due opzioni per il servizio clienti di un e-commerce: (1) chatbot sul 60% delle richieste, costo −30%, soddisfazione −5 punti; (2) tre persone in più nelle ore di picco, costo +8%, tempi di risposta −40%. Qual è quella &quot;giusta&quot;?</summary>
+<div class="answer">
+<p>Nessuna delle due in assoluto: dipende dal KPI che l'azienda considera prioritario. Se il marchio vive di fedeltà e passaparola, perdere 5 punti di soddisfazione può costare più del risparmio; se compete sul prezzo, il risparmio può valere di più. Il compito dell'ottimizzatore è mostrare i compromessi, quello del manager è scegliere in base alla strategia e chiedere una simulazione delle varianti intermedie.</p>
+</div>
+</details>
+<h2 id="il-processo-che-si-adatta-da-solo-gli-augmented-bpm-systems">Il processo che si adatta da solo: gli Augmented BPM Systems</h2>
+<p>All'ultimo gradino l'interfaccia conversazionale non parla più con un ottimizzatore ma con <strong>agenti</strong>: programmi AI che osservano previsioni e simulazioni, propongono cambiamenti e, entro certi limiti, li applicano. È l'<strong>ottimizzazione proattiva</strong>: quando cambiano KPI, regole o priorità, gli agenti adattano il processo e chiedono conferma o chiarimenti attraverso la conversazione.</p>
+<p>Il sistema che rende possibile tutto questo si chiama <strong>ABPMS</strong> (<em>Augmented Business Process Management System</em>). La definizione: un sistema informativo consapevole dei processi che usa un'AI affidabile per ragionare e agire sui dati entro un insieme di vincoli, con l'obiettivo di adattare e migliorare continuamente i processi rispetto a uno o più indicatori di prestazione.</p>
+<p>La parola decisiva è "entro vincoli". Un ABPMS fa tre cose: <strong>supporta</strong> (monitora, adatta e ottimizza in anticipo i processi), <strong>orchestra</strong> (coordina le attività in autonomia verso gli obiettivi del processo) e lavora dentro una <strong>cornice</strong> (<em>frame</em>) di vincoli espliciti su obiettivi di prestazione, regole di conformità e condizioni di sicurezza. Si parla di <em>framed autonomy</em>, autonomia dentro una cornice: come un dipendente che può decidere da solo rimborsi fino a 200 euro, ma oltre deve chiedere.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Funzione</th>
+<th>Che cosa fa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Frame</em></td>
+<td>permette alle persone di definire obiettivi, regole e indicatori</td>
+</tr>
+<tr>
+<td><em>Enact</em></td>
+<td>esegue i processi dentro la cornice</td>
+</tr>
+<tr>
+<td><em>Perceive</em></td>
+<td>descrive lo stato attuale e prevede eventi e cambiamenti</td>
+</tr>
+<tr>
+<td><em>Reason</em></td>
+<td>interpreta il contesto e raccomanda o avvia azioni</td>
+</tr>
+<tr>
+<td><em>Respond</em></td>
+<td>spiega, si adatta e migliora quando qualcosa cambia</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nel manifesto di ricerca che ha introdotto gli ABPMS (Dumas e colleghi, 2023) il ciclo ha sette passi: <em>frame</em>, <em>enact</em>, <em>perceive</em> e <em>reason</em> sono quelli di base; <em>explain</em>, <em>adapt</em> e <em>improve</em> quelli avanzati, che le slide raccolgono sotto "respond". Lo stesso testo chiede a questi sistemi cinque qualità: autonomia dentro una cornice, possibilità di essere guidati con una conversazione (<em>conversational actionability</em>), adattamento, capacità di migliorarsi, spiegabilità.</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  F[Frame: obiettivi e regole] --&gt; E[Enact: esegue il processo]
+  E --&gt; P[Perceive: stato e previsioni]
+  P --&gt; R[Reason: interpreta e decide]
+  R --&gt; X[Respond: adatta, migliora, spiega]
+  X --&gt; E
+</pre></figure>
+<p>L'architettura è a strati. In alto ci sono gli utenti e gli agenti esterni. Sotto, il "tessuto" AI (<em>AI fabric</em>) con i flussi di lavoro agentici: agenti che percepiscono, spiegano, ragionano, raccomandano e agiscono. Gli agenti usano strumenti esposti con il <strong>Model Context Protocol</strong> (MCP), lo standard aperto presentato da Anthropic a fine 2024 per collegare i modelli AI a dati e applicazioni in modo uniforme. Tramite questi strumenti raggiungono tre blocchi: la <em>process intelligence</em> (process mining, monitoraggio predittivo, simulazione e ottimizzazione, controllo di conformità, suggerimento della prossima azione), lo strato dei dati (event log, serie temporali, dati IoT, conversazioni come email e chat, modelli e documenti di processo) e lo strato delle azioni (motori di processo BPMS, bot RPA, sistemi gestionali ERP e CRM, strumenti di collaborazione, pianificatori, attuatori IoT).</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  U[Utenti e agenti esterni] --&gt; A[AI fabric: agenti di processo]
+  A --&gt; M[Strumenti MCP]
+  M --&gt; I[Process intelligence]
+  M --&gt; D[Dati: log, IoT, conversazioni]
+  M --&gt; K[Azioni: ERP, RPA, attuatori]
+</pre></figure>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span></p>
+<p>Le conversazioni (email, chat) nello strato dei dati sono il testo che la lezione del 13/11 insegnava a leggere con l'NLP; gli attuatori IoT nello strato delle azioni sono quelli della lezione del 4/11. L'ABPMS mette insieme i pezzi del corso: dati, analisi e azione.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un ABPMS gestisce i rimborsi di una compagnia di treni. La cornice dice: rimborsi automatici fino a 100 euro, tempo massimo 48 ore. Arriva un&#x27;ondata di 20.000 richieste per uno sciopero. Che cosa ti aspetti che faccia un sistema ben progettato, e che cosa non deve fare?</summary>
+<div class="answer">
+<p>Deve accorgersi dell'ondata (perceive), prevedere che le 48 ore saltano (reason), proporre o avviare adattamenti dentro la cornice, per esempio dare priorità ai rimborsi automatici e spostare personale sui casi sopra 100 euro, e spiegare che cosa ha fatto (respond). Non deve alzare da solo la soglia a 300 euro per smaltire prima: cambiare la cornice spetta alle persone che ne rispondono.</p>
+</div>
+</details>
+<h2 id="umano-automatico-autonomo-chi-esegue-chi-coordina-chi-rispon">Umano, automatico, autonomo: chi esegue, chi coordina, chi risponde</h2>
+<p>Due domande chiudono la parte teorica. Gli agenti AI sostituiranno del tutto i processi aziendali? E sostituiranno i manager dei processi? La risposta delle slide è "probabilmente no": non finché clienti e portatori di interesse sono persone con bisogni, desideri e gusti che cambiano. E perché conta la <strong>responsabilità</strong> (<em>accountability</em>): qualcuno deve rispondere delle decisioni.</p>
+<p>Per ragionarci servono due concetti distinti:</p>
+<ul>
+<li><strong>Esecuzione delle attività</strong>: svolgere i singoli compiti del processo, tramite persone, software (bot e agenti AI compresi) o macchine (robot compresi). Le attività vanno dal passo atomico ai lavori che durano settimane.</li>
+<li><strong>Orchestrazione</strong>: coordinare l'insieme delle esecuzioni tra persone, software e macchine, anche tra organizzazioni diverse.</li>
+</ul>
+<p>Incrociando chi esegue e chi orchestra si ottengono tre forme pure:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Forma</th>
+<th>Orchestrazione</th>
+<th>Compiti</th>
+<th>Esempio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Umana</td>
+<td>persone</td>
+<td>persone</td>
+<td>il percorso di cura di un paziente</td>
+</tr>
+<tr>
+<td>Automatica</td>
+<td>un motore di processo (BPMS)</td>
+<td>bot RPA e regole</td>
+<td>processi molto standard di banche e telecom</td>
+</tr>
+<tr>
+<td>Autonoma</td>
+<td>un ABPMS, dentro una cornice</td>
+<td>agenti autonomi</td>
+<td>costruire e lanciare il sito di un'attività standard</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le tre forme sono i vertici di un <strong>triangolo dell'esecuzione dei processi</strong>. I processi reali stanno quasi sempre in mezzo, e soprattutto <strong>si muovono</strong>: non restano fermi su un vertice. Ci sono strade diverse verso l'autonomia: un processo può passare prima dall'automazione classica e poi diventare autonomo, un altro può saltare direttamente da umano ad agentico. Per chi pianifica la strategia di un'azienda, la domanda non è "automatizziamo sì o no", ma "su quale strada mettiamo ciascun processo, e a che velocità".</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Air Canada e il chatbot che &quot;rispondeva per conto suo&quot; (2024)</p>
+<p>Nel 2022 Jake Moffatt chiede al chatbot del sito di Air Canada come funzionano le tariffe agevolate per lutto. Il chatbot risponde che può comprare il biglietto a prezzo pieno e chiedere il rimborso della differenza entro 90 giorni; la regola vera non lo permetteva, e la compagnia rifiuta il rimborso. Davanti al Civil Resolution Tribunal della British Columbia, Air Canada sostiene che il chatbot sia un'entità separata, responsabile delle proprie azioni. Il tribunale respinge la tesi: l'azienda risponde di tutto ciò che c'è sul suo sito, chatbot compreso, e la condanna per informazioni sbagliate date per negligenza a pagare 812,02 dollari canadesi (650,88 di danni più interessi e spese), decisione del febbraio 2024. Cifra piccola, principio grande: l'agente esegue, l'azienda risponde.</p>
+</aside>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Klarna: dall&#x27;AI che fa il lavoro di 700 persone al ritorno degli operatori (2024–2025)</p>
+<p>Il 27 febbraio 2024 Klarna annuncia che il suo assistente AI, nel primo mese, ha gestito 2,3 milioni di conversazioni, circa due terzi delle chat del servizio clienti, con un lavoro pari a 700 operatori a tempo pieno: tempi di risoluzione da 11 a meno di 2 minuti e una stima di 40 milioni di dollari di profitto in più nel 2024. A maggio 2025 il fondatore Sebastian Siemiatkowski racconta a Bloomberg che puntare soprattutto sul costo ha abbassato la qualità e che l'azienda torna ad assumere operatori umani, perché i clienti devono poter parlare sempre con una persona. Non è un fallimento dell'AI: è un processo che si è spostato troppo in fretta verso un vertice del triangolo ed è tornato indietro. I numeri del 2024 vengono dal comunicato dell'azienda.</p>
+</aside>
+<figure class="yt" data-id="F8NKVhkZZWI" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: What are AI Agents? (IBM Technology, 12 min)"><img loading="lazy" src="https://i.ytimg.com/vi/F8NKVhkZZWI/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>What are AI Agents? (IBM Technology, 12 min) · <a href="https://www.youtube.com/watch?v=F8NKVhkZZWI">apri su YouTube</a></figcaption></figure>
+
+<figure class="yt" data-id="89C0jCgtBuk" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Quando sbaglia l&#x27;intelligenza artificiale? (Geopop, 12 min, IT)"><img loading="lazy" src="https://i.ytimg.com/vi/89C0jCgtBuk/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Quando sbaglia l&#x27;intelligenza artificiale? (Geopop, 12 min, IT) · <a href="https://www.youtube.com/watch?v=89C0jCgtBuk">apri su YouTube</a></figcaption></figure>
+
+<h3 id="psycho-pass-un-sistema-che-giudica-e-nessuno-che-risponde">Psycho-Pass: un sistema che giudica e nessuno che risponde</h3>
+<p>L'anime <em>Psycho-Pass</em> (2012, Production I.G, scritto da Gen Urobuchi) porta all'estremo l'idea di processo autonomo. In un Giappone futuro il Sistema Sibyl misura in continuazione lo stato mentale dei cittadini e calcola un "coefficiente di criminalità": sopra una soglia la persona è trattata come criminale latente, prima di aver fatto qualcosa. L'arma degli ispettori, il Dominator, legge il coefficiente e decide da sola se può sparare e con quale modalità; l'agente umano esegue. È un processo autonomo con una cornice fatta solo di soglie numeriche, e la serie mostra che cosa succede quando previsione e intervento coincidono e nessuno può chiedere conto della decisione al sistema. Guardala osservando tre cose: chi stabilisce le soglie, che cosa succede ai casi che il sistema non sa classificare, e chi risponde quando sbaglia. Si trova su Crunchyroll (anche tramite il suo canale su Prime Video); la disponibilità della versione italiana va controllata nel catalogo. È fantascienza, non un caso documentato: serve a vedere il problema, non a provarlo.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;azienda di moda vuole un agente AI che risponda alle richieste di reso e, se lo ritiene giusto, conceda rimborsi senza approvazione. In che punto del triangolo collochi il processo oggi e quali condizioni chiedi prima di spostarlo verso l&#x27;autonomia?</summary>
+<div class="answer">
+<p>Oggi è probabilmente tra umano e automatico (moduli, regole, persone che approvano). Prima di spostarlo verso l'autonomo servono una cornice esplicita (importo massimo, casi esclusi come merce usata o clienti con molti resi), log completi delle decisioni, un esperimento su una parte dei casi e una persona responsabile dei reclami. Il caso Air Canada dice che la responsabilità resta all'azienda qualunque cosa risponda l'agente.</p>
+</div>
+</details>
+<h2 id="la-sfida-dai-pdf-degli-investitori-a-risultati-affidabili">La sfida: dai PDF degli investitori a risultati affidabili</h2>
+<p>La seconda parte è un lavoro di gruppo senza codice, la <em>Investment Automation Challenge</em>. Lo scenario: un gestore patrimoniale immaginario, "AngryBirds Pool Asset Manager", riceve moduli PDF di investitori immaginari che vogliono mettere da 10.000 a 750.000 dollari in due fondi, <em>eHealth BioTech</em> e <em>AI &amp; Sports</em>. La missione: trasformare i PDF in risultati di cui fidarsi, con un assistente AI, Excel o Google Sheets e formule già pronte.</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  A[1. Raccogliere 5-10 PDF] --&gt; B[2. Estrarre dati con AI]
+  B --&gt; C[3. Controllare e approvare]
+  C --&gt; D[4. Ripartire tra i fondi]
+  D --&gt; E[5. Calcolare le quote]
+  E --&gt; F[6. Generare il messaggio]
+</pre></figure>
+<ol>
+<li><strong>Raccogliere</strong>: organizzare 5–10 richieste, conservando il riferimento al file di origine.</li>
+<li><strong>Estrarre con l'AI</strong>: caricare i PDF e ottenere una tabella con nomi, importi, ripartizione tra fondi, date.</li>
+<li><strong>Controllare e approvare</strong>: verificare sui PDF, segnalare campi mancanti, doppioni e ripartizioni che non fanno 100%.</li>
+<li><strong>Ripartire</strong>: usare le formule preparate per dividere l'investimento tra i due fondi.</li>
+<li><strong>Calcolare</strong>: abbinare il valore della quota approvato (NAV, <em>Net Asset Value</em>) e la data di negoziazione; quote = importo assegnato ÷ NAV.</li>
+<li><strong>Generare</strong>: scrivere una conferma o una richiesta di chiarimento, da rileggere prima dell'invio.</li>
+</ol>
+<p>I gruppi consegnano una tabella verificata degli investitori con il registro delle quote, i totali per fondo con un cruscotto delle eccezioni, uno schema visivo del flusso e due messaggi d'esempio. Il test è severo: ogni valore deve risalire a un PDF, gli investimenti accettati devono quadrare con i totali dei fondi, e un dato mancante o un NAV mancante deve <strong>bloccare</strong> la pratica, non essere indovinato. Alla fine bisogna spiegare come il processo regge un milione di richieste.</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Un modulo dal pacchetto della sfida (il n. 03, dati immaginari)</p>
+<ol>
+<li>Il modulo indica 563.000 USD, con 160.600 su eHealth BioTech e 402.400 su AI &amp; Sports.</li>
+<li>Controllo della ripartizione: 160.600 + 402.400 = 563.000. Quadra: 28,5% e 71,5%.</li>
+<li>Con i NAV d'esempio mostrati nella consegna (eHealth 10,25; AI &amp; Sports 12,50): quote eHealth = 160.600 ÷ 10,25 = 15.668,2927; quote AI &amp; Sports = 402.400 ÷ 12,50 = 32.192.</li>
+<li>Tracciabilità: nella tabella ogni riga riporta il nome del file (03_edgar_degas.pdf), così chiunque può ricontrollare il dato alla fonte.</li>
+<li>Attenzione: firma e casella di consenso sono vuote, e il modulo dice esplicitamente che è solo una manifestazione d'interesse. In un processo reale questa pratica andrebbe in eccezione, non in conferma.</li>
+</ol>
+</aside>
+<p>Due trappole del pacchetto valgono una lezione intera. La prima: i 50 moduli usano solo 10 nomi di pittori impressionisti, ciascuno cinque volte, ma con date di nascita, email e importi diversi. Se cerchi i doppioni solo sul nome, fondi 50 investitori in 10 e sbagli tutto il registro: sono <strong>omonimi</strong>, non doppioni. Un controllo serio usa più campi insieme. La seconda: i moduli sono PDF compilabili, quindi i dati stanno già in campi con un nome (importo, valuta, fondo). Dove il dato è già strutturato, una lettura diretta dei campi è più affidabile e meno costosa di un'AI che "legge" la pagina; l'AI serve dove il dato non è strutturato (una email, una scansione, una nota scritta a mano). Scegliere lo strumento giusto per ogni passo è esattamente l'iperautomazione.</p>
+<p>Per scalare a un milione di richieste la chiave non è far lavorare l'AI più in fretta, ma ridurre la quota di casi che richiede una persona e rendere quella revisione veloce: regole chiare per le eccezioni, controllo di quadratura automatico, registro di ogni decisione. È il triangolo applicato: estrazione e calcolo vanno verso l'automatico, l'approvazione delle eccezioni resta umana, e qualcuno risponde del risultato.</p>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Quante persone servono per un milione di richieste? (numeri illustrativi)</p><div class="lab-body"><div class="row"><label>Richieste all'anno (migliaia) <input type="range" id="h-n" min="10" max="1000" step="10" value="1000"></label> <output id="h-no">1000</output></div>
+<div class="row"><label>Quota di casi in eccezione (%) <input type="range" id="h-e" min="0" max="40" step="1" value="5"></label> <output id="h-eo">5</output></div>
+<div class="row"><label>Minuti per revisione di un'eccezione <input type="range" id="h-m" min="1" max="30" step="1" value="6"></label> <output id="h-mo">6</output></div>
+<p class="out" id="h-out"></p>
+<p class="note">Ipotesi illustrative: una persona lavora 92.400 minuti l'anno (220 giorni × 7 ore); il processo tutto manuale richiede 15 minuti a pratica. Prova a portare le eccezioni dal 5% al 20%: il personale necessario quadruplica.</p>
+<script>
+(function(){
+  const n=document.getElementById('h-n'), e=document.getElementById('h-e'), m=document.getElementById('h-m');
+  function upd(){
+    const N=+n.value*1000, E=+e.value/100, Mi=+m.value, Y=92400;
+    document.getElementById('h-no').textContent=n.value; document.getElementById('h-eo').textContent=e.value; document.getElementById('h-mo').textContent=Mi;
+    const fte=N*E*Mi/Y, manual=N*15/Y;
+    document.getElementById('h-out').textContent='Con l\'automazione servono circa '+fte.toFixed(1)+' persone a tempo pieno per le eccezioni; a mano ne servirebbero circa '+manual.toFixed(0)+'.';
+  }
+  [n,e,m].forEach(x=>x.addEventListener('input',upd)); upd();
+})();
+</script></div></figure>
+
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>In un processo iperautomatizzato la persona non sparisce: si sposta sulle eccezioni, e la qualità del processo dipende da quante eccezioni produce.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Il vostro assistente AI estrae da un modulo &quot;AI &amp; Sports: USD 0&quot; e &quot;eHealth: USD 0&quot; ma l&#x27;importo totale è 250.000 USD. Che cosa fa il vostro processo?</summary>
+<div class="answer">
+<p>Blocca la pratica e la manda in eccezione: la ripartizione non fa 100% dell'importo, quindi non si può né assegnare né calcolare le quote. Si ricontrolla il PDF (forse l'estrazione ha sbagliato) e, se il dato manca davvero, si prepara una richiesta di chiarimento all'investitore. Indovinare la ripartizione violerebbe la regola "ogni valore risale a un PDF".</p>
+</div>
+</details></article></div>
+<section class="study" id="richiamo"><h2>Richiamo a libro chiuso</h2>
+<p class="hint">Chiudi la pagina e rispondi a voce o per iscritto. Poi riapri e confronta.</p><ol class="recall"><li>Spiega la scala in quattro gradini dall&#x27;event log all&#x27;ABPMS, con la domanda a cui risponde ciascun gradino e un esempio.</li><li>Racconta il caso UWV e spiega con i quattro gruppi dell&#x27;uplift perché una previsione accurata può portare a un intervento inutile.</li><li>Descrivi le funzioni e l&#x27;architettura a strati di un ABPMS, dicendo dove entrano dati, intelligenza di processo e azioni.</li><li>Descrivi i sei passi della Investment Automation Challenge, le due trappole del pacchetto di moduli e come il processo scala a un milione di richieste.</li></ol></section>
+<section class="study" id="quiz" data-key="big-data-ai-2026-11-20"><h2>Quiz</h2>
+<p class="hint">Conta il primo tentativo. Dopo ogni risposta leggi il perché.</p>
+<ol class="quiz"><li class="q" data-answer="2"><p class="q-text">Un hotel fa leggere a un software le email di prenotazione e le copia nel gestionale, ma conferme e controlli restano manuali. Come classifichi l&#x27;intervento?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Esecuzione prescrittiva dei casi</button></li><li><button type="button" class="opt" data-i="1">Process mining del flusso</button></li><li><button type="button" class="opt" data-i="2">Automazione semplice di un passo</button></li><li><button type="button" class="opt" data-i="3">Iperautomazione del processo</button></li></ol><div class="why" hidden><p>Il software tocca un solo passo (la copia dei dati) e non gestisce passaggi di mano ed eccezioni: è automazione semplice. Iperautomazione richiederebbe di collegare controllo, approvazione e risposta. Il process mining analizza i dati, non esegue; l&#x27;esecuzione prescrittiva raccomanda azioni sul singolo caso partendo da una previsione.</p></div></li><li class="q" data-answer="2"><p class="q-text">Un manager vuole sapere perché i rimborsi della filiale di Milano sono più lenti di quelli di Roma. Quale analisi di process mining usa per prima?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Scoperta automatica del modello</button></li><li><button type="button" class="opt" data-i="1">Analisi di conformità alle regole</button></li><li><button type="button" class="opt" data-i="2">Analisi comparativa tra le filiali</button></li><li><button type="button" class="opt" data-i="3">Monitoraggio predittivo dei casi</button></li></ol><div class="why" hidden><p>La domanda confronta due varianti dello stesso processo, quindi serve l&#x27;analisi comparativa, che produce report diagnostici sulle cause. La scoperta disegna la mappa ma non spiega la differenza; il monitoraggio predittivo guarda ai casi futuri; la conformità controlla il rispetto delle regole, non la velocità.</p></div></li><li class="q" data-answer="2"><p class="q-text">Un modello prevede con l&#x27;85% di accuratezza quali clienti abbandoneranno un abbonamento, ma l&#x27;email di sconto mandata a tutti i previsti non riduce gli abbandoni. Qual è la spiegazione più solida?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Servivano più dati per addestrare il modello</button></li><li><button type="button" class="opt" data-i="1">L&#x27;email è arrivata troppo tardi ai clienti</button></li><li><button type="button" class="opt" data-i="2">L&#x27;email non agisce su chi è previsto</button></li><li><button type="button" class="opt" data-i="3">Il modello ha un&#x27;accuratezza troppo bassa</button></li></ol><div class="why" hidden><p>È la lezione del caso UWV: prevedere chi abbandona non dice se l&#x27;intervento agisce su quelle persone. Più accuratezza o più dati migliorano la previsione, non l&#x27;effetto dell&#x27;azione. Il ritardo dell&#x27;email è un&#x27;ipotesi possibile ma non spiega da sola il risultato senza un test con gruppo di controllo.</p></div></li><li class="q" data-answer="1"><p class="q-text">Una persona riceve un promemoria sul rinnovo dell&#x27;abbonamento e, ricordandosi di pagarlo senza usarlo, lo disdice. Senza promemoria avrebbe rinnovato. In quale gruppo rientra?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Persuadables</button></li><li><button type="button" class="opt" data-i="1">Sleeping dogs</button></li><li><button type="button" class="opt" data-i="2">Sure things</button></li><li><button type="button" class="opt" data-i="3">Lost causes</button></li></ol><div class="why" hidden><p>Senza intervento avrebbe fatto la cosa buona per l&#x27;azienda, con l&#x27;intervento no: è un &#x27;cane che dorme&#x27;. I persuadables rinnovano solo se contattati; i sure things rinnovano comunque; i lost causes non rinnovano in nessun caso.</p></div></li><li class="q" data-answer="1"><p class="q-text">Un intervento costa 40 €, la probabilità prevista di un esito negativo è 0,5, il suo costo 1.000 € e l&#x27;esperimento mostra che l&#x27;intervento riduce quella probabilità di 0,05. Conviene?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Sì, perché la probabilità di problema è alta</button></li><li><button type="button" class="opt" data-i="1">No, perché il valore atteso è negativo</button></li><li><button type="button" class="opt" data-i="2">Sì, perché l&#x27;esito negativo costa molto</button></li><li><button type="button" class="opt" data-i="3">No, perché la previsione non è certa</button></li></ol><div class="why" hidden><p>V = 0,5 × 0,05 × 1.000 − 40 = 25 − 40 = −15 €: l&#x27;effetto dell&#x27;intervento è troppo piccolo per pagarne il costo. Una probabilità alta o un costo elevato non bastano se l&#x27;uplift è basso; l&#x27;incertezza della previsione c&#x27;è sempre ed è già dentro p.</p></div></li><li class="q" data-answer="2"><p class="q-text">Un agente AI gestisce gli ordini di un brand e può spostare le spedizioni tra magazzini, ma non può superare un costo logistico per ordine fissato dal direttore. Quale principio descrive meglio la situazione?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Automazione semplice del passo</button></li><li><button type="button" class="opt" data-i="1">Monitoraggio predittivo dei casi</button></li><li><button type="button" class="opt" data-i="2">Autonomia dentro una cornice</button></li><li><button type="button" class="opt" data-i="3">Orchestrazione del tutto umana</button></li></ol><div class="why" hidden><p>L&#x27;agente decide da solo ma entro vincoli espliciti posti da una persona: è la framed autonomy degli ABPMS. L&#x27;orchestrazione non è umana perché coordina l&#x27;agente; non è automazione semplice perché decide tra opzioni; non è solo monitoraggio perché agisce.</p></div></li><li class="q" data-answer="2"><p class="q-text">Una banca gestisce i bonifici con un motore di processo che smista le pratiche a bot RPA secondo regole fisse. In quale vertice del triangolo dell&#x27;esecuzione si trova?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Autonomo</button></li><li><button type="button" class="opt" data-i="1">Tra umano e autonomo</button></li><li><button type="button" class="opt" data-i="2">Automatico</button></li><li><button type="button" class="opt" data-i="3">Umano</button></li></ol><div class="why" hidden><p>Orchestrazione da un BPMS e compiti eseguiti da bot con regole fisse: è il vertice automatico, tipico dei processi molto standard di banche e telecom. Non è autonomo perché nessun sistema ragiona e adatta il processo; non è umano perché le persone non coordinano né eseguono.</p></div></li><li class="q" data-answer="0"><p class="q-text">Nel pacchetto di 50 moduli trovi cinque richieste intestate a &#x27;Claude Monet&#x27; con date di nascita, email e importi diversi. Che cosa fai?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Le tratti come cinque investitori</button></li><li><button type="button" class="opt" data-i="1">Le scarti come dati di prova</button></li><li><button type="button" class="opt" data-i="2">Le unisci in un solo investitore</button></li><li><button type="button" class="opt" data-i="3">Tieni solo l&#x27;importo più recente</button></li></ol><div class="why" hidden><p>Sono omonimi: i campi che identificano la persona (data di nascita, email) sono diversi, quindi sono cinque investitori. Unire per nome è l&#x27;errore classico di deduplica; scartarli o tenerne uno solo rompe la regola che ogni valore risale a un PDF e falsa i totali dei fondi.</p></div></li></ol><p class="score" aria-live="polite"></p>
+<button type="button" class="btn ghost reset">Ricomincia</button>
+<div class="print-only solutions"><h3>Soluzioni del quiz</h3><ol><li><strong>C</strong> — Il software tocca un solo passo (la copia dei dati) e non gestisce passaggi di mano ed eccezioni: è automazione semplice. Iperautomazione richiederebbe di collegare controllo, approvazione e risposta. Il process mining analizza i dati, non esegue; l&#x27;esecuzione prescrittiva raccomanda azioni sul singolo caso partendo da una previsione.</li><li><strong>C</strong> — La domanda confronta due varianti dello stesso processo, quindi serve l&#x27;analisi comparativa, che produce report diagnostici sulle cause. La scoperta disegna la mappa ma non spiega la differenza; il monitoraggio predittivo guarda ai casi futuri; la conformità controlla il rispetto delle regole, non la velocità.</li><li><strong>C</strong> — È la lezione del caso UWV: prevedere chi abbandona non dice se l&#x27;intervento agisce su quelle persone. Più accuratezza o più dati migliorano la previsione, non l&#x27;effetto dell&#x27;azione. Il ritardo dell&#x27;email è un&#x27;ipotesi possibile ma non spiega da sola il risultato senza un test con gruppo di controllo.</li><li><strong>B</strong> — Senza intervento avrebbe fatto la cosa buona per l&#x27;azienda, con l&#x27;intervento no: è un &#x27;cane che dorme&#x27;. I persuadables rinnovano solo se contattati; i sure things rinnovano comunque; i lost causes non rinnovano in nessun caso.</li><li><strong>B</strong> — V = 0,5 × 0,05 × 1.000 − 40 = 25 − 40 = −15 €: l&#x27;effetto dell&#x27;intervento è troppo piccolo per pagarne il costo. Una probabilità alta o un costo elevato non bastano se l&#x27;uplift è basso; l&#x27;incertezza della previsione c&#x27;è sempre ed è già dentro p.</li><li><strong>C</strong> — L&#x27;agente decide da solo ma entro vincoli espliciti posti da una persona: è la framed autonomy degli ABPMS. L&#x27;orchestrazione non è umana perché coordina l&#x27;agente; non è automazione semplice perché decide tra opzioni; non è solo monitoraggio perché agisce.</li><li><strong>C</strong> — Orchestrazione da un BPMS e compiti eseguiti da bot con regole fisse: è il vertice automatico, tipico dei processi molto standard di banche e telecom. Non è autonomo perché nessun sistema ragiona e adatta il processo; non è umano perché le persone non coordinano né eseguono.</li><li><strong>A</strong> — Sono omonimi: i campi che identificano la persona (data di nascita, email) sono diversi, quindi sono cinque investitori. Unire per nome è l&#x27;errore classico di deduplica; scartarli o tenerne uno solo rompe la regola che ogni valore risale a un PDF e falsa i totali dei fondi.</li></ol></div></section>
+<section class="study" id="trasferimento"><h2>Applica a un caso nuovo</h2>
+<div class="prose"><p>Caso ipotetico. Un festival musicale riceve 80.000 richieste di accredito stampa e creator in sei settimane, via modulo web ed email. Oggi due persone le leggono tutte, controllano i profili social e rispondono a mano; i tempi di risposta arrivano a tre settimane e molti creator si lamentano. Progetta il percorso dal processo attuale a uno iperautomatizzato usando i quattro gradini e il triangolo dell'esecuzione.</p></div>
+<details class="box solution"><summary>Mostra una soluzione ragionata</summary><div class="prose"><p>1) Process mining: raccolgo un event log (richiesta, ricezione, controllo profilo, decisione, risposta) e misuro dove si accumula l'attesa; probabilmente nella coda prima del controllo. 2) Separo dati strutturati (campi del modulo, letti direttamente) e non strutturati (email, letti con un'AI) e uso regole per i casi chiari (testata riconosciuta, follower sopra soglia). 3) Predittivo: stimo quali richieste diventeranno eccezioni e simulo il carico con il volume atteso, così so quante persone servono per le eccezioni nel picco. 4) Prescrittivo: non mando solleciti a tutti; provo su un campione con gruppo di controllo se un promemoria aumenta i documenti completi. 5) Autonomia nella cornice: l'agente approva da solo solo dentro regole esplicite (lista di testate, soglie), il resto va a una persona; ogni decisione resta registrata. 6) Triangolo: estrazione e controlli vanno verso l'automatico, l'approvazione dei casi dubbi resta umana, e un responsabile accrediti risponde dei rifiuti contestati.</p></div></details></section>
+<section class="study" id="decidi"><h2>Decidi tu</h2>
+<p class="hint">Mettiti nei panni di chi decide. Scegli, leggi la conseguenza, poi prova anche le altre strade.</p><div class="scenario"><h3>Il bonus per chi rischia di andarsene</h3>
+<p class="situation">Lavori in una fintech. Un nuovo modello prevede bene quali utenti chiuderanno il conto nei prossimi tre mesi: sono 40.000. Il marketing vuole mandare a tutti un bonus da 20 euro subito, per 800.000 euro.</p><p class="role">Sei l&#x27;analista che deve dare il parere. Che cosa raccomandi?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Approvare: il modello è accurato, quindi l&#x27;intervento colpirà le persone giuste</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> È l&#x27;errore del caso UWV: l&#x27;accuratezza riguarda chi se ne andrà, non l&#x27;effetto del bonus. Paghi anche chi resterebbe comunque e chi se ne va lo stesso.</p></div></li><li><button type="button" class="choice" data-good="1">Testare il bonus su un campione con gruppo di controllo, stimare l&#x27;uplift per segmento e poi estenderlo solo dove il valore atteso è positivo</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> Misuri l&#x27;effetto vero, scopri i persuadables e eviti di svegliare i &#x27;cani che dormono&#x27;. La spesa finale è più bassa e giustificata dai dati.</p></div></li><li><button type="button" class="choice" data-good="0">Rinunciare al bonus: tanto chi vuole andarsene se ne va</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> È l&#x27;eccesso opposto: alcuni utenti potrebbero restare grazie all&#x27;intervento. Senza test non lo sai, e perdi clienti recuperabili.</p></div></li></ol>
+<p class="lesson-link" hidden>Il modello predittivo sceglie dove guardare; l&#x27;esperimento decide se e su chi intervenire.</p></div><div class="scenario"><h3>L&#x27;agente che concede rimborsi</h3>
+<p class="situation">Un e-commerce di streetwear propone di dare a un agente AI la gestione dei resi, compresa la concessione di rimborsi e buoni senza approvazione umana, per tagliare i tempi da 10 giorni a 1.</p><p class="role">Sei il responsabile operations. Come imposti la cosa?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Dare all&#x27;agente pieni poteri: tanto le richieste sono quasi tutte uguali</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Senza cornice l&#x27;agente può concedere rimborsi sbagliati o essere manipolato da clienti furbi, e la responsabilità resta all&#x27;azienda, come nel caso Air Canada.</p></div></li><li><button type="button" class="choice" data-good="1">Fissare una cornice (importi massimi, casi esclusi, clienti con molti resi alla revisione umana), registrare ogni decisione e partire su una parte dei casi misurando errori e reclami</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> È la framed autonomy: velocità sui casi chiari, persone sulle eccezioni, prove misurate prima di allargare. Il processo si sposta nel triangolo in modo controllato.</p></div></li><li><button type="button" class="choice" data-good="0">Usare l&#x27;agente solo per scrivere le email, lasciando tutto il resto a mano</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Riduci il rischio ma anche il beneficio: automatizzi un passo, non il processo, e i 10 giorni restano quasi uguali.</p></div></li></ol>
+<p class="lesson-link" hidden>L&#x27;autonomia si concede dentro una cornice esplicita, con registri e una persona che risponde.</p></div></section>
+<section class="study" id="davedere"><h2>Da vedere</h2><p class="hint">Per la sera o il weekend: storie vere o ben documentate che rendono concreti i temi della lezione.</p><ul class="watch"><li class="watch-item"><span class="wk">Film · 2016</span>
+<strong><a href="https://it.wikipedia.org/wiki/The_Founder">The Founder</a></strong>
+<p>I fratelli McDonald ridisegnano la cucina con il gesso su un campo da tennis prima di costruirla: una simulazione di processo fatta a mano, con il cronometro come KPI.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li><li class="watch-item"><span class="wk">Film · 2016</span>
+<strong><a href="https://it.wikipedia.org/wiki/Il_diritto_di_contare">Il diritto di contare (Hidden Figures)</a></strong>
+<p>Il computer IBM 7090 arriva alla NASA e cambia il lavoro delle &#x27;calcolatrici umane&#x27;: mostra la riqualificazione delle persone e la fiducia nei numeri prodotti da una macchina.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li><li class="watch-item"><span class="wk">Documentario · 2019</span>
+<strong><a href="https://it.wikipedia.org/wiki/American_Factory">American Factory</a></strong>
+<p>Una fabbrica cinese in Ohio tra automazione, robot che sostituiscono operai e culture del lavoro diverse: il triangolo umano-automatico visto da dentro.</p><p class="where">Dove: Netflix</p></li><li class="watch-item"><span class="wk">Film · 1936</span>
+<strong><a href="https://it.wikipedia.org/wiki/Tempi_moderni">Tempi moderni</a></strong>
+<p>La catena di montaggio di Chaplin è il vertice &#x27;automatico&#x27; portato all&#x27;assurdo: la persona si adatta al ritmo della macchina invece del contrario.</p><p class="where">Dove: noleggio digitale (dipende dal periodo)</p></li></ul></section>
+<section class="study" id="flashcard"><h2>Flashcard</h2>
+<p class="hint">Tocca una carta per girarla. Le frecce ← → scorrono il mazzo.</p>
+<div class="deck"><ol class="cards"><li class="card" tabindex="0"><div class="front">Che cos&#x27;è l&#x27;iperautomazione?</div><div class="back">L&#x27;uso combinato di AI, dati e più strumenti di automazione per automatizzare processi interi, lasciando le persone dove serve giudizio o approvazione.</div></li><li class="card" tabindex="0"><div class="front">Differenza tra automazione semplice e iperautomazione?</div><div class="back">La prima automatizza un compito; la seconda un processo collegato, gestendo passaggi di mano ed eccezioni.</div></li><li class="card" tabindex="0"><div class="front">Con quali quattro misure si valuta il valore dell&#x27;automazione?</div><div class="back">Tempo per caso, errori, costo per caso, numero di tocchi manuali.</div></li><li class="card" tabindex="0"><div class="front">Quali sono i quattro gradini dell&#x27;AI-augmented BPM?</div><div class="back">Process mining, intelligenza predittiva, intelligenza prescrittiva, augmented process management.</div></li><li class="card" tabindex="0"><div class="front">Quali campi minimi servono in un event log?</div><div class="back">Identificativo del caso, attività, timestamp (spesso anche la risorsa).</div></li><li class="card" tabindex="0"><div class="front">Quattro analisi del process mining?</div><div class="back">Scoperta automatica, prestazioni, conformità, confronto.</div></li><li class="card" tabindex="0"><div class="front">Monitoraggio predittivo e simulazione: che differenza c&#x27;è?</div><div class="back">Il monitoraggio prevede l&#x27;esito dei casi in corso; la simulazione prova un cambiamento del disegno del processo.</div></li><li class="card" tabindex="0"><div class="front">Perché l&#x27;attesa esplode quando l&#x27;utilizzo si avvicina al 100%?</div><div class="back">Perché con arrivi variabili non resta margine per assorbire i picchi: la coda cresce in modo non lineare.</div></li><li class="card" tabindex="0"><div class="front">Lezione del caso UWV?</div><div class="back">Previsioni accurate di chi sbaglia non garantiscono che l&#x27;intervento scelto prevenga l&#x27;errore: l&#x27;effetto va misurato.</div></li><li class="card" tabindex="0"><div class="front">Persuadables e sure things: differenza?</div><div class="back">I persuadables agiscono solo se contattati; i sure things agiscono comunque, quindi contattarli è uno spreco.</div></li><li class="card" tabindex="0"><div class="front">Che cosa sono gli sleeping dogs?</div><div class="back">Persone per cui l&#x27;intervento peggiora l&#x27;esito rispetto a non fare niente.</div></li><li class="card" tabindex="0"><div class="front">Che cosa aggiunge il ciclo di ritorno nell&#x27;esecuzione prescrittiva?</div><div class="back">Gli esiti delle raccomandazioni entrano in uno storico di costi e benefici e il sistema impara quali interventi rendono.</div></li><li class="card" tabindex="0"><div class="front">Le cinque funzioni di un ABPMS?</div><div class="back">Frame, enact, perceive, reason, respond.</div></li><li class="card" tabindex="0"><div class="front">Esecuzione e orchestrazione: differenza?</div><div class="back">L&#x27;esecuzione svolge le attività; l&#x27;orchestrazione coordina chi le svolge (persone, software, macchine).</div></li><li class="card" tabindex="0"><div class="front">Perché gli agenti AI probabilmente non sostituiranno i manager dei processi?</div><div class="back">Perché clienti e stakeholder sono persone con bisogni che cambiano e perché qualcuno deve rispondere delle decisioni.</div></li></ol>
+<div class="deck-nav"><button type="button" class="btn ghost prev" aria-label="Carta precedente">‹</button><span class="pos"></span><button type="button" class="btn ghost next" aria-label="Carta successiva">›</button></div></div></section>
+<section class="study" id="glossario"><h2>Glossario</h2>
+<label class="search"><span>Cerca un termine</span><input type="search" class="gl-filter" placeholder="es. soft power"></label>
+<dl class="glossary"><div class="term"><dt>Hyperautomation <span class=it>· iperautomazione</span></dt><dd>Uso combinato di AI, dati e più strumenti di automazione per automatizzare un processo intero, con persone dove serve giudizio. Es.: iscrizioni a un evento dal modulo alla lista all&#x27;ingresso.</dd></div><div class="term"><dt>Business Process Management (BPM) <span class=it>· gestione dei processi aziendali</span></dt><dd>Disciplina che disegna, esegue, misura e migliora i processi di un&#x27;organizzazione. Es.: il flusso che porta un ordine dal sito alla consegna.</dd></div><div class="term"><dt>Process mining <span class=it>· estrazione dei processi dai dati</span></dt><dd>Tecnica che ricostruisce il processo reale dagli event log dei sistemi aziendali. Es.: scoprire che i resi aspettano 30 ore prima del controllo.</dd></div><div class="term"><dt>Event log <span class=it>· registro degli eventi</span></dt><dd>Tabella con almeno caso, attività e orario per ogni evento di un processo. Es.: &#x27;ordine 118 — spedito — 12/11 14:02&#x27;.</dd></div><div class="term"><dt>Conformance analysis <span class=it>· analisi di conformità</span></dt><dd>Confronto tra il processo reale e quello previsto dalle regole. Es.: conferme inviate prima del controllo obbligatorio.</dd></div><div class="term"><dt>Predictive process monitoring <span class=it>· monitoraggio predittivo dei processi</span></dt><dd>Previsione, per ogni caso in corso, di come finirà (ritardo, esito, prossimo passo). Es.: segnalare i 40 ordini che rischiano il ritardo.</dd></div><div class="term"><dt>Data-driven process simulation <span class=it>· simulazione basata sui dati</span></dt><dd>Modello del processo scoperto dai dati e usato per testare un cambiamento prima di farlo. Es.: che cosa succede alle code se automatizzo il controllo.</dd></div><div class="term"><dt>Uplift modeling <span class=it>· modellazione dell&#x27;effetto dell&#x27;intervento</span></dt><dd>Stima di quanto un&#x27;azione cambia l&#x27;esito rispetto a non farla, non solo del rischio. Es.: offrire uno sconto solo a chi resta grazie allo sconto.</dd></div><div class="term"><dt>Sleeping dogs <span class=it>· cani che dormono</span></dt><dd>Clienti per cui l&#x27;intervento peggiora l&#x27;esito. Es.: un promemoria che spinge un abbonato distratto a disdire.</dd></div><div class="term"><dt>Prescriptive process execution <span class=it>· esecuzione prescrittiva</span></dt><dd>Sistema che, dalle previsioni sul caso in corso, raccomanda un&#x27;azione e impara dagli esiti. Es.: suggerire di chiamare un cliente solo quando conviene.</dd></div><div class="term"><dt>Digital process twin <span class=it>· gemello digitale del processo</span></dt><dd>Copia simulabile del processo reale, alimentata dal process mining. Es.: provare la chiusura di un magazzino il sabato senza farla davvero.</dd></div><div class="term"><dt>ABPMS <span class=it>· sistema di gestione dei processi aumentato dall&#x27;AI</span></dt><dd>Sistema che usa AI affidabile per ragionare e agire sui processi entro vincoli, migliorandoli rispetto a KPI. Es.: un sistema che riorganizza i rimborsi durante uno sciopero.</dd></div><div class="term"><dt>Framed autonomy <span class=it>· autonomia dentro una cornice</span></dt><dd>Libertà di decidere limitata da obiettivi, regole e condizioni di sicurezza espliciti. Es.: rimborsi automatici solo fino a 100 euro.</dd></div><div class="term"><dt>Orchestration <span class=it>· orchestrazione</span></dt><dd>Coordinamento delle attività di un processo tra persone, software e macchine. Es.: un motore BPMS che passa la pratica dal bot all&#x27;impiegato.</dd></div><div class="term"><dt>NAV (Net Asset Value) <span class=it>· valore netto della quota</span></dt><dd>Valore di una quota di un fondo a una certa data; le quote si ottengono dividendo l&#x27;importo per il NAV. Es.: 1.025 $ con NAV 10,25 = 100 quote.</dd></div></dl><p class="empty" hidden>Nessun termine corrisponde. Prova con una parola più corta.</p></section>
+<section class="study" id="video"><h2>Video consigliati</h2><ul class="videos"><li class="video"><figure class="yt" data-id="4-KTd0uRNq8" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Hyperautomation Explained"><img loading="lazy" src="https://i.ytimg.com/vi/4-KTd0uRNq8/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>Hyperautomation Explained</strong><p class="vmeta">IBM Technology · 10 min · EN</p><p>Che cosa aggiunge l&#x27;iperautomazione all&#x27;automazione di un singolo compito: accompagna la prima sezione.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=4-KTd0uRNq8">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="uP1stpUAv3c" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: How process mining improves the things you do not see"><img loading="lazy" src="https://i.ytimg.com/vi/uP1stpUAv3c/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>How process mining improves the things you do not see</strong><p class="vmeta">TEDx Talks (Wil van der Aalst) · 19 min · EN</p><p>Il process mining spiegato dal ricercatore che l&#x27;ha fondato: event log, processi reali e deviazioni.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=uP1stpUAv3c">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="F8NKVhkZZWI" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: What are AI Agents?"><img loading="lazy" src="https://i.ytimg.com/vi/F8NKVhkZZWI/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>What are AI Agents?</strong><p class="vmeta">IBM Technology · 12 min · EN</p><p>Che cosa distingue un agente AI da un modello che risponde: utile per capire l&#x27;AI fabric degli ABPMS e il vertice autonomo.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=F8NKVhkZZWI">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="89C0jCgtBuk" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Quando sbaglia l&#x27;intelligenza artificiale?"><img loading="lazy" src="https://i.ytimg.com/vi/89C0jCgtBuk/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>Quando sbaglia l&#x27;intelligenza artificiale?</strong><p class="vmeta">Geopop · 12 min · IT</p><p>In italiano: perché i sistemi AI sbagliano e chi ne risponde, a complemento dei casi Air Canada e Klarna.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=89C0jCgtBuk">apri su YouTube</a></p></div></li></ul></section>
+<section class="study" id="approfondimenti-video"><h2>Approfondimenti video</h2><p class="hint">Video salvati che approfondiscono un capitolo di questa lezione: guardali dopo averlo letto.</p><ul class="watch"><li class="watch-item"><span class="wk">Video · TEDx Talks</span><strong><a href="https://www.youtube.com/watch?v=z7-fPFtgRE4">L&#x27;intelligenza artificiale generativa è solo l&#x27;inizio. Gli agenti IA sono ciò che verrà dopo | Da...</a></strong><p>Gli agenti IA: sistemi che agiscono in autonomia, tra automazione e responsabilità. <a href="#umano-automatico-autonomo-chi-esegue-chi-coordina-chi-rispon">Vai al capitolo</a></p></li></ul></section>
+<section class="study sources" id="fonti"><h2>Fonti</h2><ol><li>Slide Canvas 136891 — Rizzi, BigDataBSNSRizzi2026Lesson9 (34 pagine, caricate il 19/11/2026) — Fonte d&#x27;aula: dati sull&#x27;automazione pp. 3–4, hyperautomation p. 5, quattro livelli pp. 6–19, ABPMS pp. 20–24, processi autonomi e triangolo pp. 25–31, sfida pp. 32–33.</li><li>File Canvas 136892 — angrybirds_pool_50_investor_samples.zip — 50 moduli PDF compilabili e immaginari della sfida; letti tutti tramite i campi del modulo. Conteggi e trappole citati nella sezione finale sono una lettura di questa lezione, non la soluzione del docente.</li><li><a href="https://link.springer.com/chapter/10.1007/978-3-662-63047-1_13">Dees, de Leoni, van der Aalst, Reijers (2021), Accurate Predictions, Invalid Recommendations — Business Process Management Cases Vol. 2, Springer</a></li><li><a href="https://arxiv.org/abs/1905.10173">Dees et al. (2019), What if Process Predictions are not followed by Good Recommendations? (numeri dell&#x27;esperimento UWV)</a></li><li><a href="https://arxiv.org/abs/2201.12855">Dumas et al. (2023), AI-augmented Business Process Management Systems: A Research Manifesto, ACM TMIS 14(1)</a></li><li><a href="https://www.slideshare.net/slideshow/ai-augmented-business-process-management-systems/282843432">Dumas, AI-Augmented Business Process Management Systems, keynote AI4BPM @ BPM 2025 (quattro gradini e triangolo dell&#x27;esecuzione)</a></li><li><a href="https://arxiv.org/abs/2601.18833">Dumas, Milani, Chapela-Campa (2026), Agentic Business Process Management Systems</a></li><li><a href="https://www.logisticsmgmt.com/article/2025_automation_survey_diving_deep_into_the_warehouse_automation_trends">McCrea, 2025 Automation Survey: Diving deep into the warehouse automation trends — Logistics Management (Peerless Research Group)</a></li><li><a href="https://www.phenom.com/press-release/phenom-high-volume-hiring-analysis-68-of-companies-rely-on-manual-hiring">Phenom (3/12/2024), High-Volume Hiring Analysis: 68% of Companies Rely on Manual Hiring</a></li><li><a href="https://www.gartner.com/en/information-technology/glossary/hyperautomation">Gartner, Glossary: Hyperautomation</a></li><li><a href="https://www.stochasticsolutions.com/pdf/SavedAndDrivenAway.pdf">Radcliffe (2007), Identifying who can be saved and who will be driven away by retention activity</a></li><li><a href="https://www.celonis.com/customer-success-stories/siemens-digital-transformation-process-mining">Celonis — Siemens customer story (numeri del fornitore)</a></li><li><a href="https://www.cbc.ca/news/canada/british-columbia/air-canada-chatbot-lawsuit-1.7116416">CBC News — Air Canada chatbot lawsuit (Moffatt v. Air Canada, 2024 BCCRT 149)</a></li><li><a href="https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/">Klarna (27/2/2024), Klarna AI assistant handles two-thirds of customer service chats in its first month</a></li><li><a href="https://www.entrepreneur.com/business-news/klarna-ceo-reverses-course-by-hiring-more-humans-not-ai/491396">Entrepreneur (9/5/2025), Klarna CEO reverses course by hiring more humans, not AI</a></li><li><a href="https://www.anthropic.com/news/model-context-protocol">Anthropic (25/11/2024), Introducing the Model Context Protocol</a></li></ol><details class="box verifica"><summary>Note di verifica</summary><div class="prose"><p>Lezione ricostruita dai materiali: nessuna registrazione, quindi non sappiamo che cosa abbiano detto in aula Rizzi e Campana, come si siano divisi le slide né che cosa abbiano prodotto i gruppi nella sfida. Il collegamento del pacchetto 136891 al 20/11 è dedotto: è stato caricato il 19/11 insieme al file della sfida ed è il primo deck non ancora spiegato; la copertina dice 'Lesson 8' e la seconda slide riporta 'Workshop • November 1, 2026', ma il file si chiama Lesson9. Precisazioni rispetto alle slide: (1) p. 3 attribuisce lo studio Peerless a un riassunto su RFgen; la fonte primaria trovata è l'articolo di Bridget McCrea su Logistics Management (1/2/2025), con gli stessi numeri. (2) Lo studio Phenom è prodotto da un fornitore di software per le assunzioni e il 68% indica bassa maturità, non assenza di automazione. (3) Il manifesto ABPMS descrive sette passi del ciclo (frame, enact, perceive, reason, explain, adapt, improve): le slide li raggruppano in cinque funzioni con 'respond'. (4) I quattro gradini e il triangolo dell'esecuzione corrispondono alla keynote di Marlon Dumas a BPM 2025; l'etichetta 'autonomization pathways' compare solo nel titolo di quella slide. (5) I numeri del caso UWV vengono dal rapporto tecnico del 2019 degli stessi autori. I numeri Siemens e Klarna 2024 vengono da fonti delle aziende; la svolta Klarna 2025 da Bloomberg riportata da Entrepreneur; le cifre Air Canada da CBC e da commenti legali, perché il sito del tribunale blocca la lettura automatica. I NAV usati nell'esempio sono quelli d'esempio mostrati nella consegna della sfida. Le formule dei laboratori (utilizzo, approssimazione di Sakasegawa, valore atteso dell'intervento) e i loro numeri sono illustrativi.</p></div></details></section>
+<nav class="prevnext" aria-label="Altre lezioni"><a class="pn prev" href="/study-lab/big-data-ai/2026-11-13/"><span>Lezione precedente</span>13 nov · Far parlare ottanta commenti arrabbiati: NLP, sentiment ed emozioni per decidere dove investire</a></nav></main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js?v=20261118-10" defer></script>
+<script src="/study-lab/assets/tutor.js?v=20261118-5" defer></script>
+</body></html>

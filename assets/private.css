@@ -1,0 +1,17 @@
+/* Gideon · area privata: pagina del PIN. Usa colori, raggi e pulsanti del sito (style.css). */
+.pv { max-width: calc(var(--page, 72rem) + 2 * var(--pad, 1.25rem)); margin: 0 auto; padding: clamp(3rem, 12vh, 7rem) var(--pad, 1.25rem) 2rem; display: grid; justify-items: center; }
+.pv-card { width: min(100%, 26rem); background: var(--surface); border: 1px solid var(--rule-2); border-radius: var(--r); padding: clamp(1.4rem, 4vw, 2.2rem); }
+.pv-kicker { margin: 0 0 .6rem; font: 600 .78rem/1.2 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pv-card h1 { margin: 0 0 .5rem; font: 600 clamp(1.5rem, 4vw, 1.9rem)/1.15 var(--sans); letter-spacing: -.01em; color: var(--ink); }
+.pv-say { margin: 0 0 1.4rem; color: var(--ink-2); }
+.pv-label { display: block; margin: 0 0 .4rem; font: 600 .85rem/1.2 var(--sans); color: var(--ink-2); }
+.pv-row { display: flex; gap: .6rem; }
+.pv-row input { flex: 1; min-width: 0; font: 400 1rem/1.2 var(--sans); padding: .7rem .9rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: calc(var(--r) * .6); }
+.pv-row input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.pv-row .btn { flex: none; cursor: pointer; }
+.pv-row .btn[disabled] { opacity: .6; cursor: default; }
+.pv-msg { min-height: 1.4em; margin: .8rem 0 0; font-size: .9rem; color: var(--muted); }
+.pv-msg.is-bad { color: var(--bad); }
+/* scheda già sbloccata: niente lampo del modulo mentre la pagina si riapre */
+html.pv-auto .pv-card { visibility: hidden; }
+@media (max-width: 26rem) { .pv-row { flex-direction: column; } .pv-row .btn { justify-content: center; } }

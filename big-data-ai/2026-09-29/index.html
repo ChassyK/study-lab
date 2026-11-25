@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Da dove vengono i dati e quanto in fretta servono: quattro casi di modelli predittivi, cinque fonti, batch contro streaming — Big Data &amp; AI</title>
+<meta name="description" content="Rizzi mostra quattro casi in cui i big data cambiano una decisione: prevedere chi rischia la demenza, prezzare il rischio grandine per le assicurazioni, creare…">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/study-lab/assets/style.css?v=20261118-11">
+<link rel="icon" href="/study-lab/assets/favicon.svg">
+<script>try{var t=JSON.parse(localStorage.getItem("sl:theme"));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>(function(d){d.classList.add("js");if(matchMedia("(prefers-reduced-motion: no-preference)").matches)d.classList.add("motion")})(document.documentElement)</script>
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",themeVariables:{fontFamily:"-apple-system, BlinkMacSystemFont, Inter, sans-serif",primaryColor:"#ffffff",primaryBorderColor:"#d2d2d7",lineColor:"#86868b",primaryTextColor:"#1d1d1f",fontSize:"17px"},flowchart:{useMaxWidth:true,htmlLabels:true}});</script></head>
+<body class="p-lesson" data-course="bd">
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="topbar"><a class="brand" href="/study-lab/">Gideon</a>
+<nav class="topnav gideon-nav" aria-label="Navigazione principale"><details class="nav-group" name="gideon-nav"><summary>Corsi</summary><div class="nav-panel"><a href="/study-lab/geopolitics/" data-c="geo">Geopolitics</a><a href="/study-lab/international-business/" data-c="ib">International Business</a><a href="/study-lab/big-data-ai/" data-c="bd">Big Data &amp; AI</a></div></details><a href="/study-lab/midterms/">Midterm</a><a href="/study-lab/reports/">Report</a><a href="/study-lab/in-class-examinations/">In-class exams</a><details class="nav-group" name="gideon-nav"><summary>Esplora</summary><div class="nav-panel"><a href="/study-lab/case-studies/" data-c="cs">Case studies</a><a href="/study-lab/internships/" data-c="in">Internships</a><a href="/study-lab/about/" data-c="ab">About</a></div></details></nav></header>
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
+<main id="main" class="lesson">
+<header class="lesson-head">
+  <p class="crumbs"><a href="/study-lab/">Corsi</a> / <a href="/study-lab/big-data-ai/">Big Data &amp; AI</a></p>
+  <div class="date-mark"><span class="day">29</span><span class="month">settembre<br>2026</span></div>
+  <h1>Da dove vengono i dati e quanto in fretta servono: quattro casi di modelli predittivi, cinque fonti, batch contro streaming</h1>
+  <p class="title-en" lang="en">Foundation in Big Data — Lesson 2: Industry Examples across Sectors, Big Data Sources, Batch vs Streaming Data, Introduction to Databricks + Team Work 2</p>
+  <p class="meta">Martedì · Rizzi, Campana · <span class="chip s-completa">Completa</span></p>
+  <details class="coverage"><summary>Come è costruita questa lezione</summary><p>Due registrazioni PLAUD: parte 1 (Rizzi, 10:03, 91 min): quattro casi aziendali (demenza, grandine e alluvioni per le assicurazioni, arte di Refik Anadol, previsione dei trend nella moda) fino al minuto 55 circa, poi Team Work 2 sul centro fitness con lavoro a gruppi (conversazioni private saltate) e alcune presentazioni finali. Parte 2 (Campana, 12:03, 62 min): la registrazione parte a lezione già iniziata (manca l&#x27;introduzione, si sente solo la fine della metafora del maiale della slide 3), poi le fonti dei big data, il gioco sulle fonti da combinare, batch contro streaming con la sfida in classe, e si interrompe proprio mentre comincia l&#x27;introduzione a Databricks. Slide Canvas &#x27;BigDataBsnsRizzi2026Lesson2&#x27; (45 pagine, caricata la mattina della lezione): pp. 2–11 fonti, pp. 12–19 batch/streaming (Campana); pp. 20–29 Databricks (registrata solo l&#x27;apertura: la sezione su Databricks è un&#x27;integrazione ricostruita dalle slide 20–29, viste anche come immagine, più fonti ufficiali Databricks); pp. 30–43 casi (Rizzi); pp. 44–45 consegna del Team Work 2. Nessun&#x27;altra registrazione del giorno sui PLAUD salvati (le due trascrizioni &#x27;pulita&#x27; di settembre sono copie delle stesse due registrazioni). Canvas non accessibile in questo giro. Le slide-immagine 4–11, 25–27, 13–19, 32–34, 36–37, 39, 42–43 sono state guardate come immagine.</p></details>
+</header>
+<section class="brief" aria-labelledby="inbreve"><h2 id="inbreve">In breve</h2>
+<div class="brief-overview">
+<p class="brief-teaser">Rizzi mostra quattro casi in cui i big data cambiano una decisione: prevedere chi rischia la demenza, prezzare il rischio grandine per le assicurazioni, creare un&#x27;opera d&#x27;arte…</p>
+<details class="brief-reading" open><summary>Riepilogo completo</summary><p class="lede">Rizzi mostra quattro casi in cui i big data cambiano una decisione: prevedere chi rischia la demenza, prezzare il rischio grandine per le assicurazioni, creare un&#x27;opera d&#x27;arte da dati ecologici, anticipare il trend della prossima collezione di moda. Il filo comune è unire fonti molto diverse e saper misurare quanto un modello è affidabile. Campana spiega da dove arrivano i dati (transazioni, ERP/CRM, sensori, social, API), che cosa vede e che cosa perde ciascuna fonte, e come scegliere tra elaborazione batch (a lotti, programmata) e streaming (continua, in tempo reale) in base alla finestra di decisione.</p></details></div><ul class="keys"><li>Un modello predittivo combina molti fattori insieme: lo studio NACC (9.606 persone) trova età, bassa istruzione, depressione e BMI come segnali principali, con due metodi diversi che arrivano alle stesse conclusioni.</li><li>Un modello si giudica con metriche precise: sensibilità = quota dei malati veri che trova; specificità = quota dei sani che riconosce; AUC = quanto bene ordina i rischi. Accuratezza da sola inganna quando i casi sono rari.</li><li>Associazione non è causa: nello studio il BMI più alto sembra &#x27;proteggere&#x27;, ma è probabile causalità inversa (si dimagrisce prima della diagnosi). Non è un consiglio di salute.</li><li>Il rischio diventa un prezzo quando unisci pericolo (meteo), esposizione (beni assicurati) e vulnerabilità: perdita attesa = somma di probabilità × gravità.</li><li>Ogni fonte cattura un pezzo di realtà: transazioni = cosa è successo; ERP/CRM = chi e come; sensori = condizioni fisiche; social = contesto pubblico; API = contesto esterno. Nessuna basta da sola.</li><li>Ogni fonte ha il suo difetto tipico: definizioni incoerenti e silos (ERP/CRM), rumore e guasti (sensori), distorsioni e fake (social), dipendenza da un fornitore (API).</li><li>La finestra di decisione decide la velocità: buste paga e bilanci in batch; frodi con carta e monitoraggio dei pazienti in streaming. Si sceglie la latenza che la decisione richiede, non la più bassa possibile.</li><li>Quasi tutte le aziende usano entrambi: streaming per agire subito, batch per riconciliare, fare report e riaddestrare i modelli.</li></ul></section>
+<div class="lesson-grid"><nav class="toc" aria-label="Indice della lezione">
+<details class="reading-index" open><summary>Indice della lezione</summary>
+<p class="toc-h">Spiegazione</p><ol><li><a href="#un-modello-predittivo-vede-i-rischi-che-nessuno-vede-guardan">Un modello predittivo vede i rischi che nessuno vede guardando un fattore alla volta</a></li><li><a href="#il-rischio-diventa-un-prezzo-quando-unisci-meteo-luoghi-e-si">Il rischio diventa un prezzo quando unisci meteo, luoghi e sinistri</a></li><li><a href="#i-dati-possono-anche-creare-un-opera-d-arte-e-la-prossima-co">I dati possono anche creare: un'opera d'arte e la prossima collezione</a></li><li><a href="#ogni-fonte-di-dati-vede-solo-un-pezzo-di-realta">Ogni fonte di dati vede solo un pezzo di realtà</a></li><li><a href="#sensori-e-social-sono-veloci-ma-possono-mentire">Sensori e social sono veloci, ma possono mentire</a></li><li><a href="#un-api-ti-fa-risparmiare-ma-ti-lega-a-qualcun-altro">Un'API ti fa risparmiare, ma ti lega a qualcun altro</a></li><li><a href="#batch-o-streaming-scegli-la-velocita-che-la-decisione-richie">Batch o streaming: scegli la velocità che la decisione richiede</a></li><li><a href="#dal-caso-al-progetto-la-mappa-dei-dati-di-un-centro-fitness">Dal caso al progetto: la mappa dei dati di un centro fitness</a></li><li><a href="#databricks-un-solo-posto-per-conservare-interrogare-e-far-la">Databricks: un solo posto per conservare, interrogare e far lavorare i dati</a></li></ol><p class="toc-h">Mettiti alla prova</p><ul><li><a href="#richiamo">Richiamo</a></li><li><a href="#quiz">Quiz</a></li><li><a href="#trasferimento">Applica</a></li><li><a href="#decidi">Decidi tu</a></li><li><a href="#davedere">Da vedere</a></li><li><a href="#flashcard">Flashcard</a></li><li><a href="#glossario">Glossario</a></li><li><a href="#video">Video</a></li><li><a href="#casi">Casi collegati</a></li><li><a href="#approfondimenti-video">Approfondimenti video</a></li></ul><div class="toc-actions"><a class="btn" href="2026-09-29__lezione.pdf" download>Scarica PDF</a><a class="btn ghost" href="https://notebook.google.com/notebook/075a6b17-6b0d-4565-a05f-d532d2bfa1b0">Apri NotebookLM</a></div>
+</details></nav><article class="prose"><h2 id="un-modello-predittivo-vede-i-rischi-che-nessuno-vede-guardan">Un modello predittivo vede i rischi che nessuno vede guardando un fattore alla volta</h2>
+<p>Si può capire in anticipo chi rischia la demenza? Con una popolazione che invecchia, sanità e farmaceutica vogliono <strong>prevedere</strong> chi è a rischio e <strong>prevenire</strong> dove possibile. Nel 2024 la <em>Lancet Commission</em> (un gruppo di esperti della rivista The Lancet) ha indicato <strong>14 fattori di rischio modificabili</strong>: inattività fisica, fumo, alcol, inquinamento, traumi alla testa, poca vita sociale, bassa istruzione, obesità, ipertensione, diabete, depressione, perdita dell'udito, colesterolo LDL alto e perdita della vista non curata. Agire su questi fattori potrebbe prevenire o ritardare circa il 45% dei casi (stima della Commissione).</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Un rischio complesso non si capisce guardando un fattore alla volta: il modello li valuta tutti insieme, perché le persone hanno più condizioni nello stesso momento.</p>
+</aside>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Lo studio NACC: due metodi, le stesse risposte (2025)</p>
+<p>Arnold e colleghi (<em>Alzheimer's &amp; Dementia</em>, 2025) hanno usato i dati del National Alzheimer's Coordinating Center americano: <strong>9.606 persone</strong> seguite in 46 centri tra il 2005 e il 2023, in media per circa 6 anni; <strong>877 (il 9%)</strong> hanno sviluppato demenza. Hanno analizzato 13 fattori di rischio con due "lenti":</p>
+<ol>
+<li><strong>Data-driven</strong> (guidata dai dati): <em>XGBoost</em>, una catena di piccoli alberi decisionali in cui ogni albero corregge gli errori del precedente. Trova combinazioni non lineari, ma da solo non spiega il perché.</li>
+<li><strong>Hypothesis-driven</strong> (guidata da ipotesi): l'analisi di sopravvivenza dei medici, con le curve di <em>Kaplan-Meier</em> (quanti restano senza demenza nel tempo) e la regressione di <em>Cox</em> (quanto ogni fattore aumenta il rischio).</li>
+</ol>
+<p>Le due lenti indicano gli stessi segnali principali, <strong>età, bassa istruzione, depressione e BMI</strong>: quando metodi diversi convergono, la conclusione è più solida. Limiti dichiarati: nessuna validazione esterna, volontari di centri di ricerca, popolazione in prevalenza bianca.</p>
+</aside>
+<p>Un ragionamento deterministico è trasparente ("Andrea è padre di Filippo, Filippo è padre di Marco, quindi Andrea è nonno di Marco"); un modello statistico invece produce probabilità, e non dice <strong>come</strong> ci è arrivato. Per aprire la scatola nera si usa <em>SHAP</em>, che a posteriori stima quanto ogni variabile ha spinto la previsione: nello studio la barra dell'età è lunghissima, quelle di istruzione e depressione più corte. SHAP spiega <strong>il modello</strong>, non dimostra cause.</p>
+<p>Il paradosso: chi ha un <strong>BMI più alto</strong> (peso diviso altezza al quadrato) ha un rischio osservato <strong>più basso</strong>. Rizzi scherza che "mangiare un po' di più non è sempre male", ma lo studio stesso indica la probabile <em>causalità inversa</em>: negli anni prima della diagnosi molte persone dimagriscono, quindi il peso basso è un sintomo precoce, non una causa. La Lancet Commission considera l'obesità in mezza età un fattore di rischio.</p>
+<p>Come si misura se il modello è buono? Quattro numeri:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Metrica</th>
+<th>Domanda a cui risponde</th>
+<th>Valore nello studio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sensibilità</td>
+<td>Su 100 persone che si ammaleranno, quante ne segnala?</td>
+<td>0,70 → 70 su 100</td>
+</tr>
+<tr>
+<td>Specificità</td>
+<td>Su 100 persone che resteranno sane, quante ne riconosce?</td>
+<td>0,64 → 36 su 100 ricevono un falso allarme</td>
+</tr>
+<tr>
+<td>ROC AUC</td>
+<td>Preso un malato e un sano a caso, quante volte dà al malato il rischio più alto?</td>
+<td>0,73 (0,5 = moneta, 1 = perfetto)</td>
+</tr>
+<tr>
+<td>Accuratezza</td>
+<td>Che quota di risposte è giusta in totale?</td>
+<td>0,64: da sola inganna se i casi sono rari</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="yt" data-id="9AdRNLW2L54" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Sensibilità e specificità, spiegate dagli statistici di Padova"><img loading="lazy" src="https://i.ytimg.com/vi/9AdRNLW2L54/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Sensibilità e specificità, spiegate dagli statistici di Padova · <a href="https://www.youtube.com/watch?v=9AdRNLW2L54">apri su YouTube</a></figcaption></figure>
+
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Che cosa succede su 1.000 persone</p>
+<ol>
+<li>Con il 9% di casi, su 1.000 persone 90 svilupperanno demenza e 910 no.</li>
+<li>Sensibilità 0,70: il modello trova 63 dei 90 casi veri e ne perde 27.</li>
+<li>Specificità 0,64: dei 910 sani ne riconosce 580; gli altri 330 sono falsi allarmi.</li>
+<li>Allarmi totali: 63 + 330 = 393. Solo 63 su 393, cioè il 16%, sono casi veri.</li>
+<li>Accuratezza: (63 + 580) / 1.000 = 64,3%, proprio il valore dello studio.</li>
+</ol>
+<p>Conclusione: il modello serve a decidere a chi offrire prima controlli e prevenzione, non a dire a una persona "avrai la demenza".</p>
+</aside>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Sposta la soglia del modello: più casi trovati o meno falsi allarmi?</p><div class="lab-body"><div class="row"><label for="thr">Soglia di rischio per dare l'allarme: <output id="thrv">50</output></label>
+<input type="range" id="thr" min="10" max="90" step="5" value="50"></div>
+<p>Su 1.000 persone (90 casi veri): casi trovati <output id="tp"></output> · casi persi <output id="fn"></output> · falsi allarmi <output id="fp"></output></p>
+<p>Sensibilità <output id="se"></output> · Specificità <output id="sp"></output></p>
+<p class="out" id="thrmsg"></p>
+<p class="note">Numeri illustrativi costruiti intorno ai valori dello studio NACC (a soglia 50: sensibilità 0,70, specificità 0,64). Non è il modello vero, serve a vedere il compromesso.</p>
+<script>
+(function(){
+var s=document.getElementById('thr');
+function up(){var t=+s.value;
+var se=Math.max(0.05,Math.min(0.98,0.70-(t-50)*0.012));
+var sp=Math.max(0.10,Math.min(0.98,0.64+(t-50)*0.009));
+var tp=Math.round(90*se),fp=Math.round(910*(1-sp));
+document.getElementById('thrv').value=t;
+document.getElementById('tp').value=tp;document.getElementById('fn').value=90-tp;document.getElementById('fp').value=fp;
+document.getElementById('se').value=se.toFixed(2);document.getElementById('sp').value=sp.toFixed(2);
+document.getElementById('thrmsg').textContent=t<40?'Soglia bassa: trovi quasi tutti i casi, ma i falsi allarmi esplodono.':(t>65?'Soglia alta: pochi falsi allarmi, ma perdi molti malati veri.':'Zona di compromesso: è qui che si decide, in base al costo di un caso perso e di un falso allarme.');}
+s.addEventListener('input',up);up();})();
+</script></div></figure>
+
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span> · Precision, recall e F1</p>
+<p>Sensibilità è lo stesso concetto che nel machine learning si chiama <em>recall</em>. La lezione del 3 novembre aggiunge <em>precision</em> (quanti allarmi sono veri: qui il 16%) e F1, e mostra perché l'accuracy mente quando i casi sono rari.</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un amico ha ricevuto da un&#x27;app &quot;rischio demenza alto&quot; basata su un modello con specificità 0,64. Deve preoccuparsi?</summary>
+<div class="answer">
+<p>Non in automatico. Con eventi rari e specificità moderata la maggior parte degli allarmi è falsa (nell'esempio, 84 su 100). Il risultato è un motivo per parlarne con un medico e lavorare sui fattori modificabili, non una diagnosi.</p>
+</div>
+</details>
+<h2 id="il-rischio-diventa-un-prezzo-quando-unisci-meteo-luoghi-e-si">Il rischio diventa un prezzo quando unisci meteo, luoghi e sinistri</h2>
+<p>L'agricoltore paga un <em>premio</em> (il prezzo della polizza) e, se la grandine distrugge il raccolto, la compagnia lo rimborsa: il premio giusto dipende dalla probabilità dell'evento. Prima dei dati chi scriveva le polizze (l'<em>underwriter</em>) decideva a sensazione, "a Bergamo grandina più che a Catanzaro". Per un settore che nel 2024 raccoglieva premi pari a circa il 6,9% del PIL italiano (dati ANIA) non basta.</p>
+<p>Il caso viene dall'esperienza personale di Rizzi: una ventina di anni fa ha lavorato con l'ANIA (l'associazione delle compagnie assicurative) su un modello per <strong>grandine e alluvioni</strong> in agricoltura. La difficoltà era unire email delle denunce, immagini satellitari e storico dei sinistri, e collegarli alla <strong>geografia</strong>: per ogni punto della mappa, la probabilità di un evento nei prossimi 12 mesi, trasformabile in premio. La versione moderna lavora in sei passi, in ciclo:</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  A[&quot;Detect: radar e sensori&quot;] --&gt; B[&quot;Match: evento sulle polizze&quot;]
+  B --&gt; C[&quot;Predict: sinistri e danni&quot;]
+  C --&gt; D[&quot;Act: allerta ai clienti&quot;]
+  D --&gt; E[&quot;Verify: controllo delle denunce&quot;]
+  E --&gt; F[&quot;Learn: aggiorna il modello&quot;]
+  F --&gt; A
+</pre></figure>
+<p>Il modello unisce <strong>pericolo</strong> (<em>hazard</em>: grandine, vento, pioggia), <strong>esposizione</strong> (<em>exposure</em>: che cosa è assicurato e dove) e <strong>vulnerabilità</strong> (quanto si danneggia un tetto, un'auto, un vigneto). La fase "verify" serve anche contro le frodi: chi denuncia una grandinata mai avvenuta viene smentito dai dati meteo.</p>
+<aside class="box formula">
+<p class="box-title"><span class="box-kind">Formula</span> · Perdita attesa</p>
+<p>Perdita attesa = Σ [P(sinistro) × gravità attesa], corretta per franchigie, limiti, coperture e riassicurazione.</p>
+<ul>
+<li>P(sinistro): probabilità che la polizza abbia un danno nel periodo (tra 0 e 1).</li>
+<li>Gravità attesa: danno medio in euro se il sinistro avviene.</li>
+<li>Esempio ipotetico: 1.000 vigneti, ognuno con P = 0,03 e danno medio 20.000 €. Perdita attesa = 1.000 × 0,03 × 20.000 = 600.000 €, cioè 600 € per polizza prima di costi e margine. Se in una valle P sale a 0,08, lì il premio puro diventa 1.600 €.</li>
+</ul>
+</aside>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Il chicco di 19 centimetri (Friuli, luglio 2023)</p>
+<p>Il 24 luglio 2023 ad Azzano Decimo (Pordenone) cadde un chicco di grandine di circa <strong>19 cm</strong>, record europeo confermato dall'European Severe Weather Laboratory (ESSL). Il record precedente, 16 cm a Carmignano di Brenta (Padova), era di cinque giorni prima. Se gli eventi estremi cambiano, il passato non basta: i modelli vanno riaddestrati (il passo "learn").</p>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Perché un modello del rischio grandine addestrato solo sui sinistri 2000–2015 potrebbe sbagliare i prezzi nel 2026?</summary>
+<div class="answer">
+<p>Perché il clima cambia: frequenza e intensità della grandine non sono le stesse, e il modello impara dal passato. Va aggiornato con dati recenti (radar, satelliti, sinistri nuovi), altrimenti sottostima il rischio e la compagnia perde soldi.</p>
+</div>
+</details>
+<h2 id="i-dati-possono-anche-creare-un-opera-d-arte-e-la-prossima-co">I dati possono anche creare: un'opera d'arte e la prossima collezione</h2>
+<p>Lo stesso schema (raccogliere dati diversissimi, analizzarli, poi <strong>generare</strong>) funziona anche nell'arte.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Machine Dreams: Rainforest (DATALAND, Los Angeles)</p>
+<p>L'artista Refik Anadol ha aperto a Los Angeles il museo DATALAND con <em>Machine Dreams: Rainforest</em>. Secondo il museo, l'opera usa il <em>Large Nature Model</em>, addestrato su archivi di istituzioni di ricerca più lavoro sul campo: oltre <strong>1,2 miliardi di dati ecologici</strong>. Ne escono immagini e suoni che non si ripetono mai, proiettati da 84 proiettori; sensori indossabili leggono in forma anonima battito, movimento e posizione dei visitatori, che entrano nell'esperienza.</p>
+</aside>
+<p>Nella <strong>moda</strong> ogni collezione è una scommessa fatta mesi prima. I big data riducono l'azzardo seguendo la traccia digitale dal buzz all'acquisto: <strong>attenzione</strong> (che cosa la gente nota), <strong>ricerca</strong> (che cosa cerca davvero, per esempio "ballerine argento"), <strong>esplorazione</strong> (quali prodotti guarda), <strong>intenzione</strong> (wishlist e carrello), <strong>acquisto</strong>, e infine <strong>tenere o restituire</strong>.</p>
+<p>Letti insieme, i passi danno diagnosi diverse:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Segnale</th>
+<th>Diagnosi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tanto buzz, poche ricerche</td>
+<td>solo attenzione culturale</td>
+</tr>
+<tr>
+<td>Tante ricerche, poca disponibilità</td>
+<td>buco nell'assortimento</td>
+</tr>
+<tr>
+<td>Tante vendite, tanti resi</td>
+<td>problema di vestibilità o qualità</td>
+</tr>
+<tr>
+<td>Tante vendite, pochi resi</td>
+<td>domanda vera</td>
+</tr>
+</tbody>
+</table></div>
+<p>Il concetto chiave è il <em>trend momentum</em>: <strong>crescita × persistenza × conversione commerciale</strong>. Un picco di ricerche di tre giorni dopo il post di una celebrità è virale, non una base per la collezione. Il modello produce una previsione ("calzature metalliche, primavera-estate, clienti urbani 18–35"), ma la decisione creativa resta allo stilista.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Zara: vince chi cambia rotta in poche settimane</p>
+<p>Il primo negozio Zara aprì nel 1975 ad A Coruña, in Galizia. La forza del gruppo (Inditex) è poter <strong>correggere</strong> durante la stagione invece di indovinare tutto prima, grazie alla produzione di prossimità: molti capi nascono vicino alla sede (Spagna, Portogallo, Marocco, Turchia), così se un capo non vende si cambia produzione in settimane, non in mesi.</p>
+</aside>
+<figure class="yt" data-id="lsR-cVRK3Y8" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Dentro il mondo di Zara (Bloomberg Originals)"><img loading="lazy" src="https://i.ytimg.com/vi/lsR-cVRK3Y8/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Dentro il mondo di Zara (Bloomberg Originals) · <a href="https://www.youtube.com/watch?v=lsR-cVRK3Y8">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Le ricerche di un modello di giacca crescono da quattro mesi, le vendite anche, ma i resi sono al 45%. Che cosa concludi?</summary>
+<div class="answer">
+<p>Il trend è reale (crescita persistente e conversione), ma c'è un problema di vestibilità o qualità: è la combinazione "tante vendite, tanti resi". Prima di aumentare la produzione bisogna correggere il prodotto, altrimenti si moltiplicano i resi.</p>
+</div>
+</details>
+<h2 id="ogni-fonte-di-dati-vede-solo-un-pezzo-di-realta">Ogni fonte di dati vede solo un pezzo di realtà</h2>
+<p>Campana parte da una metafora francese: <em>"tout est bon dans le cochon"</em>, del maiale non si butta niente; così l'AI "non butta mai via nessun dato". Il senso: un dato che oggi sembra spazzatura può diventare informazione con il sistema giusto, e un modello che parla con le persone ha bisogno anche di post e conversazioni, che contengono contesto e cultura.</p>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span> · Lo slogan e il GDPR</p>
+<p>Come regola aziendale va presa con le pinze. Per i dati personali il GDPR (art. 5) impone la <strong>minimizzazione</strong>: raccogli solo ciò che serve per uno scopo dichiarato e conservalo solo per il tempo necessario. "Tenere tutto, non si sa mai" è un rischio legale. Il <em>data lake</em> della lezione del 13 ottobre è il posto dove i dati si tengono, ma con etichette, permessi e scadenze.</p>
+</aside>
+<p>Prima di analizzare, chiediti <strong>quale parte di realtà cattura ogni fonte</strong>. I dati nascono da <strong>persone</strong> (post, recensioni, click), <strong>processi</strong> (ordini, fatture), <strong>macchine</strong> (sensori, telemetria) o sono <strong>esterni</strong> (meteo, mercati). Guardarne una sola porta fuori strada: un'azienda di trasporti vede salire i costi di consegna e cerca l'errore all'interno, ma i dati esterni mostrano che è salito il petrolio.</p>
+<p>Le fonti concrete sono cinque:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Fonte</th>
+<th>Domanda a cui risponde</th>
+<th>Esempio</th>
+<th>Difetto tipico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transazioni</td>
+<td>Che cosa è successo, e quando?</td>
+<td>scontrino, pagamento, reso</td>
+<td>perdono il contesto</td>
+</tr>
+<tr>
+<td>ERP/CRM</td>
+<td>Chi è il cliente e come lavora l'azienda?</td>
+<td>ordine in SAP, chiamata in Salesforce</td>
+<td>silos, definizioni diverse</td>
+</tr>
+<tr>
+<td>Sensori/IoT</td>
+<td>In che condizioni fisiche sono le cose?</td>
+<td>temperatura di un motore</td>
+<td>rumore, guasti</td>
+</tr>
+<tr>
+<td>Social</td>
+<td>Che cosa pensa e dice la gente?</td>
+<td>commenti su un nuovo prodotto</td>
+<td>distorsioni, profili falsi</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Che cosa succede fuori dall'azienda?</td>
+<td>meteo, mappe, tassi di cambio</td>
+<td>dipendenza dal fornitore</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le <strong>transazioni</strong> sono strutturate e verificabili, pronte per una revisione contabile, e servono per vendite, frodi e previsione della domanda. Ma lo scontrino non dice che prima avevi guardato altri tre prodotti.</p>
+<p>L'<strong>ERP</strong> (<em>Enterprise Resource Planning</em>: finanza, magazzino, acquisti, produzione) risponde a "ho le risorse per mantenere le promesse?": è <strong>esecuzione</strong>. Il <strong>CRM</strong> (<em>Customer Relationship Management</em>) ricorda contatti, opportunità e chiamate con i clienti: è <strong>relazione</strong>. Insieme raccontano una storia migliore (l'ERP sa che il cliente ha pagato, il CRM che prima aveva chiesto assistenza tre volte), ma solo con <strong>identificativi comuni</strong> e <strong>definizioni comuni</strong>.</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Il consiglio di amministrazione con due numeri (ipotetico)</p>
+<ol>
+<li>Il marketing presenta: "abbiamo 2.000 clienti". Per lui cliente = chiunque abbia lasciato i dati scaricando un documento.</li>
+<li>Le vendite rispondono: "no, sono 1.000". Per loro cliente = chi ha pagato un abbonamento negli ultimi 90 giorni.</li>
+<li>Entrambi leggono dati corretti, da sistemi diversi con definizioni diverse.</li>
+<li>La soluzione non è "più dati", ma un dizionario comune delle definizioni (<em>data governance</em>) e un codice cliente unico tra ERP e CRM.</li>
+</ol>
+</aside>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un e-commerce ha solo i dati delle transazioni. Che cosa non potrà mai sapere?</summary>
+<div class="answer">
+<p>Il percorso prima dell'acquisto: che cosa il cliente ha guardato e scartato, che cosa cercava e non ha trovato, perché ha abbandonato il carrello. Servono anche dati di navigazione, CRM e magari social: la transazione dice "cosa", non "perché".</p>
+</div>
+</details>
+<h2 id="sensori-e-social-sono-veloci-ma-possono-mentire">Sensori e social sono veloci, ma possono mentire</h2>
+<p>I <strong>sensori</strong> dell'<em>IoT</em> (<em>Internet of Things</em>, oggetti collegati in rete) misurano piccole variazioni continue: temperatura, movimento, GPS, battito, pressione. Il flusso è <strong>sensore → gateway</strong> (il dispositivo che raccoglie e inoltra) <strong>→ piattaforma di streaming → azione</strong>. Sono dati velocissimi e <em>semi-strutturati</em> (hanno una forma, ma non sempre stanno in una tabella). Usi tipici: manutenzione predittiva (cambiare un pezzo quando sta per rompersi, non a calendario), flotte, energia, terapia intensiva.</p>
+<figure class="yt" data-id="CObyT2P9C-U" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Che cos&#x27;è l&#x27;Internet of Things (Registro .it)"><img loading="lazy" src="https://i.ytimg.com/vi/CObyT2P9C-U/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Che cos&#x27;è l&#x27;Internet of Things (Registro .it) · <a href="https://www.youtube.com/watch?v=CObyT2P9C-U">apri su YouTube</a></figcaption></figure>
+
+<p>Il loro difetto è il <strong>rumore</strong>: se un macchinario segna +100 °C in due minuti, può stare per rompersi oppure il sensore ha preso un'interferenza, e hai pochi secondi per capirlo.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Lion Air 610: un sistema che si fidava di un solo sensore (2018)</p>
+<p>Il 29 ottobre 2018 un Boeing 737 MAX della Lion Air precipitò in mare dopo il decollo da Giacarta: 189 morti. Il rapporto finale degli investigatori indonesiani (KNKT, ottobre 2019) indica tra i fattori il sistema automatico MCAS, che leggeva <strong>un solo sensore</strong> dell'angolo d'attacco, starato di circa 21 gradi: credendo che l'aereo stesse per stallare, spingeva il muso in basso. Dopo un secondo incidente (Ethiopian Airlines, marzo 2019) il 737 MAX fu fermato in tutto il mondo e MCAS modificato per confrontare entrambi i sensori. Un dato macchina non è automaticamente vero.</p>
+</aside>
+<p>I <strong>social media</strong> sono dati non strutturati (post, commenti, immagini, slang, reti di contatti). Servono per il <em>sentiment</em> (che cosa pensa la gente del tuo prodotto, anche chi non è cliente), il monitoraggio del brand e la scoperta di trend, a volte più in fretta e a meno di una ricerca di mercato. Ma attenzione a ironia, profili falsi, privacy e soprattutto <strong>distorsioni</strong>: se vendi a persone anziane, i social non rappresentano i tuoi clienti.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Google Flu Trends: quando le ricerche ingannano (2008–2015)</p>
+<p>Google lanciò Flu Trends nel 2008 per stimare l'influenza dalle ricerche online, prima dei dati ufficiali del CDC americano. Nel 2013 Nature segnalò che stimava più del doppio delle visite rispetto al CDC; Lazer e colleghi (Science, 2014) calcolarono che tra agosto 2011 e settembre 2013 aveva sovrastimato l'influenza in 100 settimane su 108. Le ricerche dipendono anche da notizie e paura, e Google cambiava il proprio motore. Chiuso nel 2015. Il nome del problema è <em>big data hubris</em>: credere che tanti dati sostituiscano i dati raccolti con metodo.</p>
+</aside>
+<figure class="yt" data-id="X0XqnAqvyIk" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Big data hubris: il caso Google Flu Trends (University of Washington)"><img loading="lazy" src="https://i.ytimg.com/vi/X0XqnAqvyIk/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Big data hubris: il caso Google Flu Trends (University of Washington) · <a href="https://www.youtube.com/watch?v=X0XqnAqvyIk">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;azienda di apparecchi acustici vuole capire la soddisfazione dei clienti solo da TikTok. Che cosa non va?</summary>
+<div class="answer">
+<p>È una fonte distorta: i clienti sono soprattutto anziani, che usano poco TikTok. Chi posta non rappresenta chi compra. Meglio unire recensioni, CRM (reclami e assistenza), resi e un sondaggio mirato.</p>
+</div>
+</details>
+<h2 id="un-api-ti-fa-risparmiare-ma-ti-lega-a-qualcun-altro">Un'API ti fa risparmiare, ma ti lega a qualcun altro</h2>
+<p>Un'<strong>API</strong> (<em>Application Programming Interface</em>) è la porta controllata con cui un sistema chiede dati o servizi a un altro (meteo, mappe, pagamenti): un contratto che dice che cosa puoi chiedere e in che formato arriva la risposta. Una startup di trasporti non ricostruisce Google Maps, lo usa; e se il fornitore cambia tecnologia dietro le quinte, per te non cambia nulla finché l'API resta uguale. Serve anche a condividere <strong>solo i dati necessari</strong>: un ospedale può comunicare data e tipo di intervento senza passare l'intera cartella clinica.</p>
+<p>Prima di dipendere da un'API, tre domande:</p>
+<ol>
+<li><strong>Chi possiede il servizio?</strong> Se il fornitore fallisce o viene comprato, il tuo prodotto si ferma.</li>
+<li><strong>Quali sono i limiti d'uso?</strong> Prezzi e quote cambiano: molte aziende hanno adottato servizi di AI a consumo e solo dopo hanno visto quanto costavano.</li>
+<li><strong>Come vengono gestiti i cambiamenti?</strong> Una nuova versione può rompere la tua applicazione; una vecchia può avere falle di sicurezza.</li>
+</ol>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Google Maps alza il prezzo (2018)</p>
+<p>Nel giugno-luglio 2018 Google ha riunito le API di mappe nella Google Maps Platform: fatturazione obbligatoria per tutti, con 200 dollari al mese di credito gratuito. Per chi faceva molte richieste i costi sono saliti di colpo, e diversi sviluppatori hanno valutato alternative aperte come OpenStreetMap. Il servizio è di un altro, e le condizioni le decide lui.</p>
+</aside>
+<p>Il valore nasce dal <strong>combinare</strong> fonti intorno a una decisione: nel gioco in classe si sceglie un'azienda e tre fonti da unire.</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Le creme solari</p>
+<ol>
+<li>Fonti: vendite per zona, social che parlano di un'ondata di caldo, API meteo con temperature alte previste.</li>
+<li>Decisione: spostare in anticipo più creme solari nei magazzini italiani, senza rincorrere la domanda.</li>
+<li>Rischio: se il caldo non arriva, hai merce ferma nel posto sbagliato. Più fonti riducono l'incertezza, non la eliminano.</li>
+</ol>
+</aside>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Nessuna fonte dà la visione completa: il valore nasce dal combinarne alcune intorno a una decisione precisa.</p>
+</aside>
+<h2 id="batch-o-streaming-scegli-la-velocita-che-la-decisione-richie">Batch o streaming: scegli la velocità che la decisione richiede</h2>
+<p>L'idea più importante per l'esame è la <strong>finestra di decisione</strong>: il periodo in cui un'informazione può ancora cambiare l'esito. Va da <strong>giorni</strong> (redditività mensile) a <strong>ore</strong> (scorte di magazzino), <strong>minuti</strong> (seguire le consegne: sapere ore dopo che un camion era fermo non serve) e <strong>millisecondi</strong> (bloccare una frode con carta).</p>
+<p>Da qui due modi di elaborare:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Batch (a lotti)</th>
+<th>Streaming (in flusso)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Come funziona</td>
+<td>i dati si accumulano; a orario fisso parte un lavoro programmato</td>
+<td>ogni evento è analizzato appena arriva</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>efficiente sui grandi volumi, facile da testare, costa meno</td>
+<td>intervento rapido, monitoraggio continuo, automazione</td>
+</tr>
+<tr>
+<td>Contro</td>
+<td>latenza alta: l'errore del martedì, con un batch del lunedì, lo scopri sei giorni dopo</td>
+<td>eventi in ritardo o duplicati, più complessità, errori che si propagano subito</td>
+</tr>
+<tr>
+<td>Esempi</td>
+<td>buste paga, saldi dei conti, report mensili, segmentazione clienti</td>
+<td>frodi nei pagamenti, pazienti, veicoli, anomalie delle macchine</td>
+</tr>
+</tbody>
+</table></div>
+<p>Un evento duplicato è comune: un utente impaziente clicca "paga" quattro volte, e il sistema deve capire che è una sola richiesta. Tra i due estremi ci sono vie di mezzo: <em>real-time</em> (millisecondi-secondi, autorizzazione del pagamento), <em>near-real-time</em> (secondi-minuti, dashboard operative), <em>micro-batch</em> (piccoli lotti ogni pochi minuti), <em>offline</em> (ore-giorni, bilanci). In una frase: <strong>tempo reale significa abbastanza veloce per la decisione</strong>.</p>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Visa: un punteggio di rischio per ogni transazione</p>
+<p>Visa Advanced Authorization assegna a ogni pagamento, mentre viene autorizzato, un punteggio di rischio frode calcolato da modelli di AI. Secondo CSO Online il punteggio arriva in circa 300 millisecondi e nel 2021 il sistema avrebbe evitato frodi per 26 miliardi di dollari (cifre dichiarate dall'azienda). Le stesse transazioni finiscono poi in batch, nella riconciliazione contabile e nel riaddestramento dei modelli.</p>
+</aside>
+<figure class="yt" data-id="1xgBQTF24mU" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Batch e streaming con esempi pratici (Andreas Kretz)"><img loading="lazy" src="https://i.ytimg.com/vi/1xgBQTF24mU/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Batch e streaming con esempi pratici (Andreas Kretz) · <a href="https://www.youtube.com/watch?v=1xgBQTF24mU">apri su YouTube</a></figcaption></figure>
+
+<p>Le due strade non sono rivali. In un negozio online lo stesso flusso di eventi va in due direzioni: <strong>streaming</strong> per la frode e per suggerire subito un prodotto (hai comprato un computer? forse ti serve un monitor), <strong>batch</strong> per riconciliare ordini e pagamenti e per i report. Quasi tutte le aziende usano entrambi.</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  A[&quot;Quanto in fretta devo agire?&quot;] --&gt; B[&quot;Ore o giorni&quot;]
+  A --&gt; C[&quot;Secondi o minuti&quot;]
+  B --&gt; D[&quot;Batch: report, buste paga&quot;]
+  C --&gt; E[&quot;Ogni evento vale da solo?&quot;]
+  E --&gt; F[&quot;Sì: streaming&quot;]
+  E --&gt; G[&quot;No: micro-batch&quot;]
+</pre></figure>
+<p>Per scegliere si pesano quattro trade-off: <strong>costo</strong> (infrastruttura sempre accesa, competenze rare), <strong>velocità</strong> richiesta dall'azione, <strong>rischio</strong> (errori di automazione, eventi persi, guasti), <strong>usabilità</strong> (allarmi gestibili). La domanda finale: <em>una latenza più bassa crea abbastanza valore da giustificare costo e rischio in più?</em> Campana aggiunge un'avvertenza: "troppo caro" non esiste in assoluto; se l'opzione economica ti fa perdere più soldi, era quella cara.</p>
+<figure class="lab"><p class="box-title"><span class="box-kind">Laboratorio</span> · Conviene passare le frodi allo streaming?</p><div class="lab-body"><div class="row"><label for="nf">Frodi al mese: <output id="nfv"></output></label>
+<input type="range" id="nf" min="10" max="500" step="10" value="120"></div>
+<div class="row"><label for="lf">Perdita media per frode (€): <output id="lfv"></output></label>
+<input type="range" id="lf" min="50" max="2000" step="50" value="400"></div>
+<div class="row"><label for="bl">Frodi bloccate in tempo dallo streaming (%): <output id="blv"></output></label>
+<input type="range" id="bl" min="10" max="95" step="5" value="60"></div>
+<div class="row"><label for="cs">Costo extra dello streaming al mese (€): <output id="csv"></output></label>
+<input type="range" id="cs" min="1000" max="60000" step="1000" value="15000"></div>
+<p>Perdite evitate al mese: <output id="sav"></output> · Saldo netto: <output id="net"></output></p>
+<p class="out" id="frmsg"></p>
+<p class="note">Numeri illustrativi, non di una banca reale. Con il batch la frode si scopre a cose fatte, quindi qui si assume che il batch non ne blocchi nessuna in tempo.</p>
+<script>
+(function(){
+var ids=['nf','lf','bl','cs'];
+function g(i){return +document.getElementById(i).value;}
+function up(){
+document.getElementById('nfv').value=g('nf');document.getElementById('lfv').value=g('lf');
+document.getElementById('blv').value=g('bl');document.getElementById('csv').value=g('cs');
+var s=g('nf')*g('lf')*g('bl')/100,n=s-g('cs');
+document.getElementById('sav').value=Math.round(s).toLocaleString('it-IT')+' €';
+document.getElementById('net').value=(n>=0?'+':'')+Math.round(n).toLocaleString('it-IT')+' €';
+document.getElementById('frmsg').textContent=n>0?'Lo streaming si ripaga: la latenza bassa crea più valore di quanto costa.':'Lo streaming costa più di quanto fa risparmiare: con questi numeri il batch (o un controllo più semplice) basta.';}
+ids.forEach(function(i){document.getElementById(i).addEventListener('input',up);});up();})();
+</script></div></figure>
+
+<p>La sfida in classe: buste paga, segmentazione dei clienti (una fotografia, non una raccomandazione istantanea) e riconciliazione delle vendite → <strong>batch</strong>; frode con carta e monitoraggio dei pazienti → <strong>streaming</strong>; tracciamento delle consegne → <strong>streaming o near-real-time</strong>.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Un&#x27;app di consegne calcola ogni notte i tempi medi per quartiere e intanto segue i rider via GPS. È batch o streaming?</summary>
+<div class="answer">
+<p>Entrambi, ed è giusto così. Il GPS dei rider è streaming: serve a dire "arriva tra 5 minuti" e a riassegnare un ordine se un rider si ferma. Il calcolo notturno dei tempi medi è batch: serve a pianificare i turni, e può aspettare.</p>
+</div>
+</details>
+<h2 id="dal-caso-al-progetto-la-mappa-dei-dati-di-un-centro-fitness">Dal caso al progetto: la mappa dei dati di un centro fitness</h2>
+<p>Il Team Work 2 mette tutto in pratica: siete consulenti di un centro fitness con abbonamenti, corsi, personal training, app e valutazioni del benessere. Si consegnano una <strong>tabella dei touchpoint</strong> (8–10 righe: punto di contatto, dati, fonte, uso di business), una <strong>mappa dei dati</strong> (come l'informazione si muove nel centro), <strong>rischi e opportunità</strong> (due problemi di qualità, un rischio privacy, due opportunità) e un pitch volontario di 5 minuti.</p>
+<aside class="box esempio">
+<p class="box-title"><span class="box-kind">Esempio svolto</span> · Quattro righe della tabella dei touchpoint</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Touchpoint</th>
+<th>Dati raccolti</th>
+<th>Fonte</th>
+<th>Uso di business</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visita al sito</td>
+<td>pagine viste, click, dispositivo</td>
+<td>web analytics</td>
+<td>misurare l'interesse</td>
+</tr>
+<tr>
+<td>Iscrizione</td>
+<td>età, contatti, tipo di abbonamento</td>
+<td>CRM</td>
+<td>gestire i soci</td>
+</tr>
+<tr>
+<td>Ingresso con badge</td>
+<td>ora e giorno di accesso</td>
+<td>tornelli (sensore)</td>
+<td>prevedere l'affollamento</td>
+</tr>
+<tr>
+<td>Prenotazione corso in app</td>
+<td>corso, orario, cancellazioni</td>
+<td>app</td>
+<td>ottimizzare l'orario dei corsi</td>
+</tr>
+</tbody>
+</table></div>
+<p>Qualità: chi si iscrive con due email diventa due soci; badge prestati falsano le presenze. Privacy: peso e pressione sono dati sanitari, che per il GDPR richiedono consenso esplicito. Opportunità: consigliare gli orari meno affollati; riconoscere chi sta per disdire (presenze in calo) e offrirgli una sessione con un trainer.</p>
+</aside>
+<p>Dalle presentazioni: suggerire orari e sedi ai soci con turni variabili, unire prenotazioni e personal trainer per capire quali corsi trattengono i clienti. Il commento di Rizzi: i dati devono essere <strong>facili da raccogliere</strong> (se il socio deve inserirli a mano non lo farà; meglio dedurli da ingressi e macchine) e per allenamento e salute serve <strong>il consenso</strong>.</p>
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Nella tabella dei touchpoint metti il &quot;battito cardiaco dal cardiofrequenzimetro del tapis roulant&quot;. Che cosa devi aggiungere prima di usarlo?</summary>
+<div class="answer">
+<p>Lo scopo preciso (per esempio personalizzare l'allenamento) e il consenso esplicito del socio, perché è un dato sulla salute protetto dal GDPR. Poi la minimizzazione: se ti basta sapere "zona di sforzo alta o bassa", non conservare la serie completa dei battiti.</p>
+</div>
+</details>
+<h2 id="databricks-un-solo-posto-per-conservare-interrogare-e-far-la">Databricks: un solo posto per conservare, interrogare e far lavorare i dati</h2>
+<p>L'ultima parte è pratica: <strong>Databricks</strong>, la piattaforma del corso. La registrazione si ferma dopo le prime frasi, quindi questa sezione è ricostruita dalle slide e dalle fonti ufficiali Databricks.</p>
+<p>Databricks è una <strong>piattaforma unificata e aperta</strong> per costruire, mettere in produzione e mantenere dati, analisi e AI su scala aziendale: invece di un programma per pulire i dati, uno per i grafici e uno per i modelli, fai tutto nello stesso ambiente, sugli stessi dati.</p>
+<aside class="box idea">
+<p class="box-title"><span class="box-kind">L'idea in una frase</span></p>
+<p>Databricks è una "cucina unica" dei dati: lo stesso dato entra una volta e da lì lo puliscono gli ingegneri, lo interrogano gli analisti e lo usano i modelli di machine learning.</p>
+</aside>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pilastro</th>
+<th>Domanda a cui risponde</th>
+<th>Esempio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unificata</td>
+<td>Serve un programma per ogni lavoro?</td>
+<td>engineering, data science, ML e <em>business intelligence</em> (report) nello stesso posto</td>
+</tr>
+<tr>
+<td>Collaborativa</td>
+<td>Come lavora insieme il team?</td>
+<td><em>notebook</em> (codice, risultati, note) condivisi come un Google Doc</td>
+</tr>
+<tr>
+<td>Scalabile</td>
+<td>E se i dati crescono?</td>
+<td>gira su AWS, Azure, Google Cloud: si affitta calcolo invece di comprare server</td>
+</tr>
+<tr>
+<td>Aperta</td>
+<td>Su che cosa è costruita?</td>
+<td><em>open source</em>: <strong>Spark</strong> (calcolo diviso su tante macchine), <strong>Delta Lake</strong> (file affidabili nel data lake), <strong>MLflow</strong> (traccia gli esperimenti di ML)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box caso">
+<p class="box-title"><span class="box-kind">Caso reale</span> · Da un laboratorio di Berkeley a piattaforma gratuita per studenti</p>
+<p>Databricks nasce nel 2013 da sette ricercatori dell'AMPLab di Berkeley, gli stessi che avevano creato Apache Spark; poi sono arrivati Delta Lake e MLflow. L'11 giugno 2025 ha presentato la <strong>Free Edition</strong>, gratuita per studenti e principianti (non per uso commerciale), con un investimento di 100 milioni di dollari nella formazione su dati e AI. È la versione che usate in classe: chi impara una piattaforma all'università tende a portarla in azienda.</p>
+</aside>
+<p>Il primo giorno serve a registrarsi e orientarsi. Nel menu laterale: <strong>Workspace</strong> (notebook e cartelle), <strong>Catalog</strong> (database e tabelle), <strong>Jobs &amp; Pipelines</strong> (programmare i passaggi, per esempio un batch ogni notte), <strong>Compute</strong> (la potenza di calcolo), <strong>Learn</strong> (tutorial della Databricks Academy) e <strong>Marketplace</strong> (dati e modelli di partner).</p>
+<p>Nella sezione <strong>SQL</strong> (<em>Structured Query Language</em>, il linguaggio per fare domande a una tabella) il <em>SQL Editor</em> serve a scrivere le domande (<em>query</em>), <em>Dashboards</em> a trasformarle in grafici, <em>Alerts</em> a ricevere una notifica quando succede qualcosa (scorte sotto soglia); i <em>SQL Warehouses</em> sono i motori di calcolo dedicati. I <em>Genie Agents</em> sono assistenti AI: fai la domanda in linguaggio naturale ("quanti clienti abbiamo perso a marzo?") e scrivono la query per te. Più avanti userete le aree <strong>Data Engineering</strong> (preparazione dei dati) e <strong>AI/ML</strong> (dalla prova del modello alla produzione).</p>
+<figure class="yt" data-id="fNQRQkx1SIQ" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Giro guidato di Databricks Free Edition (Alex The Analyst)"><img loading="lazy" src="https://i.ytimg.com/vi/fNQRQkx1SIQ/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Giro guidato di Databricks Free Edition (Alex The Analyst) · <a href="https://www.youtube.com/watch?v=fNQRQkx1SIQ">apri su YouTube</a></figcaption></figure>
+
+<p>Infine i <strong>dati</strong>, meglio se tanti e di buona qualità. Per esercitarsi c'è <strong>Kaggle</strong>, la piattaforma di Google per competizioni di data science, con dataset gratuiti in CSV (una tabella in testo semplice, valori separati da virgole).</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+  A[&quot;Scarica un CSV da Kaggle&quot;] --&gt; B[&quot;Catalog: scegli il database&quot;]
+  B --&gt; C[&quot;Crea un volume&quot;]
+  C --&gt; D[&quot;Carica il file&quot;]
+  D --&gt; E[&quot;Crea la tabella&quot;]
+  E --&gt; F[&quot;SQL Editor: SELECT&quot;]
+  F --&gt; G[&quot;Dashboard e grafici&quot;]
+</pre></figure>
+<p>Il <em>volume</em> è lo spazio del catalogo per i file "grezzi" (CSV, JSON, immagini), con permessi controllati. Da <strong>Create → Table</strong> trasformi il file in tabella, controllando nomi e tipi delle colonne, e poi la interroghi: <code>SELECT titolo FROM oscar WHERE candidature &gt; 5</code> (esempio ipotetico) estrae i film con più di 5 candidature.</p>
+<aside class="box collegamento">
+<p class="box-title"><span class="box-kind">Collegamento</span> · La procedura in pratica</p>
+<p>Gli stessi passaggi (volume, tabella dal CSV, dashboard) li ripete il laboratorio "Dashboarding Oscars" della lezione del 6 ottobre, con i dettagli tecnici. Jobs &amp; Pipelines è dove vive il batch notturno visto sopra, e Spark gestisce anche flussi in streaming; catalogo e volumi sono il primo assaggio del data lake del 13 ottobre.</p>
+</aside>
+<figure class="yt" data-id="JOOAo_yUGkM" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Le query SQL partendo dalle basi (Aulab)"><img loading="lazy" src="https://i.ytimg.com/vi/JOOAo_yUGkM/hqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button><figcaption>Le query SQL partendo dalle basi (Aulab) · <a href="https://www.youtube.com/watch?v=JOOAo_yUGkM">apri su YouTube</a></figcaption></figure>
+
+<details class="box domanda">
+<summary><span class="box-kind">Prova tu</span> Il tuo team carica lo stesso CSV di vendite in tre notebook diversi, ognuno con la sua copia modificata a mano. Che cosa perdete e come lo eviteresti in Databricks?</summary>
+<div class="answer">
+<p>Perdete una "versione unica della verità": tre copie divergono e i numeri non tornano, come nel consiglio con 2.000 o 1.000 clienti. In Databricks carichi il file una volta, crei una tabella nel Catalog e tutti interrogano quella, con permessi e cronologia: il pilastro "unificata".</p>
+</div>
+</details></article></div>
+<section class="study" id="richiamo"><h2>Richiamo a libro chiuso</h2>
+<p class="hint">Chiudi la pagina e rispondi a voce o per iscritto. Poi riapri e confronta.</p><ol class="recall"><li>Spiega con l&#x27;esempio di 1.000 persone che cosa significano sensibilità 0,70 e specificità 0,64, e perché la maggior parte degli allarmi del modello sono falsi.</li><li>Elenca le cinque fonti di dati e, per ciascuna, che cosa vede, quanto è veloce e qual è il suo difetto tipico.</li><li>Descrivi i sei passi &#x27;detect, match, predict, act, verify, learn&#x27; del caso assicurativo e dove entra lo streaming e dove il batch.</li><li>Classifica a memoria buste paga, frode con carta, segmentazione clienti, monitoraggio in terapia intensiva, riconciliazione vendite e tracciamento consegne in batch o streaming, con il motivo.</li></ol></section>
+<section class="study" id="quiz" data-key="big-data-ai-2026-09-29"><h2>Quiz</h2>
+<p class="hint">Conta il primo tentativo. Dopo ogni risposta leggi il perché.</p>
+<ol class="quiz"><li class="q" data-answer="0"><p class="q-text">Un modello controlla un difetto di fabbrica raro (1 pezzo su 100) e dichiara &#x27;accuratezza 99%&#x27;. Il responsabile qualità non è convinto. Che cosa deve chiedere?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Sensibilità e specificità: dire sempre &#x27;pezzo buono&#x27; dà già il 99%</button></li><li><button type="button" class="opt" data-i="1">I valori SHAP, perché provano che il modello ha capito le cause</button></li><li><button type="button" class="opt" data-i="2">La specificità al massimo, così il modello trova tutti i pezzi difettosi</button></li><li><button type="button" class="opt" data-i="3">La ROC AUC, perché misura la quota di difetti veri che il modello trova</button></li></ol><div class="why" hidden><p>Con eventi rari l&#x27;accuratezza è dominata dai casi negativi: un modello che dice sempre &#x27;buono&#x27; fa 99% senza trovare un difetto. Servono sensibilità (quanti difetti veri trova) e specificità (quanti pezzi buoni riconosce). La ROC AUC misura quanto bene il modello ordina i rischi, non la quota di difetti trovati: è la confusione più comune tra le metriche. La specificità riguarda i pezzi buoni, non i difettosi: qui si scambiano le due definizioni. SHAP spiega il modello, non prova cause e non dice quanto è preciso.</p></div></li><li class="q" data-answer="0"><p class="q-text">In una catena di 200 negozi, quelli con più commessi hanno vendite più basse. Il direttore vuole tagliare il personale ovunque. Qual è l&#x27;obiezione più solida?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Probabile causalità inversa: si manda più personale dove si vende poco</button></li><li><button type="button" class="opt" data-i="1">Con i dati di tutti i negozi il campione è completo, quindi è causale</button></li><li><button type="button" class="opt" data-i="2">Se nei valori SHAP il personale pesa molto, il taglio funzionerà di sicuro</button></li><li><button type="button" class="opt" data-i="3">Due analisi diverse trovano la stessa associazione, quindi è già una causa</button></li></ol><div class="why" hidden><p>Come per il BMI nello studio sulla demenza, l&#x27;effetto può generare la presunta causa: l&#x27;azienda rinforza proprio i negozi in difficoltà. Che due metodi convergano rende l&#x27;associazione più solida, non la trasforma in causa. SHAP dice quanto una variabile spinge la previsione del modello, non che cosa succede se la cambi. Avere tutti i dati non elimina il problema: è la big data hubris di Google Flu Trends.</p></div></li><li class="q" data-answer="0"><p class="q-text">Una compagnia assicura 500 serre contro la grandine. Il modello stima per ognuna una probabilità di sinistro di 0,04 all&#x27;anno e un danno medio di 15.000 €. Qual è il premio puro per polizza?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">600 € a polizza</button></li><li><button type="button" class="opt" data-i="1">6.000 € a polizza</button></li><li><button type="button" class="opt" data-i="2">300.000 € a polizza</button></li><li><button type="button" class="opt" data-i="3">15.000 € a polizza</button></li></ol><div class="why" hidden><p>Perdita attesa per polizza = P × gravità = 0,04 × 15.000 = 600 €, prima di costi e margine. 300.000 € è la perdita attesa di tutto il portafoglio (600 × 500): confonde il totale con la singola polizza. 15.000 € è il danno se la grandine arriva, senza pesarlo per la probabilità. 6.000 € legge 0,04 come 0,4: un errore di decimali.</p></div></li><li class="q" data-answer="1"><p class="q-text">Dopo il post di una celebrità, le ricerche di &#x27;scarpe argento&#x27; esplodono per tre giorni. Il team prodotto vuole ordinarne 100.000 paia. Che cosa conviene fare prima?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Contare like e condivisioni del post per stimare quante ne venderai</button></li><li><button type="button" class="opt" data-i="1">Verificare che la crescita duri e diventi acquisti con pochi resi</button></li><li><button type="button" class="opt" data-i="2">Ordinare subito: un picco di ricerche così forte è già domanda vera</button></li><li><button type="button" class="opt" data-i="3">Basarsi sulle vendite dell&#x27;anno scorso, il dato più affidabile</button></li></ol><div class="why" hidden><p>Il trend momentum è crescita × persistenza × conversione: un picco di tre giorni è attenzione, non ancora domanda. Ordinare subito scambia il buzz per acquisti. Le vendite dell&#x27;anno scorso non vedono il cambiamento, che è proprio ciò che si cerca. Like e condivisioni misurano il primo passo del percorso (attenzione), non l&#x27;acquisto né i resi.</p></div></li><li class="q" data-answer="1"><p class="q-text">In un ospedale il reparto conta 300 pazienti cronici, l&#x27;amministrazione 180. Entrambi leggono dati corretti dai propri sistemi. Che cosa va fatto?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Aggiungere fonti esterne, che faranno emergere il numero vero</button></li><li><button type="button" class="opt" data-i="1">Una definizione comune di &#x27;cronico&#x27; e un codice paziente condiviso</button></li><li><button type="button" class="opt" data-i="2">Usare la media dei due numeri, 240, come stima più prudente</button></li><li><button type="button" class="opt" data-i="3">Passare allo streaming, così i due sistemi si aggiornano insieme</button></li></ol><div class="why" hidden><p>È il rischio tipico di ERP e CRM: sistemi diversi, definizioni diverse (silos). Serve un dizionario comune e un identificativo unico. Lo streaming cambia la velocità, non il significato del dato. Più fonti non risolvono un problema di definizione, anzi ne aggiungono. La media di due definizioni diverse non misura niente.</p></div></li><li class="q" data-answer="3"><p class="q-text">In un supermercato il sensore di una cella frigo segna +15 °C in un minuto; il secondo sensore della stessa cella resta stabile a 4 °C. Qual è la mossa giusta?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Aspettare il controllo notturno in batch, che rilegge tutti i dati con calma</button></li><li><button type="button" class="opt" data-i="1">Buttare subito la merce: lo streaming serve ad agire al primo allarme</button></li><li><button type="button" class="opt" data-i="2">Scartare per sempre il primo sensore: il secondo dice 4 °C, quindi è rotto</button></li><li><button type="button" class="opt" data-i="3">Allertare un tecnico e verificare la cella prima di buttare la merce</button></li></ol><div class="why" hidden><p>I sensori sono veloci ma rumorosi: un salto improvviso smentito da un secondo sensore fa pensare a un guasto della misura, ma va verificato in fretta. Agire al primo segnale senza confronto è l&#x27;errore di MCAS sul Lion Air 610. Fidarsi ciecamente dell&#x27;altro sensore è lo stesso errore al contrario. Il batch notturno arriva fuori dalla finestra di decisione: se la cella si sta davvero scaldando, la merce è persa.</p></div></li><li class="q" data-answer="2"><p class="q-text">Un&#x27;app di consegne a domicilio ha quattro processi. Quale ha davvero bisogno di streaming?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Confrontare a fine mese gli ordini incassati con i pagamenti</button></li><li><button type="button" class="opt" data-i="1">Calcolare i compensi mensili dei rider in base alle consegne</button></li><li><button type="button" class="opt" data-i="2">Riassegnare un ordine quando il rider si ferma per un guasto</button></li><li><button type="button" class="opt" data-i="3">Raggruppare i clienti in segmenti per la campagna del mese</button></li></ol><div class="why" hidden><p>Il rider fermo va gestito in minuti, altrimenti il cliente aspetta e il cibo si fredda: la finestra di decisione è corta. I compensi mensili sono come le buste paga: batch. La segmentazione è una fotografia della base clienti, non una raccomandazione istantanea: si confonde &#x27;marketing&#x27; con &#x27;tempo reale&#x27;. La riconciliazione di fine mese è il caso classico del batch.</p></div></li><li class="q" data-answer="3"><p class="q-text">Una startup costruisce l&#x27;app sopra l&#x27;API mappe di un grande fornitore, gratis fino a 10.000 richieste al mese. Quale rischio va scritto nel business plan?</p>
+<ol class="opts" type="A"><li><button type="button" class="opt" data-i="0">Nessuno: finché l&#x27;API resta uguale, chi sta dietro non conta</button></li><li><button type="button" class="opt" data-i="1">La latenza: le API di mappe forniscono dati solo in lotti notturni</button></li><li><button type="button" class="opt" data-i="2">La privacy: ogni chiamata API passa l&#x27;intero database del fornitore</button></li><li><button type="button" class="opt" data-i="3">Prezzi e limiti li decide il fornitore: il costo va stimato sui volumi futuri</button></li></ol><div class="why" hidden><p>Chi possiede il servizio decide prezzi e limiti d&#x27;uso: con Google Maps nel 2018 la fatturazione è diventata obbligatoria e i costi di chi faceva molte richieste sono saliti. Le API possono dare dati in tempo reale, non solo a lotti. Un&#x27;API serve proprio a passare solo i dati richiesti, non tutto il database. È vero che non conta come il fornitore costruisce il servizio, ma conta chi lo possiede: si confondono indipendenza tecnica e indipendenza commerciale.</p></div></li></ol><p class="score" aria-live="polite"></p>
+<button type="button" class="btn ghost reset">Ricomincia</button>
+<div class="print-only solutions"><h3>Soluzioni del quiz</h3><ol><li><strong>A</strong> — Con eventi rari l&#x27;accuratezza è dominata dai casi negativi: un modello che dice sempre &#x27;buono&#x27; fa 99% senza trovare un difetto. Servono sensibilità (quanti difetti veri trova) e specificità (quanti pezzi buoni riconosce). La ROC AUC misura quanto bene il modello ordina i rischi, non la quota di difetti trovati: è la confusione più comune tra le metriche. La specificità riguarda i pezzi buoni, non i difettosi: qui si scambiano le due definizioni. SHAP spiega il modello, non prova cause e non dice quanto è preciso.</li><li><strong>A</strong> — Come per il BMI nello studio sulla demenza, l&#x27;effetto può generare la presunta causa: l&#x27;azienda rinforza proprio i negozi in difficoltà. Che due metodi convergano rende l&#x27;associazione più solida, non la trasforma in causa. SHAP dice quanto una variabile spinge la previsione del modello, non che cosa succede se la cambi. Avere tutti i dati non elimina il problema: è la big data hubris di Google Flu Trends.</li><li><strong>A</strong> — Perdita attesa per polizza = P × gravità = 0,04 × 15.000 = 600 €, prima di costi e margine. 300.000 € è la perdita attesa di tutto il portafoglio (600 × 500): confonde il totale con la singola polizza. 15.000 € è il danno se la grandine arriva, senza pesarlo per la probabilità. 6.000 € legge 0,04 come 0,4: un errore di decimali.</li><li><strong>B</strong> — Il trend momentum è crescita × persistenza × conversione: un picco di tre giorni è attenzione, non ancora domanda. Ordinare subito scambia il buzz per acquisti. Le vendite dell&#x27;anno scorso non vedono il cambiamento, che è proprio ciò che si cerca. Like e condivisioni misurano il primo passo del percorso (attenzione), non l&#x27;acquisto né i resi.</li><li><strong>B</strong> — È il rischio tipico di ERP e CRM: sistemi diversi, definizioni diverse (silos). Serve un dizionario comune e un identificativo unico. Lo streaming cambia la velocità, non il significato del dato. Più fonti non risolvono un problema di definizione, anzi ne aggiungono. La media di due definizioni diverse non misura niente.</li><li><strong>D</strong> — I sensori sono veloci ma rumorosi: un salto improvviso smentito da un secondo sensore fa pensare a un guasto della misura, ma va verificato in fretta. Agire al primo segnale senza confronto è l&#x27;errore di MCAS sul Lion Air 610. Fidarsi ciecamente dell&#x27;altro sensore è lo stesso errore al contrario. Il batch notturno arriva fuori dalla finestra di decisione: se la cella si sta davvero scaldando, la merce è persa.</li><li><strong>C</strong> — Il rider fermo va gestito in minuti, altrimenti il cliente aspetta e il cibo si fredda: la finestra di decisione è corta. I compensi mensili sono come le buste paga: batch. La segmentazione è una fotografia della base clienti, non una raccomandazione istantanea: si confonde &#x27;marketing&#x27; con &#x27;tempo reale&#x27;. La riconciliazione di fine mese è il caso classico del batch.</li><li><strong>D</strong> — Chi possiede il servizio decide prezzi e limiti d&#x27;uso: con Google Maps nel 2018 la fatturazione è diventata obbligatoria e i costi di chi faceva molte richieste sono saliti. Le API possono dare dati in tempo reale, non solo a lotti. Un&#x27;API serve proprio a passare solo i dati richiesti, non tutto il database. È vero che non conta come il fornitore costruisce il servizio, ma conta chi lo possiede: si confondono indipendenza tecnica e indipendenza commerciale.</li></ol></div></section>
+<section class="study" id="trasferimento"><h2>Applica a un caso nuovo</h2>
+<div class="prose"><p>Caso ipotetico. Una catena italiana di 40 supermercati vuole ridurre lo spreco di prodotti freschi (frutta, latticini) e le rotture di stock. Ha: casse (scontrini), un'app fedeltà, celle frigorifere con sensori di temperatura, un'API meteo, recensioni e post social. Decidi: (1) quali tre fonti combini e perché; (2) che cosa elabori in streaming e che cosa in batch; (3) un rischio di qualità dei dati e un rischio privacy; (4) come misuri se il modello di previsione delle vendite funziona.</p></div>
+<details class="box solution"><summary>Mostra una soluzione ragionata</summary><div class="prose"><p>(1) Scontrini (che cosa si vende davvero, per negozio e ora), API meteo (il caldo sposta gli acquisti di gelati e insalate) e sensori delle celle (una cella che si scalda rovina la merce). I social servono poco: chi posta non rappresenta i clienti. (2) Streaming per i sensori: se una cella supera la soglia l'allarme deve partire in minuti, altrimenti la merce è persa. Batch notturno per le previsioni di vendita e gli ordini ai fornitori del giorno dopo: la finestra di decisione è di ore, il batch costa meno ed è più facile da controllare. Batch mensile per il report sullo spreco. (3) Qualità: un sensore guasto che manda picchi falsi (confronta con un secondo sensore prima di buttare la merce); codici prodotto diversi tra casse e magazzino (definizione comune). Privacy: i dati dell'app fedeltà legano acquisti a persone; per la previsione bastano dati aggregati per negozio, quindi minimizzi (GDPR). (4) Confronti previsione e vendite reali su settimane non usate per addestrare il modello: errore medio, quante rotture di stock e quanti chili buttati prima e dopo. Se lo spreco scende senza più rotture di stock, il modello vale il suo costo.</p></div></details></section>
+<section class="study" id="decidi"><h2>Decidi tu</h2>
+<p class="hint">Mettiti nei panni di chi decide. Scegli, leggi la conseguenza, poi prova anche le altre strade.</p><div class="scenario"><h3>Il modello che vede la demenza</h3>
+<p class="situation">Lavori in una startup di salute digitale. Il team ha addestrato un modello simile a quello dello studio NACC (sensibilità 0,70, specificità 0,64) e il CEO vuole lanciare un&#x27;app a pagamento: &#x27;scopri in 5 minuti il tuo rischio di demenza&#x27;, da vendere a tutti gli over 50.</p><p class="role">Che cosa consigli al CEO?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Lanciare subito: il modello è stato pubblicato su una rivista seria</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Con una prevalenza intorno al 9%, su 1.000 utenti l&#x27;app darebbe circa 330 falsi allarmi contro 63 casi veri trovati, e ne perderebbe 27. Ansia, reclami e rischio legale: lo studio stesso dice che manca una validazione esterna.</p></div></li><li><button type="button" class="choice" data-good="1">Usarlo come strumento per i medici, che lo interpretano nel contesto e lo usano per indirizzare la prevenzione (depressione, istruzione, udito, vista), dopo una validazione su pazienti italiani</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> È il percorso &#x27;modello → clinico → prevenzione mirata&#x27;. Il modello aiuta a fare priorità, non a dare diagnosi; la validazione su una popolazione diversa dai volontari americani dei centri NACC controlla che regga.</p></div></li><li><button type="button" class="choice" data-good="0">Abbandonare il progetto: un&#x27;AUC di 0,73 non vale niente</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Troppo drastico. Un modello moderato può essere utile per decidere a chi offrire prima controlli e prevenzione, se lo si usa con i limiti dichiarati.</p></div></li></ol>
+<p class="lesson-link" hidden>Le metriche decidono l&#x27;uso: con eventi rari anche un modello discreto produce molti falsi allarmi. Prevedere non significa diagnosticare.</p></div><div class="scenario"><h3>La banca e l&#x27;architettura da 2 milioni</h3>
+<p class="situation">Sei l&#x27;analista di una banca regionale. Un fornitore propone di passare tutto allo streaming in tempo reale: frodi, buste paga dei dipendenti, report per la Banca d&#x27;Italia, segmentazione clienti. Costo: 2 milioni l&#x27;anno in più.</p><p class="role">Che cosa proponi al comitato?</p><ol class="choices" type="A"><li><button type="button" class="choice" data-good="0">Tutto in streaming: più veloce è sempre meglio</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Paghi latenza bassa dove non crea valore: buste paga e report mensili non migliorano se calcolati al millisecondo, e lo streaming porta eventi duplicati e errori che si propagano subito.</p></div></li><li><button type="button" class="choice" data-good="1">Streaming solo per le frodi con carta, batch per buste paga, report e segmentazione; poi misuri le frodi evitate contro il costo extra</button><div class="outcome" hidden><p><strong>Scelta solida.</strong> È la regola di Campana: la latenza che la decisione richiede. Le frodi hanno una finestra di millisecondi, il resto di giorni. Il confronto tra perdite evitate e costo dice se l&#x27;investimento si ripaga.</p></div></li><li><button type="button" class="choice" data-good="0">Tutto in batch: lo streaming è troppo caro</button><div class="outcome" hidden><p><strong>Rischiosa.</strong> Una frode scoperta il giorno dopo è già un danno. Per i pagamenti la finestra di decisione è più corta di qualsiasi batch.</p></div></li></ol>
+<p class="lesson-link" hidden>Batch e streaming lavorano insieme: si sceglie per ogni decisione, chiedendosi se la velocità in più vale il costo e il rischio in più.</p></div></section>
+<section class="study" id="davedere"><h2>Da vedere</h2><p class="hint">Per la sera o il weekend: storie vere o ben documentate che rendono concreti i temi della lezione.</p><ul class="watch"><li class="watch-item"><span class="wk">Documentario · 2022</span>
+<strong><a href="https://en.wikipedia.org/wiki/Downfall:_The_Case_Against_Boeing">Downfall: The Case Against Boeing</a></strong>
+<p>I due incidenti del 737 MAX: un sistema automatico che si fidava di un solo sensore. Il lato oscuro dei dati &#x27;machine-generated&#x27;.</p><p class="where">Dove: Netflix</p></li><li class="watch-item"><span class="wk">Documentario · 2020</span>
+<strong><a href="https://en.wikipedia.org/wiki/The_Social_Dilemma">The Social Dilemma</a></strong>
+<p>Come le piattaforme raccolgono i dati generati dalle persone e li usano per prevedere e orientare i comportamenti.</p><p class="where">Dove: Netflix</p></li><li class="watch-item"><span class="wk">Documentario · 2020</span>
+<strong><a href="https://en.wikipedia.org/wiki/Coded_Bias">Coded Bias</a></strong>
+<p>Una ricercatrice del MIT scopre che i sistemi di riconoscimento facciale sbagliano di più su donne e persone nere: dati distorti, modelli distorti.</p><p class="where">Dove: Netflix (uscito in tutto il mondo nel 2021; disponibilità attuale da verificare su JustWatch Italia)</p></li><li class="watch-item"><span class="wk">Film · 2011</span>
+<strong><a href="https://en.wikipedia.org/wiki/Moneyball_(film)">Moneyball (L&#x27;arte di vincere)</a></strong>
+<p>Una squadra di baseball povera batte le ricche usando i dati al posto dell&#x27;intuito degli osservatori: lo stesso salto degli assicuratori di Rizzi.</p><p class="where">Dove: Noleggio o acquisto digitale (Apple TV, Amazon, Rakuten TV secondo JustWatch Italia; verificare prima)</p></li></ul></section>
+<section class="study" id="flashcard"><h2>Flashcard</h2>
+<p class="hint">Tocca una carta per girarla. Le frecce ← → scorrono il mazzo.</p>
+<div class="deck"><ol class="cards"><li class="card" tabindex="0"><div class="front">Lente data-driven contro lente hypothesis-driven nello studio NACC?</div><div class="back">Data-driven: XGBoost + SHAP, scopre combinazioni complesse tra fattori. Hypothesis-driven: analisi di sopravvivenza (Kaplan-Meier e Cox), misura effetti medi interpretabili.</div></li><li class="card" tabindex="0"><div class="front">Quali segnali principali indicano entrambe le lenti dello studio NACC?</div><div class="back">Età, bassa istruzione, depressione e BMI.</div></li><li class="card" tabindex="0"><div class="front">Sensibilità in una riga?</div><div class="back">Quota dei casi veri che il modello trova: veri positivi / tutti i positivi reali.</div></li><li class="card" tabindex="0"><div class="front">Specificità in una riga?</div><div class="back">Quota dei non-casi che il modello riconosce come tali: veri negativi / tutti i negativi reali.</div></li><li class="card" tabindex="0"><div class="front">Che cosa misura la ROC AUC?</div><div class="back">Quanto bene il modello ordina i rischi: 0,5 = a caso, 1 = perfetto. Nello studio NACC 0,732.</div></li><li class="card" tabindex="0"><div class="front">Perché nello studio NACC un BMI alto sembra &#x27;proteggere&#x27; dalla demenza?</div><div class="back">Probabile causalità inversa: molte persone dimagriscono negli anni prima della diagnosi. È un&#x27;associazione, non un consiglio.</div></li><li class="card" tabindex="0"><div class="front">Perché un modello statistico è più difficile da spiegare di una deduzione logica?</div><div class="back">Produce probabilità, non catene di regole come &#x27;padre del padre = nonno&#x27;. Per aprirlo si usano metodi come SHAP, che spiegano il modello ma non provano cause.</div></li><li class="card" tabindex="0"><div class="front">Pericolo, esposizione e vulnerabilità nel rischio assicurativo?</div><div class="back">Pericolo (hazard): l&#x27;evento meteo. Esposizione (exposure): che cosa è assicurato e dove. Vulnerabilità: quanto quel bene si danneggia.</div></li><li class="card" tabindex="0"><div class="front">Formula della perdita attesa?</div><div class="back">Somma di P(sinistro) × gravità attesa, poi corretta per franchigie, limiti, coperture e riassicurazione.</div></li><li class="card" tabindex="0"><div class="front">Trend momentum nella moda?</div><div class="back">Crescita × persistenza × conversione commerciale: distingue il picco virale dalla domanda vera.</div></li><li class="card" tabindex="0"><div class="front">ERP contro CRM?</div><div class="back">ERP = esecuzione (finanza, magazzino, acquisti, produzione). CRM = relazione (contatti, opportunità, interazioni con i clienti).</div></li><li class="card" tabindex="0"><div class="front">Che cosa perdono i dati delle transazioni?</div><div class="back">Il contesto: dicono che cosa è successo, non che cosa il cliente ha guardato, cercato o scartato prima.</div></li><li class="card" tabindex="0"><div class="front">Rischio tipico di costruire su un&#x27;API?</div><div class="back">Dipendenza dal fornitore: può cambiare prezzi, limiti d&#x27;uso o versione.</div></li><li class="card" tabindex="0"><div class="front">Rischio tipico dello streaming che il batch non ha?</div><div class="back">Eventi in ritardo o duplicati, ed errori che si propagano subito alle azioni automatiche senza tempo per correggerli.</div></li><li class="card" tabindex="0"><div class="front">Che cosa vuol dire che Databricks è una piattaforma &#x27;unificata&#x27;?</div><div class="back">Data engineering, data science, machine learning e BI lavorano nello stesso ambiente, sugli stessi dati, invece che in programmi separati.</div></li></ol>
+<div class="deck-nav"><button type="button" class="btn ghost prev" aria-label="Carta precedente">‹</button><span class="pos"></span><button type="button" class="btn ghost next" aria-label="Carta successiva">›</button></div></div></section>
+<section class="study" id="glossario"><h2>Glossario</h2>
+<label class="search"><span>Cerca un termine</span><input type="search" class="gl-filter" placeholder="es. soft power"></label>
+<dl class="glossary"><div class="term"><dt>Predictive model <span class=it>· modello predittivo</span></dt><dd>Modello che stima la probabilità di un evento futuro a partire da dati passati. Esempio: la probabilità che un campo venga colpito dalla grandine nei prossimi 12 mesi.</dd></div><div class="term"><dt>Gradient boosting / XGBoost <span class=it>· potenziamento a gradiente</span></dt><dd>Tecnica che costruisce tanti piccoli alberi decisionali in fila, ognuno corregge gli errori del precedente. XGBoost è la versione più usata. Esempio: il modello sulla demenza dello studio NACC.</dd></div><div class="term"><dt>Sensitivity <span class=it>· sensibilità</span></dt><dd>Su 100 persone che hanno davvero l&#x27;evento, quante il modello ne segnala. Esempio: sensibilità 0,70 = trova 70 malati su 100.</dd></div><div class="term"><dt>Specificity <span class=it>· specificità</span></dt><dd>Su 100 persone che NON hanno l&#x27;evento, quante il modello riconosce come sane. Esempio: specificità 0,64 = 64 sani su 100 non ricevono un falso allarme.</dd></div><div class="term"><dt>ROC AUC <span class=it>· area sotto la curva ROC</span></dt><dd>Numero tra 0,5 (a caso) e 1 (perfetto) che dice quanto bene il modello mette i casi veri sopra i non-casi nella classifica di rischio. Esempio: 0,73 = discreto, non ottimo.</dd></div><div class="term"><dt>SHAP <span class=it>· valori di Shapley per spiegare</span></dt><dd>Metodo che a posteriori stima quanto ogni variabile ha spinto in su o in giù la previsione. Esempio: per una persona l&#x27;età pesa molto, l&#x27;istruzione poco. Spiega il modello, non prova cause.</dd></div><div class="term"><dt>Reverse causation <span class=it>· causalità inversa</span></dt><dd>Quando è l&#x27;effetto a generare la presunta causa. Esempio: la demenza in arrivo fa perdere peso, quindi il peso basso sembra &#x27;causare&#x27; la demenza.</dd></div><div class="term"><dt>Expected loss <span class=it>· perdita attesa</span></dt><dd>Somma su tutte le polizze di probabilità di sinistro × danno atteso. Esempio: 2% × 10.000 € = 200 € per polizza.</dd></div><div class="term"><dt>ERP (Enterprise Resource Planning) <span class=it>· gestionale delle risorse</span></dt><dd>Sistema che registra l&#x27;esecuzione: finanza, magazzino, acquisti, produzione. Esempio: SAP che segna l&#x27;ordine e la fattura.</dd></div><div class="term"><dt>CRM (Customer Relationship Management) <span class=it>· gestione delle relazioni con i clienti</span></dt><dd>Sistema che segue contatti, opportunità e interazioni con i clienti. Esempio: Salesforce che ricorda quando hai chiamato un cliente e com&#x27;è andata.</dd></div><div class="term"><dt>IoT (Internet of Things) <span class=it>· internet delle cose</span></dt><dd>Oggetti con sensori collegati in rete che mandano misure continue. Esempio: un motore che invia temperatura e vibrazioni ogni secondo.</dd></div><div class="term"><dt>API (Application Programming Interface) <span class=it>· interfaccia di programmazione</span></dt><dd>Porta controllata con cui un sistema chiede dati o servizi a un altro secondo regole fisse. Esempio: un&#x27;app di consegne che chiede a Google Maps il percorso.</dd></div><div class="term"><dt>Batch processing <span class=it>· elaborazione a lotti</span></dt><dd>I dati si accumulano e vengono elaborati tutti insieme a orari fissi (ogni notte, ogni mese). Esempio: le buste paga di fine mese.</dd></div><div class="term"><dt>Stream processing <span class=it>· elaborazione in flusso</span></dt><dd>Ogni evento viene analizzato appena arriva, per agire subito. Esempio: bloccare un pagamento sospetto prima che venga autorizzato.</dd></div><div class="term"><dt>Decision window <span class=it>· finestra di decisione</span></dt><dd>Il periodo in cui un&#x27;informazione può ancora cambiare l&#x27;esito. Esempio: per una frode con carta sono millisecondi, per un bilancio sono giorni.</dd></div></dl><p class="empty" hidden>Nessun termine corrisponde. Prova con una parola più corta.</p></section>
+<section class="study" id="video"><h2>Video consigliati</h2><ul class="videos"><li class="video"><figure class="yt" data-id="9AdRNLW2L54" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: #3 Le parole dell&#x27;epidemia: test diagnostici, sensibilità e specificità"><img loading="lazy" src="https://i.ytimg.com/vi/9AdRNLW2L54/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>#3 Le parole dell&#x27;epidemia: test diagnostici, sensibilità e specificità</strong><p class="vmeta">Scienze Statistiche Unipd · 6 min · IT</p><p>Sensibilità e specificità spiegate da statistici dell&#x27;Università di Padova: le due metriche più facili da confondere.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=9AdRNLW2L54">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="lsR-cVRK3Y8" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Inside the Secret World of Zara"><img loading="lazy" src="https://i.ytimg.com/vi/lsR-cVRK3Y8/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>Inside the Secret World of Zara</strong><p class="vmeta">Bloomberg Originals · 10 min · EN</p><p>Come Zara legge la domanda e cambia la produzione in poche settimane: il caso moda di Rizzi visto da dentro.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=lsR-cVRK3Y8">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="CObyT2P9C-U" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Cos&#x27;è l&#x27;Internet of Things? Scopri la rete che entra negli oggetti"><img loading="lazy" src="https://i.ytimg.com/vi/CObyT2P9C-U/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>Cos&#x27;è l&#x27;Internet of Things? Scopri la rete che entra negli oggetti</strong><p class="vmeta">Registroit · 5 min · IT</p><p>Il Registro .it (CNR) spiega in italiano sensori e oggetti connessi, la fonte &#x27;machine-generated&#x27; di Campana.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=CObyT2P9C-U">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="X0XqnAqvyIk" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Calling Bullshit 5.3: Big Data Hubris"><img loading="lazy" src="https://i.ytimg.com/vi/X0XqnAqvyIk/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>Calling Bullshit 5.3: Big Data Hubris</strong><p class="vmeta">UW Information School · 6 min · EN</p><p>Il fallimento di Google Flu Trends raccontato da due professori dell&#x27;Università di Washington: perché i dati generati dalle persone ingannano.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=X0XqnAqvyIk">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="1xgBQTF24mU" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Stream vs Batch processing explained with examples"><img loading="lazy" src="https://i.ytimg.com/vi/1xgBQTF24mU/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>Stream vs Batch processing explained with examples</strong><p class="vmeta">Andreas Kretz · 9 min · EN</p><p>Batch e streaming con esempi concreti da un data engineer: ripassa la seconda metà della lezione di Campana.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=1xgBQTF24mU">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="fNQRQkx1SIQ" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: Intro to Databricks (Free Edition) | UI Walkthrough"><img loading="lazy" src="https://i.ytimg.com/vi/fNQRQkx1SIQ/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>Intro to Databricks (Free Edition) | UI Walkthrough</strong><p class="vmeta">Alex The Analyst · 11 min · EN</p><p>Il giro del menu di Databricks Free Edition, cliccato dal vivo.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=fNQRQkx1SIQ">apri su YouTube</a></p></div></li><li class="video"><figure class="yt" data-id="JOOAo_yUGkM" data-start="0"><button type="button" class="yt-play" aria-label="Guarda il video: QUERY SQL: parti dalle BASI"><img loading="lazy" src="https://i.ytimg.com/vi/JOOAo_yUGkM/mqdefault.jpg" alt=""><span class="yt-icon" aria-hidden="true"></span></button></figure>
+<div><strong>QUERY SQL: parti dalle BASI</strong><p class="vmeta">Aulab · 11 min · IT</p><p>SELECT, FROM, WHERE spiegati in italiano: le prime query che scrivi nel SQL Editor.</p><p class="vmeta"><a href="https://www.youtube.com/watch?v=JOOAo_yUGkM">apri su YouTube</a></p></div></li></ul></section>
+<section class="study" id="casi"><h2>Casi di studio collegati</h2><p class="hint">Cose che hai visto o salvato e che toccano i concetti di questa lezione.</p><ul class="watch"><li class="watch-item" data-course="cs"><span class="wk">Case study · Reel · Instagram</span><strong><a href="/study-lab/case-studies/dead-internet-theory/">Dead Internet Theory: quando i like non sono persone</a></strong><p>I social sono una fonte veloce ma manipolabile. Prima di usarli per decidere va stimata la quota di attività non umana.</p></li><li class="watch-item" data-course="cs"><span class="wk">Case study · Reel · Instagram</span><strong><a href="/study-lab/case-studies/memetic-warfare/">Guerra dei meme: quando una risata fa il lavoro della propaganda</a></strong><p>La lezione avverte che i social sono una fonte veloce ma distorta da ironia e profili falsi. I 300 account finti scoperti da Reuters sono un esempio documentato: chi avesse analizzato quelle conversazioni come «opinione dei filippini» avrebbe misurato una campagna, non le persone.</p></li></ul></section>
+<section class="study" id="approfondimenti-video"><h2>Approfondimenti video</h2><p class="hint">Video salvati che approfondiscono un capitolo di questa lezione: guardali dopo averlo letto.</p><ul class="watch"><li class="watch-item"><span class="wk">Video · Breaking Italy</span><strong><a href="https://www.youtube.com/watch?v=Apj8NRuJl0w">Prevedere i crimini con l’Intelligenza Artificiale? Ci pensa il Regno Unito</a></strong><p>Prevedere i crimini con l&#x27;AI nel Regno Unito: modelli predittivi e loro limiti. <a href="#un-modello-predittivo-vede-i-rischi-che-nessuno-vede-guardan">Vai al capitolo</a></p></li><li class="watch-item"><span class="wk">Video · Geopop</span><strong><a href="https://www.youtube.com/watch?v=epMQNw2UcpA">Come funzionano le &quot;click farm&quot;, le fabbriche con cui si comprano like e follower finti</a></strong><p>Le click farm mostrano come i dati social possano essere falsi: veridicità delle fonti. <a href="#sensori-e-social-sono-veloci-ma-possono-mentire">Vai al capitolo</a></p></li></ul></section>
+<section class="study sources" id="fonti"><h2>Fonti</h2><ol><li>Registrazione PLAUD parte 1 — Rizzi (of_35d557621cb38a8488b7d64f02cb079b) — 10:03, 91 min: piano della lezione (0–3′), demenza (3–23′), grandine e alluvioni per le assicurazioni (23–38′), Refik Anadol (38–45′), moda e Zara (45–55′), consegna Team Work 2 (55–58′), lavoro a gruppi con conversazioni private non usate (58–82′), presentazioni (82–90′).</li><li>Registrazione PLAUD parte 2 — Campana (of_7ab7a081aa2952ef1cbbfc3d371cb0d9) — 12:03, 62 min, inizio mancante: metafora del maiale e dati come risorsa (0–6′), quattro origini dei dati (6–9′), transazioni (9–13′), ERP/CRM (13–17′), sensori (17–21′), social (21–24′), API (24–31′), gioco sulle fonti (32–40′), tabella riassuntiva (40–42′), finestra di decisione (42–45′), batch (45–48′), streaming (48–51′), dal tempo reale all&#x27;offline e lavoro insieme (51–54′), trade-off e sfida in classe (54–60′), inizio Databricks (60–62′).</li><li>Slide Canvas — Rizzi, BigDataBsnsRizzi2026Lesson2 (45 pagine) — Fonti pp. 2–11, batch/streaming pp. 12–19, Databricks pp. 20–29, casi pp. 30–43, Team Work 2 pp. 44–45.</li><li><a href="https://doi.org/10.1002/alz.70870">Arnold D. et al. (2025), Stratifying dementia risk factors: A prediction model and hypothesis-driven analysis, Alzheimer&#x27;s &amp; Dementia 21(10): e70870</a></li><li><a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(24)01296-0/fulltext">Livingston G. et al. (2024), Dementia prevention, intervention, and care: 2024 report of the Lancet standing Commission, The Lancet 404: 572–628</a></li><li><a href="https://www.alzheimer-europe.org/news/2024-lancet-commission-underscores-potential-dementia-risk-reduction-identifying-14-modifiable">Alzheimer Europe — la Lancet Commission 2024 e i 14 fattori modificabili (circa 45% dei casi potenzialmente prevenibili o ritardabili)</a></li><li><a href="https://essl.org/cms/?p=13994">ESSL — chicco di grandine di 19 cm confermato ad Azzano Decimo, 24 luglio 2023</a></li><li><a href="https://www.howdengroup.com/it-it/ania-nel-2024-raccolta-premi-crescita-howden-italia">Howden Italia su dati ANIA — premi assicurativi 2024 pari a circa il 6,9% del PIL</a></li><li><a href="https://www.dataland.art/exhibitions/machine-dreams-rainforest">DATALAND — Refik Anadol, Machine Dreams: Rainforest (Los Angeles)</a></li><li><a href="https://www.retaildetail.eu/news/fashion/the-very-first-zara-store-is-closing-after-more-than-fifty-years/">RetailDetail — chiude il primo negozio Zara, aperto ad A Coruña nel 1975</a></li><li><a href="https://www.modaes.com/global/companies/inditex-sourcing-where-does-zara-owner-make-its-clothes">Modaes — la produzione di prossimità di Inditex (Spagna, Portogallo, Marocco, Turchia)</a></li><li><a href="https://gking.harvard.edu/publication/the-parable-of-google-flu-traps-in-big-data-analysis/">Lazer D., Kennedy R., King G., Vespignani A. (2014), The Parable of Google Flu: Traps in Big Data Analysis, Science 343: 1203–1205</a></li><li><a href="https://www.bbc.com/news/business-50177788">BBC News — rapporto finale KNKT su Lion Air 610: una serie di errori, tra cui sensore AoA e MCAS</a></li><li><a href="https://geoawesomeness.com/developers-up-in-arms-over-google-maps-api-insane-price-hike">Geoawesomeness — la reazione degli sviluppatori al cambio di prezzi delle Google Maps API (2018)</a></li><li><a href="https://www.csoonline.com/article/3664140/how-visa-fights-fraud.html">CSO Online — How Visa fights fraud (Visa Advanced Authorization, punteggio di rischio in tempo reale)</a></li><li><a href="https://www.databricks.com/company/newsroom/press-releases/databricks-launches-free-edition-and-announces-100-million">Databricks — comunicato: lancio della Free Edition e investimento di 100 milioni in formazione (11 giugno 2025)</a></li><li><a href="https://www.databricks.com/company/newsroom/press-kit">Databricks — press kit: fondata nel 2013 da sette ricercatori dell&#x27;AMPLab di Berkeley, creatori di Spark, Delta Lake e MLflow</a></li><li><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">Regolamento (UE) 2016/679 (GDPR), art. 5 — minimizzazione dei dati</a></li></ol><details class="box verifica"><summary>Note di verifica</summary><div class="prose"><p>Audio della parte 1 spesso disturbato; la parte 2 comincia a lezione già iniziata e finisce all'inizio di Databricks. Correzioni rispetto al parlato: (1) Rizzi dice che la demenza "riguarderà quasi metà della popolazione": il dato vero è della Lancet Commission 2024, secondo cui circa il 45% dei casi è potenzialmente prevenibile o ritardabile agendo su 14 fattori modificabili (stima modellistica, non una misura). (2) I 14 fattori della slide 32 sono della Lancet Commission; lo studio di machine learning delle slide 33–34 è un altro lavoro (Arnold e colleghi, 2025, coorte NACC, 9.606 persone, 13 fattori, 877 casi = 9%, follow-up medio circa 6 anni). A voce i due studi sono fusi. (3) Rizzi confonde sensibilità, specificità e accuratezza ("accuracy means sensitivity"): nel testo valgono le definizioni standard; i valori dello studio sono sensibilità 0,702, specificità 0,637, accuratezza 0,643, ROC AUC 0,732, PR AUC 0,208. La metrica che lui descrive come "quanti positivi previsti erano veri" è la precisione (valore predittivo positivo), non la AUC. (4) Il "Maya court" della trascrizione è la curva di Kaplan-Meier, con regressione di Cox. (5) Sul BMI Rizzi dice che "mangiare un po' di più è sano": le slide stesse lo chiamano paradosso e indicano possibile causalità inversa; la Lancet Commission considera l'obesità in mezza età un fattore di rischio. Nel testo è presentato come associazione, non come consiglio. (6) Il fattore 14 della Commissione è la perdita della vista non trattata in età avanzata, non la miopia in sé; il racconto sulla miopia da vita al chiuso non è usato come dato. (7) La frase "prevedere il rischio 20–30 anni prima" non è sostenuta dallo studio (follow-up medio circa 6 anni) ed è omessa. (8) La scoperta sulla variabilità della frequenza cardiaca citata a voce non è nelle slide né nello studio citato: non verificata, non usata. (9) Assicurazioni: Rizzi dice che pesano oltre l'8% del PIL italiano, con un PIL di 1.500 miliardi e 300–400 miliardi di assicurazioni; i dati ANIA danno premi pari a circa il 6,9% del PIL nel 2024 (circa 170 miliardi). Anche il numero di compagnie ANIA citato (oltre 130) non è stato verificato e non è riportato. (10) Il progetto grandine per ANIA (2004–2005, squadra e costi) è un racconto personale del docente, non verificabile: presentato come tale, senza cifre. Le percentuali sulle frodi RC auto dette a voce sono incomprensibili e omesse. (11) Refik Anadol: l'opera è a DATALAND, Los Angeles; il modello (Large Nature Model) è addestrato su archivi di istituzioni di ricerca più lavoro sul campo, oltre 1,2 miliardi di dati ecologici; i "due anni in Amazzonia" non sono verificati. I sensori dei visitatori leggono battito, movimento e posizione (non "emozioni" o "colori"). (12) Zara: il primo negozio è del 1975 ad A Coruña; la capacità di cambiare produzione in poche settimane si basa sulla produzione di prossimità (fonti di stampa), non su un sistema di AI documentato. (13) Campana: le date della slide sulle transazioni sono marzo 2024, non "1904/1907". (14) La slide 3 ("l'AI non butta via nessun dato") è uno slogan: per il GDPR i dati personali vanno minimizzati, quindi nel testo è discusso criticamente. Le presentazioni degli studenti e le loro conversazioni non sono usate. Databricks (pp. 20–29) non è nella registrazione oltre le prime frasi: la sezione è integrazione dalle slide più il comunicato e il press kit Databricks (fondazione 2013 all'AMPLab di Berkeley, Free Edition dell'11 giugno 2025); la procedura di import è quella della slide 29, con passaggi spiegati; l'esempio SQL sugli Oscar è ipotetico. L'inizio della parte di Campana (slide 1–3) manca nell'audio ma il contenuto delle slide 1–3 (titolo, fonti, metafora del maiale) è coperto.</p></div></details></section>
+<nav class="prevnext" aria-label="Altre lezioni"><a class="pn prev" href="/study-lab/big-data-ai/2026-09-25/"><span>Lezione precedente</span>25 set · Dal clic alla decisione: che cosa sono i Big Data, come si analizzano e quando creano davvero valore</a><a class="pn next" href="/study-lab/big-data-ai/2026-10-06/"><span>Lezione successiva</span>6 ott · Dentro il motore dell&#x27;AI: come imparano le macchine, come un LLM sceglie la parola dopo, e una dashboard che racconta una storia</a></nav></main>
+<footer class="foot"><p>Appunti rielaborati da registrazioni e materiali di corso per uso personale di studio. Le slide originali dei docenti non sono pubblicate qui.</p></footer>
+<script src="/study-lab/assets/app.js?v=20261118-10" defer></script>
+<script src="/study-lab/assets/tutor.js?v=20261118-5" defer></script>
+</body></html>
